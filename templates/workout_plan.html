@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% for log in logs %}
-        <h2>{{ log.excercise.name }}</h2>
-    {% endfor%}
+    
+    <div class="container">
+        <div class="row">
+            {% for log in logs %}
+            <div class="col-md-4 offset-md-1">
+                <div class="card">
+                    <img src="{{ log.excercise.guide_image.url }}" class="card-img-top" alt="exercise image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ log.excercise.name }}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                            content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                
+            </div>
+            {% endfor%}
+        </div>
+    </div>
+
 {% endblock %}
