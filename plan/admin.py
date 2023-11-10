@@ -14,3 +14,12 @@ class InfoAdmin(admin.ModelAdmin):
 class ExerciseInfo(admin.ModelAdmin):
     list_display = ('name', 'guide_image', 'muscle_group', 'youtube_link')
     list_filter = ('muscle_group',)
+
+
+@admin.register(WorkoutLog)
+class WorkoutAdmin(admin.ModelAdmin):
+    list_display = ('identifier', 'created_date',
+                    'trainee', 'logged_date', 'sets_ideal',
+                    'sets_actual', 'reps_ideal', 'reps_actual',
+                    'completed', 'excercise')
+    list_filter = ('trainee',)
