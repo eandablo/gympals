@@ -6,7 +6,16 @@
     <div class="col-md-6 offset-md-3 mt-2 center-text">
         <h2>Welcome to GymPal <span class="text-to-capital">{{user.username}}</span></h2>
         {% if info_exists %}
-            {{ info_exists }}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 offset-md-1 mt-10">
+                        <a class="btn btn btn-primary btn-lg" href="#">Update Info</a>
+                    </div>
+                    <div class="col-md-4 offset-md-1">
+                        <a class="btn btn btn-primary btn-lg" href="#">See Workouts</a>
+                    </div>
+                </div>
+            </div>
         {% else %}
             <form method="POST">
                 {{ info_form.as_p }}
