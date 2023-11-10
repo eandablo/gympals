@@ -31,7 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['8000-eandablo-gympals-d2kpql23bs.us2.codeanyapp.com',
                  'gympals-6af3102877bb.herokuapp.com']
 
-
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 # Application definition
 
 INSTALLED_APPS = [
