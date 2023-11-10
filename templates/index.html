@@ -8,8 +8,8 @@
         {% if info_exists %}
             {{ info_exists }}
         {% else %}
-            <form method="post">
-                {{ info_form }}
+            <form method="POST">
+                {{ info_form.as_p }}
                 {% csrf_token %}
                 <button type="submit">Submit</button>
             </form>
