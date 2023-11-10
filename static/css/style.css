@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@300&family=Roboto:wght@300&display=swap');
+
+/* base.html */
+
+.white-medium-text {
+    color: #f8f7f7;
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+}
+
+.white-large-text {
+    color: #f8f7f7;
+    font-family: "Roboto", sans-serif;
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.text-to-capital {
+    text-transform: capitalize;
+}

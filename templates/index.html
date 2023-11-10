@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="row">
+    <div class="col-md-6 offset-md-3 mt-2 center-text">
+        <h2>Welcome to GymPal <span class="text-to-capital">{{user.username}}</span></h2>
+    </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-md-6 offset-md-3 mt-2 center-text">
+        <h2>Welcome to GymPal</h2>
+        <h3>Your wellness journey commence here</h3>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
