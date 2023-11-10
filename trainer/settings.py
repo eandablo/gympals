@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-eandablo-gympals-d2kpql23bs.us2.codeanyapp.com',]
+ALLOWED_HOSTS = ['8000-eandablo-gympals-d2kpql23bs.us2.codeanyapp.com', 'gympals-6af3102877bb.herokuapp.com']
 
 
 # Application definition
