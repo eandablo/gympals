@@ -34,5 +34,12 @@ class HomeView(View):
             {"info_exists": info_exists}
         )
 
-# class WorkoutView(View)
-    
+
+class WorkoutView(View):
+    def get(self, request, name, *args, **kwargs):
+        exercises = WorkoutLog.objects.filter(trainee__name=name)
+        return render(
+            request,
+            'workout_plan.html',
+            {"exercises": exercises}
+        )
