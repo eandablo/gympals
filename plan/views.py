@@ -1,19 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from .forms import TraineeInfoForm
+from .models import TraineeInfo, WorkoutLog
 
 
 class HomeView(View):
 
     def get(self, request, *args, **kwargs):
         info_exists = False
+        trainee = request.user
         if hasattr(request.user, 'traineeinfo'):
             info_exists = True
-
+            trainee = get_object_or_404(TraineeInfo, trainee=request.user)
         return render(
             request,
             'index.html',
             {"info_exists": info_exists,
+             "trainee": trainee,
              "info_form": TraineeInfoForm()}
         )
 
@@ -30,3 +33,6 @@ class HomeView(View):
             'index.html',
             {"info_exists": info_exists}
         )
+
+# class WorkoutView(View)
+    
