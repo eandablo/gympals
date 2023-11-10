@@ -37,9 +37,9 @@ class HomeView(View):
 
 class WorkoutView(View):
     def get(self, request, name, *args, **kwargs):
-        exercises = WorkoutLog.objects.filter(trainee__name=name)
+        logs = WorkoutLog.objects.filter(trainee__name=name)
         return render(
             request,
             'workout_plan.html',
-            {"exercises": exercises}
+            {"logs": logs}
         )

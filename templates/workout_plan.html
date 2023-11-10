@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+    {% for log in logs %}
+        <h2>{{ log.excercise.name }}</h2>
+    {% endfor%}
 {% endblock %}
