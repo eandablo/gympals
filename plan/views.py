@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views import View
+from django.views import View, generic
 from .forms import TraineeInfoForm
 from .models import TraineeInfo, WorkoutLog
 
@@ -41,5 +41,15 @@ class WorkoutView(View):
         return render(
             request,
             'workout_plan.html',
+            {"logs": logs}
+        )
+
+
+class LogViews(generic.ListView):
+    def get(self, request, name, *args, **kwargs):
+        logs = WorkoutLog.objects.filter(trainee__name=name, completed=True)
+        return render(
+            request,
+            'logs_view.html',
             {"logs": logs}
         )

@@ -64,3 +64,8 @@ class WorkoutLog(models.Model):
 
     def __str__(self):
         return f'trainee: {self.trainee}'
+
+# class SiteImages(models.Model):
+#     role = models.CharField(max_length=100, primary_key=True)
+#     image_url = CloudinaryField('image', default='add')
+#     caption = models.TextField()

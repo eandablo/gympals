@@ -9,11 +9,14 @@
             <h2>{{ trainee.name }}</h2>
             <div class="container mt-5">
                 <div class="row">
-                    <div class="col-md-4 offset-md-1">
+                    <div class="col-md-2 offset-md-2">
                         <a class="btn btn btn-primary btn-lg" href="#">Update Info</a>
                     </div>
-                    <div class="col-md-4 offset-md-1">
+                    <div class="col-md-2 offset-md-2">
                         <a class="btn btn btn-primary btn-lg" href="{% url 'workout_plan' trainee.name %}">See Workouts</a>
+                    </div>
+                    <div class="col-md-2 offset-md-2">
+                        <a class="btn btn btn-primary btn-lg" href="{% url 'logs_view' trainee.name %}">See Logs</a>
                     </div>
                 </div>
             </div>
@@ -30,7 +33,7 @@
 <div class="row">
     <div class="col-md-6 offset-md-3 mt-2 center-text">
         <h2>Welcome to GymPal</h2>
-        <h3>Your wellness journey commences here</h3>
+        <h3>Your wellness journey starts here</h3>
     </div>
 </div>
 {% endif %}

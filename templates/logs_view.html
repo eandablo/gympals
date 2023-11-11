@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Muscle Group</th>
+            <th scope="col">Exercise</th>
+            <th scope="col">Sets</th>
+            <th scope="col">Reps</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <th scope="col">{{ log.logged_date }}</th>
+            <th scope="col">{{ log.excercise.muscle_group }}</th>
+            <th scope="col">{{ log.excercise.name }}</th>
+            <th scope="col">{{ log.sets_actual }}</th>
+            <th scope="col">{{ log.reps_actual }}</th>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
