@@ -3,17 +3,17 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
 
-GROUPS = [
-    ('BC', 'BACK'),
-    ('CT', 'CHEST'),
-    ('LG', 'LEGS'),
-    ('BP', 'BICEPS'),
-    ('TP', 'TRICEPS'),
-    ('SH', 'SHOULDERS'),
-]
-
-
 class TraineeInfo(models.Model):
+    GENDERS = [
+        ('F', 'FEMALE'),
+        ('M', 'MALE'),
+        ('N', 'NEUTRAL'),
+    ]
+    GOALS = [
+        ('WL', 'WEIGHT LOSE'),
+        ('MG', 'MUSCLE GAIN'),
+        ('DF', 'DEFINITION')
+    ]
     trainee = models.OneToOneField(User,
                                    on_delete=models.CASCADE,
                                    primary_key=True)
@@ -22,6 +22,8 @@ class TraineeInfo(models.Model):
     age = models.PositiveIntegerField(default=0)
     weight = models.DecimalField(max_digits=4, decimal_places=1)
     height = models.DecimalField(max_digits=4, decimal_places=1)
+    gender = models.CharField(max_length=1, choices=GENDERS, default='N')
+    goal = models.CharField(max_length=2, choices=GOALS, default='WL')
 
     class Meta:
         ordering = ['-name']
@@ -31,11 +33,33 @@ class TraineeInfo(models.Model):
 
 
 class Exercises(models.Model):
+    GROUPS = [
+        ('BC', 'BACK'),
+        ('CT', 'CHEST'),
+        ('LG', 'LEGS'),
+        ('BP', 'BICEPS'),
+        ('TP', 'TRICEPS'),
+        ('SH', 'SHOULDERS'),
+        ('CR', 'CARDIO'),
+    ]
+    LEVEL_CHOICES = [
+        (1, 'BEGGINER'),
+        (2, 'ADVANCED'),
+        (3, 'EXPERT')
+    ]
+    GENDERS = [
+        ('F', 'FEMALE'),
+        ('M', 'MALE'),
+        ('B', 'BOTH')
+    ]
     name = models.CharField(max_length=150, unique=True)
     guide_image = CloudinaryField('image', default='None')
     muscle_group = models.CharField(max_length=2, choices=GROUPS)
     youtube_link = models.CharField(max_length=200, unique=True,
                                     default='None')
+    level = models.IntegerField(choices=LEVEL_CHOICES, default=1)
+    calories_burnt = models.PositiveIntegerField(default=0)
+    gender = models.CharField(max_length=1, choices=GENDERS, default='B')
 
     class Meta:
         ordering = ['name']
@@ -65,7 +89,20 @@ class WorkoutLog(models.Model):
     def __str__(self):
         return f'trainee: {self.trainee}'
 
-# class SiteImages(models.Model):
-#     role = models.CharField(max_length=100, primary_key=True)
-#     image_url = CloudinaryField('image', default='add')
-#     caption = models.TextField()
+
+# class Diet(models.Model):
+#     date_created = models.DateField(auto_now_add=True)
+#     trainee = models.ForeignKey(TraineeInfo,
+#                                 on_delete=models.CASCADE,
+#                                 related_name='diet_log')
+#     calories = models.PositiveIntegerField(default=0)
+#     calories_ideal = models.PositiveIntegerField(default=0)
+
+
+class SiteImages(models.Model):
+    role = models.CharField(max_length=100, primary_key=True)
+    image_url = CloudinaryField('image', default='add')
+    caption = models.TextField()
+
+    def __str__(self):
+        return f'This image role is {self.role}'
