@@ -2,6 +2,10 @@
 
 /* base.html */
 
+.whole-screen{
+    min-height: 100vh;
+}
+
 .white-medium-text {
     color: #f8f7f7;
     font-family: "Roboto", sans-serif;
@@ -21,4 +25,9 @@
 
 .text-to-capital {
     text-transform: capitalize;
+}
+
+.footer-div{
+    position: absolute;
+    bottom: 0;
 }
