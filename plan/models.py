@@ -22,7 +22,7 @@ class TraineeInfo(models.Model):
     age = models.PositiveIntegerField(default=0)
     weight = models.DecimalField(max_digits=4, decimal_places=1)
     height = models.DecimalField(max_digits=4, decimal_places=1)
-    gender = models.CharField(max_length=1, choices=GENDERS, default='N')
+    sex = models.CharField(max_length=1, choices=GENDERS, default='N')
     goal = models.CharField(max_length=2, choices=GOALS, default='WL')
 
     class Meta:
@@ -41,6 +41,7 @@ class Exercises(models.Model):
         ('TP', 'TRICEPS'),
         ('SH', 'SHOULDERS'),
         ('CR', 'CARDIO'),
+        ('AB', 'ABS'),
     ]
     LEVEL_CHOICES = [
         (1, 'BEGGINER'),
