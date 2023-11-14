@@ -34,14 +34,14 @@ class TraineeInfo(models.Model):
 
 class Exercises(models.Model):
     GROUPS = [
-        ('BC', 'BACK'),
-        ('CT', 'CHEST'),
-        ('LG', 'LEGS'),
-        ('BP', 'BICEPS'),
-        ('TP', 'TRICEPS'),
-        ('SH', 'SHOULDERS'),
-        ('CR', 'CARDIO'),
-        ('AB', 'ABS'),
+        ('BACK', 'BACK'),
+        ('CHEST', 'CHEST'),
+        ('LEGS', 'LEGS'),
+        ('BICEPS', 'BICEPS'),
+        ('TRICEPS', 'TRICEPS'),
+        ('SHOULDERS', 'SHOULDERS'),
+        ('CARDIO', 'CARDIO'),
+        ('ABS', 'ABS'),
     ]
     LEVEL_CHOICES = [
         (1, 'BEGGINER'),
@@ -55,7 +55,7 @@ class Exercises(models.Model):
     ]
     name = models.CharField(max_length=150, unique=True)
     guide_image = CloudinaryField('image', default='None')
-    muscle_group = models.CharField(max_length=2, choices=GROUPS)
+    muscle_group = models.CharField(max_length=10, choices=GROUPS)
     youtube_link = models.CharField(max_length=200, unique=True,
                                     default='None')
     level = models.IntegerField(choices=LEVEL_CHOICES, default=1)
@@ -71,6 +71,7 @@ class Exercises(models.Model):
 
 class WorkoutLog(models.Model):
     identifier = models.CharField(max_length=50, unique=True)
+    day = models.PositiveIntegerField(default=1)
     created_date = models.DateField(auto_now_add=True)
     trainee = models.ForeignKey(TraineeInfo,
                                 on_delete=models.CASCADE,
@@ -91,13 +92,19 @@ class WorkoutLog(models.Model):
         return f'trainee: {self.trainee}'
 
 
-# class Diet(models.Model):
-#     date_created = models.DateField(auto_now_add=True)
-#     trainee = models.ForeignKey(TraineeInfo,
-#                                 on_delete=models.CASCADE,
-#                                 related_name='diet_log')
-#     calories = models.PositiveIntegerField(default=0)
-#     calories_ideal = models.PositiveIntegerField(default=0)
+class Diet(models.Model):
+    created_date = models.DateField(auto_now_add=True)
+    trainee = models.ForeignKey(TraineeInfo,
+                                on_delete=models.CASCADE,
+                                related_name='diet_log')
+    calories = models.PositiveIntegerField(default=0)
+    calories_ideal = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['trainee', '-created_date']
+
+    def __str__(self):
+        return f'This diet is for: {self.trainee}'
 
 
 class SiteImages(models.Model):

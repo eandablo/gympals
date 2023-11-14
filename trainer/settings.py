@@ -28,7 +28,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-eandablo-gympals-3f4pjj6piiw.ws-eu106.gitpod.io',
+ALLOWED_HOSTS = ['8000-eandablo-gympals-6j1f5jpcr0e.ws-eu106.gitpod.io',
                  'gympals-6af3102877bb.herokuapp.com']
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
