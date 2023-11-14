@@ -1,23 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
     
-    <div class="container">
-        <div class="row">
-            {% for log in logs %}
-            <div class="col-md-4 offset-md-1">
-                <div class="card">
-                    <img src="{{ log.excercise.guide_image.url }}" class="card-img-top" alt="exercise image">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ log.excercise.name }}</h5>
-                        <p class="card-text">Sets: {{log.sets_ideal }}</p>
-                        <p class="card-text">Reps: {{log.reps_ideal }}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-                
-            </div>
-            {% endfor %}
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          Accordion Item #1
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
         </div>
+      </div>
     </div>
+  </div>
 
 {% endblock %}
