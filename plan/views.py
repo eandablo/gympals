@@ -25,13 +25,17 @@ class HomeView(View):
         new_trainee = request.user
         info_exists = False
         if info_form.is_valid():
-            info_form.instance.trainee = new_trainee
-            info_form.save()
+            info = info_form.save(commit=False)
+            info.trainee = new_trainee
+            info.save()
             info_exists = True
+            trainee = get_object_or_404(TraineeInfo, trainee=request.user)
+
         return render(
             request,
             'index.html',
-            {"info_exists": info_exists}
+            {"trainee": trainee,
+             "info_exists": info_exists}
         )
 
 
