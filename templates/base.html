@@ -28,6 +28,19 @@
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo01">
                     {% if user.is_authenticated %}
+
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link active white-medium-text" aria-current="page"
+                                href="/plan/{{ user.traineeinfo }}">Workout</a>
+                        </li>
+                    </ul>
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link active white-medium-text" aria-current="page"
+                                href="/logs/{{ user.traineeinfo }}">Logs</a>
+                        </li>
+                    </ul>
                     <ul class="nav">
                         <li class="nav-item">
                             <a class="nav-link active white-medium-text" aria-current="page"
