@@ -5,7 +5,11 @@ from .models import TraineeInfo, WorkoutLog
 class TraineeInfoForm(forms.ModelForm):
     class Meta:
         model = TraineeInfo
-        fields = ('name', 'age', 'weight', 'height')
+        fields = ('name', 'age', 'weight', 'height', 'sex', 'goal')
+        labels = {
+            'sex': 'Sex (If you prefere not to disclose, please select neutral)',
+            'goal': 'Please select a goal'
+        }
 
 
 class LogExerciseForm(forms.ModelForm):
