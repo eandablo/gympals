@@ -7,16 +7,28 @@
         <h2>Welcome to GymPal</h2>
         {% if info_exists %}
             <h2>{{ trainee.name }}</h2>
-            <div class="container mt-5">
+            <div class="container-fluid mt-5">
                 <div class="row">
-                    <div class="col-md-2 offset-md-2">
-                        <a class="btn btn btn-primary btn-lg" href="#">Update Info</a>
+                    <div class="col-md-5">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Workouts</h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                              <a class="btn btn btn-primary btn-lg" href="{% url 'workout_plan' trainee.name %}">See Workouts</a>
+                            </div>
+                          </div>
                     </div>
-                    <div class="col-md-2 offset-md-2">
-                        <a class="btn btn btn-primary btn-lg" href="{% url 'workout_plan' trainee.name %}">See Workouts</a>
-                    </div>
-                    <div class="col-md-2 offset-md-2">
-                        <a class="btn btn btn-primary btn-lg" href="{% url 'logs_view' trainee.name %}">See Logs</a>
+                    <div class="col-md-5 offset-md-2">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Logs</h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                              <a class="btn btn btn-primary btn-lg" href="{% url 'logs_view' trainee.name %}">See Logs</a>
+                            </div>
+                          </div>
+                        
                     </div>
                 </div>
             </div>
