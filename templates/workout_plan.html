@@ -29,6 +29,13 @@
                 <div class="card-body center-text">
                   <a href="{{ log.excercise.youtube_link }}" class="card-link" target="_blank" aria-label="Youtube link (opens in new page)">Youtube Link</a>
                 </div>
+                <div class="card-body center-text">
+                  <form method="POST" action="update/{{ log }}">
+                  {{ update_form.as_p }}
+                  {% csrf_token %}
+                  <button type="submit">Submit</button>
+                  </form>
+                </div>
               </div>              
             </div>
           {% endif %}

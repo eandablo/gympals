@@ -15,4 +15,8 @@ class TraineeInfoForm(forms.ModelForm):
 class LogExerciseForm(forms.ModelForm):
     class Meta:
         model = WorkoutLog
-        fields = ('sets_actual', 'reps_actual', 'completed')
+        fields = ('sets_actual', 'reps_actual')
+        labels = {
+            'sets_actual': 'How many sets?',
+            'reps_actual': 'How many reps per set?'
+        }

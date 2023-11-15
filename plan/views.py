@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 from django.views import View, generic
-from .forms import TraineeInfoForm
+from .forms import TraineeInfoForm, LogExerciseForm
 from .models import TraineeInfo, WorkoutLog
-
+from django.http import HttpResponseRedirect
 
 class HomeView(View):
 
@@ -47,14 +47,24 @@ class WorkoutView(View):
         for day in days:
             labels = ['#accordion-'+str(day[0]), 'accordion-'+str(day[0]), day[0]]
             ids.append(labels)
-            
 
         return render(
             request,
             'workout_plan.html',
             {"logs": logs,
-             "ids": ids}
+             "ids": ids,
+             "update_form": LogExerciseForm()
+            }
         )
+
+
+class LogWorkout(View):
+    def post(self, request, log, *args, **kwargs):
+        form = LogExerciseForm(request.POST, instance=log)
+        if form.is_valid():
+            form.instance.completed = True
+            form.save()
+        return HttpResponseRedirect(reverse('workout_plan', args=[log.traineeinfo.name]))
 
 
 class LogViews(generic.ListView):
