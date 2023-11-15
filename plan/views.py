@@ -45,8 +45,9 @@ class WorkoutView(View):
         days = logs.order_by('day').values_list('day').distinct('day')
         ids = []
         for day in days:
-            labels = ['#accordion-'+str(day[0]), 'accordion-'+str(day[0])]
+            labels = ['#accordion-'+str(day[0]), 'accordion-'+str(day[0]), day[0]]
             ids.append(labels)
+            
 
         return render(
             request,

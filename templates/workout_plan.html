@@ -11,7 +11,29 @@
       </h2>
       <div id="{{ id.1 }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
         <div class="accordion-body">
-          <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          <!-- starts exercise holder body -->
+          <div class="row">
+          {% for log in logs %}
+          {% if log.day == id.2 %}
+            <div class="col-md-3">
+              <div class="card" style="width: 18rem;">
+                <img src="{{ log.excercise.guide_image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">log.excercise.name</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><strong>Sets = </strong>{{log.sets_ideal}}</li>
+                  <li class="list-group-item"><strong>Reps = </strong>{{log.reps_ideal}}</li>
+                </ul>
+                <div class="card-body">
+                  <a href="{{ log.excercise.youtube_link }}" class="card-link" target="_blank" >Youtube Link</a>
+                </div>
+              </div>              
+            </div>
+          {% endif %}
+          {% endfor %}
+          </div>
+          <!-- ends exercise holder body -->
         </div>
       </div>
     </div>
