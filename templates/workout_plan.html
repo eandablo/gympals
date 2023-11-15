@@ -16,17 +16,18 @@
           {% for log in logs %}
           {% if log.day == id.2 %}
             <div class="col-md-3">
-              <div class="card" style="width: 18rem;">
+              <div class="card">
                 <img src="{{ log.excercise.guide_image.url }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">log.excercise.name</h5>
+                <div class="card-body center-text">
+                  <h5 class="card-title">{{ log.excercise.name }}</h5>
                 </div>
                 <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><strong>Group = </strong>{{log.excercise.muscle_group}}</li>
                   <li class="list-group-item"><strong>Sets = </strong>{{log.sets_ideal}}</li>
                   <li class="list-group-item"><strong>Reps = </strong>{{log.reps_ideal}}</li>
                 </ul>
-                <div class="card-body">
-                  <a href="{{ log.excercise.youtube_link }}" class="card-link" target="_blank" >Youtube Link</a>
+                <div class="card-body center-text">
+                  <a href="{{ log.excercise.youtube_link }}" class="card-link" target="_blank" aria-label="Youtube link (opens in new page)">Youtube Link</a>
                 </div>
               </div>              
             </div>
