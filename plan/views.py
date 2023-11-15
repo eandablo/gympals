@@ -60,12 +60,12 @@ class WorkoutView(View):
 
 class LogWorkout(View):
     def post(self, request, log_id, *args, **kwargs):
-        log = WorkoutLog.objects.filter(id=log_id)
+        log = get_object_or_404(WorkoutLog, id=log_id)
         form = LogExerciseForm(data=request.POST, instance=log)
         if form.is_valid():
             form.instance.completed = True
             form.save()
-        return HttpResponseRedirect(reverse('workout_plan', args=[log.traineeinfo.name]))
+        return HttpResponseRedirect(reverse('workout_plan', args=[log.trainee.name]))
 
 
 class LogViews(generic.ListView):
