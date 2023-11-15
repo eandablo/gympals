@@ -42,10 +42,16 @@ class HomeView(View):
 class WorkoutView(View):
     def get(self, request, name, *args, **kwargs):
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
+        days = logs.order_by('day').values_list('day').distinct('day')
+        ids = []
+        for day in days:
+            ids.append(day)
+
         return render(
             request,
             'workout_plan.html',
-            {"logs": logs}
+            {"logs": logs,
+             "ids": ids}
         )
 
 
