@@ -106,11 +106,3 @@ class Diet(models.Model):
     def __str__(self):
         return f'This diet is for: {self.trainee}'
 
-
-class SiteImages(models.Model):
-    role = models.CharField(max_length=100, primary_key=True)
-    image_url = CloudinaryField('image', default='add')
-    caption = models.TextField()
-
-    def __str__(self):
-        return f'This image role is {self.role}'
