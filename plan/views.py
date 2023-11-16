@@ -3,7 +3,7 @@ from django.views import View, generic
 from .forms import TraineeInfoForm, LogExerciseForm
 from .models import TraineeInfo, WorkoutLog
 from django.http import HttpResponseRedirect
-from .decisions import WorkoutMaker
+from .decisions import select_ids
 
 class HomeView(View):
 
@@ -40,12 +40,12 @@ class HomeView(View):
         )
 
 
-class WorkoutView(View, WorkoutMaker):
+class WorkoutView(View):
     def get(self, request, name, *args, **kwargs):
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
         dummy = 0
         if not WorkoutLog.objects.filter(trainee__name=name, completed=False):
-            dummy = self.select_ids
+            dummy = select_ids
         days = logs.order_by('day').values_list('day').distinct('day')
         ids = []
         for day in days:
