@@ -62,8 +62,10 @@
             </div>
         </nav>
     </header>
-    <main class="container-fluid">
-
+    <main>
+        <div id="hero-div">
+            <img id="hero-img" src="{% static 'images/hero_workout.jpg '%}" alt="couple exercising">
+        </div>
         {% block content %}
         {% endblock %}
     </main>

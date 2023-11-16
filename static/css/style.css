@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo:wght@300&family=Roboto:wght@300&display=swap');
 
+/* bootstrap elements */
+
+.row{
+    --bs-gutter-x: 0;
+}
+
+.navbar{
+    --bs-navbar-padding-y: 0;
+}
+
 /* base.html */
 
 .whole-screen{
@@ -25,6 +35,10 @@
 
 .text-to-capital {
     text-transform: capitalize;
+}
+
+#hero-div, #hero-img, main{
+    width: 100%;
 }
 
 .footer-div{
