@@ -31,7 +31,6 @@
                 </div>
                 <div class="card-body center-text">
                   <form method="POST" action="{% url 'update_workout' log.id %}">
-                    {{log.id}}
                   {{ update_form.as_p }}
                   {% csrf_token %}
                   <button type="submit">Submit</button>

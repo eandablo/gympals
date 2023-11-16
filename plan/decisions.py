@@ -1,17 +1,22 @@
 from .models import TraineeInfo, WorkoutLog, Exercises
-
+import random
 
 class WorkoutMaker():
-    days = [{
-            'day':1,
-            'groups': ['BACK', 'BICEPS'],}
-            'day':2,
-            'groups': ['CHEST', 'TRICEPS'],}
-            'day':1,
-            'groups': ['LEGS', 'SHOULDERS'],}
-        ]
-    groups = Exercises.objects.order_by('muscle_group').distinct('muscle_group')
-    for group in groups:
-
-    def write_groups(self):
-        return groups
+    def select_ids():
+        days = [{
+                'day':1,
+                'groups': ['BACK', 'BICEPS']}
+                {'day':2,
+                'groups': ['CHEST', 'TRICEPS']},
+                # {'day':3,
+                # 'groups': ['LEGS', 'SHOULDERS'],}
+            ]
+        all_ids = []
+        for day in days:
+            groups = day['groups']
+            for group in groups:
+                exercise_list = Exercises.objects.filter(muscle_group=group)
+                id_list = exercise_list.values_list('id')
+                random_list = random.sample(id_list, k=3)
+                all_ids.extend(id_list)
+        return all_ids
