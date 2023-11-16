@@ -11,6 +11,9 @@
 }
 
 /* base.html */
+main {
+    min-height: 100vh;
+}
 
 .whole-screen{
     min-height: 100vh;
@@ -42,8 +45,6 @@
 }
 
 .footer-div{
-    position: absolute;
-    bottom: 0;
     height: 50px;
     width: 100%;
 }
