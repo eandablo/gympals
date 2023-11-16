@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="accordion" id="accordionExample">
+<div class="accordion" id="workouts-accordion">
   {% for id in ids %}
     <div class="accordion-item">
       <h2 class="accordion-header">
@@ -9,7 +9,7 @@
           Day {{ forloop.counter }}
         </button>
       </h2>
-      <div id="{{ id.1 }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div id="{{ id.1 }}" class="accordion-collapse collapse" data-bs-parent="#workouts-accordion">
         <div class="accordion-body">
           <!-- starts exercise holder body -->
           <div class="row">
