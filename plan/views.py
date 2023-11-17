@@ -90,6 +90,12 @@ class UpdateInfo(View):
         return render(
             request,
             'update_info.html',
-            {"trainee": trainee,
-             "info_form": info_form}
+            {"info_form": info_form}
         )
+    def post(self, request, name, *args, **kwargs):
+        trainee = get_object_or_404(TraineeInfo, name=name)
+        info_form = TraineeInfoForm(data=request.POST, instance=trainee)
+        if info_form.is_valid:
+            info_form.save()
+        
+        return HttpResponseRedirect(reverse('home'))
