@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if log_type == "workout" %}
 <table class="table">
     <thead>
         <tr>
@@ -23,4 +24,5 @@
         {% endfor %}
     </tbody>
 </table>
+{% endif %}
 {% endblock %}

@@ -58,7 +58,6 @@ class WorkoutView(View):
             {"logs": logs,
              "ids": ids,
              "update_form": LogExerciseForm(),
-             "dummy": dummy
             }
         )
 
@@ -73,13 +72,27 @@ class LogWorkout(View):
         return HttpResponseRedirect(reverse('workout_plan', args=[log.trainee.name]))
 
 
-class LogViews(View):
+class WLogViews(View):
     def get(self, request, name, *args, **kwargs):
+        log_type = 'workout'
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=True)
         return render(
             request,
             'logs_view.html',
-            {"logs": logs}
+            {"logs": logs,
+             "log_type":log_type}
+        )
+
+
+class DLogWiews(View):
+    def get(self, request, name, *args, **kwargs):
+        log_type = 'diet'
+        logs = Diet.objects.filter(trainee__name=name)
+        return render(
+            request,
+            'logs_view.html',
+            {"logs": logs,
+             "log_type":log_type}
         )
 
 
