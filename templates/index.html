@@ -67,16 +67,15 @@
 {% else %}
 <div class="row">
     <div class="col-md-6 offset-md-3 mt-2 center-text">
-        <h2>Welcome to GymPal</h2>
-        <h3>To start your wellness journey 
-            <p class="mt-2 mb-2"><a href="{% url 'account_signup' %}" class="btn btn btn-primary" href="{% url 'account_login' %}">BECOME THE NEWEST MEMBER</a>
-            </p> 
-        </h3>
-        <h3>or, if you are a member
+        <h4>CONTINUE YOUR JOURNEY
             <p class="mt-2 mb-2"><a href="{% url 'account_login' %}" class="btn btn btn-primary"
                     href="{% url 'account_login' %}">LOGIN</a>
             </p>
-        </h3>
+        </h4>
+        <h4>OR
+            <p class="mt-2 mb-2"><a href="{% url 'account_signup' %}" class="btn btn btn-primary" href="{% url 'account_login' %}">JOIN US NOW</a>
+            </p> 
+        </h4>
     </div>
 </div>
 {% endif %}

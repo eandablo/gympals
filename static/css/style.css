@@ -40,9 +40,23 @@ main {
     text-transform: capitalize;
 }
 
-#hero-div, #hero-img, main{
+#hero-div, #hero-img{
     width: 100%;
+    position: relative;
 }
+
+#ethos-holder{
+    position:absolute;
+    color:#f8f7f7;
+    top:10px;
+    width: 250px;
+    height:100px;
+    right:20px;
+    background-color:black;
+    opacity: 0.5;
+    text-align: center;
+}
+
 
 .footer-div{
     height: 50px;
