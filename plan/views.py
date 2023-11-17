@@ -73,11 +73,23 @@ class LogWorkout(View):
         return HttpResponseRedirect(reverse('workout_plan', args=[log.trainee.name]))
 
 
-class LogViews(generic.ListView):
+class LogViews(View):
     def get(self, request, name, *args, **kwargs):
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=True)
         return render(
             request,
             'logs_view.html',
             {"logs": logs}
+        )
+
+
+class UpdateInfo(View):
+    def get(self, request, name, *args, **kwargs):
+        trainee = get_object_or_404(TraineeInfo, name=name)
+        info_form = TraineeInfoForm(instance=trainee)
+        return render(
+            request,
+            'update_info.html',
+            {"trainee": trainee,
+             "info_form": info_form}
         )
