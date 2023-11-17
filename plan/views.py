@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import View, generic
 from .forms import TraineeInfoForm, LogExerciseForm
-from .models import TraineeInfo, WorkoutLog
+from .models import TraineeInfo, WorkoutLog, Diet
 from django.http import HttpResponseRedirect
 from .decisions import select_ids
 
@@ -84,7 +84,7 @@ class WLogViews(View):
         )
 
 
-class DLogWiews(View):
+class DLogViews(View):
     def get(self, request, name, *args, **kwargs):
         log_type = 'diet'
         logs = Diet.objects.filter(trainee__name=name)

@@ -24,5 +24,24 @@
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Suggested</th>
+            <th scope="col">Registered</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <th scope="col">{{ log.created_date }}</th>
+            <th scope="col">{{ log.calories }}</th>
+            <th scope="col">{{ log.calories_ideal }}</th>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endif %}
 {% endblock %}
