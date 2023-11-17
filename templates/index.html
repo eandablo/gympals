@@ -65,17 +65,35 @@
     </div>
 </div>
 {% else %}
-<div class="row">
-    <div class="col-md-6 offset-md-3 mt-2 center-text">
-        <h4>CONTINUE YOUR JOURNEY
-            <p class="mt-2 mb-2"><a href="{% url 'account_login' %}" class="btn btn btn-primary"
-                    href="{% url 'account_login' %}">LOGIN</a>
-            </p>
-        </h4>
-        <h4>OR
-            <p class="mt-2 mb-2"><a href="{% url 'account_signup' %}" class="btn btn btn-primary" href="{% url 'account_login' %}">JOIN US NOW</a>
-            </p> 
-        </h4>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 center-text">
+            <h3>GYMPAL is your personal trainer</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 center-text">
+            <h4>Workout Plans  <i class="fa-solid fa-dumbbell"></i></h4>
+        </div>
+        <div class="col-md-4 center-text">
+            <h4>Diet advice <i class="fa-solid fa-utensils"></i></h4>
+        </div>
+        <div class="col-md-4 center-text">
+            <h4>Log your progress <i class="fa-regular fa-file-lines"></i></h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-2 center-text">
+            <h4>CONTINUE YOUR JOURNEY
+                <p class="mt-2 mb-2"><a href="{% url 'account_login' %}" class="btn btn btn-primary"
+                        href="{% url 'account_login' %}">LOGIN</a>
+                </p>
+            </h4>
+            <h4>OR
+                <p class="mt-2 mb-2"><a href="{% url 'account_signup' %}" class="btn btn btn-primary" href="{% url 'account_login' %}">JOIN US NOW</a>
+                </p> 
+            </h4>
+        </div>
     </div>
 </div>
 {% endif %}
