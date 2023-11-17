@@ -34,14 +34,15 @@
                             <a class="nav-link active white-medium-text" aria-current="page"
                                 href="/plan/{{ user.traineeinfo }}">Workout</a>
                         </li>
-                    </ul>
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link active white-medium-text" aria-current="page"
-                                href="/logs/{{ user.traineeinfo }}">Logs</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle white-medium-text" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Records
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <li><a class="dropdown-item" href="/logs/{{ user.traineeinfo }}">Workouts</a></li>
+                              <li><a class="dropdown-item" href="#">Diet</a></li>
+                            </ul>
                         </li>
-                    </ul>
-                    <ul class="nav">
                         <li class="nav-item">
                             <a class="nav-link active white-medium-text" aria-current="page"
                                 href="{% url 'account_logout' %}">Log out</a>
