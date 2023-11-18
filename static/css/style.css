@@ -10,15 +10,7 @@
     --bs-navbar-padding-y: 0;
 }
 
-/* base.html */
-main {
-    min-height: 100vh;
-}
-
-.whole-screen{
-    min-height: 100vh;
-}
-
+/* Common styles */
 .white-medium-text {
     color: #f8f7f7;
     font-family: "Roboto", sans-serif;
@@ -40,9 +32,15 @@ main {
     text-transform: capitalize;
 }
 
-#hero-div, #hero-img{
-    width: 100%;
-    position: relative;
+
+/* base.html */
+
+main {
+    min-height: 100vh;
+}
+
+.whole-screen{
+    min-height: 100vh;
 }
 
 #ethos-holder{
@@ -57,7 +55,13 @@ main {
     text-align: center;
 }
 
+#hero-div, #hero-img{
+    width: 100%;
+    position: relative;
+}
 
 .footer-div{
     width: 100%;
 }
+
+/* Index */
