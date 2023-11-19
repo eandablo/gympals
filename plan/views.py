@@ -86,15 +86,16 @@ class WLogViews(View):
     def post(self, request, name, *args, **kwargs):
         log_type = 'workout'
         
-        date = request.POST.get('start_date')
-        logs = WorkoutLog.objects.filter(trainee__name=name, completed=True, created_date__gte=date)
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        logs = WorkoutLog.objects.filter(trainee__name=name, completed=True, logged_date__range=[start_date, end_date])
         return render(
             request,
             'logs_view.html',
             {"logs": logs,
              "log_type":log_type,
              "name": name,
-             "date": date}
+             "date": start_date}
         )
 
 
