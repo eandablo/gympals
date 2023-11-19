@@ -3,17 +3,19 @@
 {% block content %}
 <div class="row">
     <div class="col-md-6 offset-3 center-text">
-        <form method="post">
+        <form method="post" action="{% url 'wlogs_view' name%}">
             <label for="start-date">Start Date</label>
-            <input type="date" id="start-date" name="start-date">
+            <input type="date" id="start-date" name="start_date">
             <label for="start-date">End Date</label>
             <input type="date" id="end-date" name="end-date">
             <button type="submit">Search</button>
+            {% csrf_token %}
         </form>
-
+        
     </div>
 </div>
 </div>
+{{ date }}
 {% if log_type == "workout" %}
 <table class="table">
     <thead>
