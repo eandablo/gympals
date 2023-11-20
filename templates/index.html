@@ -8,11 +8,12 @@
     <h2>Your are staff member</h2>
 <!-- if user is not staff welcome is here -->
 {% else %}
-<div class="row">
+<div class="row mb-4 mt-4">
     <div class="col-md-6 offset-md-3 mt-2 center-text">
         <!-- this will display if user has already provided info once -->
         {% if info_exists %}
-            <h2> Hi {{ trainee.name }}</h2>
+            <h2> Hi {{ trainee.name }}!</h2>
+            <h3>This Is Your Dashboard</h3>
             <div class="container-fluid mt-5">
                 <div class="row">
                     <div class="col-md-6 mt-4">
