@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<!-- if user is logged in-->
 {% if user.is_authenticated %}
 <div class="row">
     <div class="col-md-6 offset-md-3 mt-2 center-text">
-        <h2>Welcome to GymPal</h2>
+        <!-- this will display if user has already provided info once -->
         {% if info_exists %}
-            <h2>{{ trainee.name }}</h2>
+            <h2> Hi {{ trainee.name }}</h2>
             <div class="container-fluid mt-5">
                 <div class="row">
                     <div class="col-md-6 mt-4">
@@ -55,6 +56,7 @@
                     </div>
                 </div>
             </div>
+        <!-- if user has just joined, he will be prompted to provide info -->
         {% else %}
             <form method="POST">
                 {{ info_form.as_p }}
@@ -64,6 +66,7 @@
         {% endif %}
     </div>
 </div>
+<!-- if user is not logged in -->
 {% else %}
 <div id ="welcome-container" class="container">
     <div class="row">
