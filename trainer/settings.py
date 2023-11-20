@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from django.contrib.messages import constants as messages
 import sys
 if os.path.exists('env.py'):
     import env
@@ -29,7 +30,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-eandablo-gympals-ckz4dz3x5dr.ws-eu106.gitpod.io',
+ALLOWED_HOSTS = ['8000-eandablo-gympals-fm9k9dzrc67.ws-eu106.gitpod.io',
                  'gympals-6af3102877bb.herokuapp.com']
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
@@ -86,6 +87,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'trainer.wsgi.application'
 
+# bootstraps alerts for django.contrib.messages
+MESSAGE_TAGS = {
+    messages.DEBUG: "alert-info",
+    messages.INFO: "alert-info",
+    messages.SUCCESS: "alert-success",
+    messages.WARNING: "alert-warning",
+    messages.ERROR: "alert-danger"
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
