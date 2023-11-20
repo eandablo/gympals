@@ -68,7 +68,7 @@
 <div id ="welcome-container" class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3 center-text">
-            <h3>GYMPAL Is Your Personal Trainer</h3>
+            <h3>GYMPAL Acts As Your Personal Trainer</h3>
         </div>
     </div>
     <div class="row">
@@ -93,19 +93,29 @@
     </div>
     <div class="row">
         <div class="col-md-6 offset-md-3 center-text">
-            <h3>Continue Your Journey</h3>
+            <h3>Start A Session</h3>
         </div>
-        <div class="col-md-4 center-text">
-            <p class="mt-2 mb-2"><a href="{% url 'account_login' %}" class="btn btn btn-primary"
-                href="{% url 'account_login' %}">Login</a>
+    </div>
+    <div class="row">
+        <div class="col-md-6 center-text">
+            <div>
+                <p>If you are already registererd for our service</p>
+            </div>
+            <div>
+                <p class="mt-2 mb-2"><a href="{% url 'account_login' %}" class="btn btn btn-primary"
+                    href="{% url 'account_login' %}">Login</a>
             </p>
+            </div>
         </div>
-        <div class="col-md-4 center-text">
-            <p class="mt-2 mb-2">Or
-            </p> 
-        </div>
-        <div class="col-md-4 center-text">
-            <p class="mt-2 mb-2"><a href="{% url 'account_signup' %}" class="btn btn btn-primary" href="{% url 'account_login' %}">Join Us</a>
+
+        <div class="col-md-6 center-text">
+            <div>
+                <p>If you want to start receiving GYMPAL benefits</p>
+            </div>            
+            <div>
+            </div>
+                <p class="mt-2 mb-2"><a href="{% url 'account_signup' %}" class="btn btn btn-primary" href="{% url 'account_login' %}">Join Us</a>
+            </div>
             </p> 
         </div>
     </div>

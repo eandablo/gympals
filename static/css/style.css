@@ -46,12 +46,11 @@ main {
 #ethos-holder{
     position:absolute;
     color:#f8f7f7;
-    top:10px;
+    top:20px;
     width: 250px;
     height:100px;
-    right:20px;
-    background-color:black;
-    opacity: 0.5;
+    right:30px;
+    background-color:rgba(0, 0, 0, 0.3);
     text-align: center;
 }
 
@@ -72,7 +71,7 @@ main {
 /* Index */
 
 #welcome-container > div{
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 20px;
 }
 
