@@ -3,6 +3,11 @@
 {% block content %}
 <!-- if user is logged in-->
 {% if user.is_authenticated %}
+<!-- if user is staff the welcome will be here -->
+{% if user.is_staff %}
+    <h2>Your are staff member</h2>
+<!-- if user is not staff welcome is here -->
+{% else %}
 <div class="row">
     <div class="col-md-6 offset-md-3 mt-2 center-text">
         <!-- this will display if user has already provided info once -->
@@ -66,6 +71,8 @@
         {% endif %}
     </div>
 </div>
+
+{% endif %}
 <!-- if user is not logged in -->
 {% else %}
 <div id ="welcome-container" class="container">
