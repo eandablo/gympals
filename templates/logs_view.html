@@ -2,6 +2,9 @@
 
 {% block content %}
 <div class="row">
+    <h2>This are your {{ log_type }} logs</h2>
+</div>
+<div class="row">
     <div class="col-md-6 offset-3 center-text">
         <form method="post" action="{% url 'wlogs_view' name%}">
             <label for="start-date">Start Date</label>
@@ -10,12 +13,9 @@
             <input type="date" id="end-date" name="end_date">
             <button type="submit">Search</button>
             {% csrf_token %}
-        </form>
-        
+        </form>    
     </div>
 </div>
-</div>
-{{ date }}
 {% if log_type == "workout" %}
 <table class="table">
     <thead>
