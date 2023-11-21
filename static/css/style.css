@@ -82,4 +82,8 @@ main {
     --bs-accordion-active-bg: #0d6efd;
 }
 
+.accordion-button:not(.collapsed){
+    color: #f8f7f7;
+}
+
 

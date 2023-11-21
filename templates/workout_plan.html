@@ -1,13 +1,19 @@
 {% extends 'base.html' %} 
 {% block content %}
 <div class="container mb-4">
+    <div class="row mt-4 mb-4">
+        <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
+            <h2>Workout Plan</h2>
+
+        </div>
+    </div>
     <div class="accordion" id="workouts-accordion">
     {% for id in ids %}
     <div class="accordion-item">
         <h2 class="accordion-header">
         {% if forloop.counter == 1 %}
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="{{ id.0 }}" aria-expanded="true"aria-controls="{{ id.1 }}">
-            Day {{ forloop.counter }}
+            Day {{ id.2 }}
         </button>
         </h2>
         <div id="{{ id.1 }}" class="accordion-collapse collapse show" data-bs-parent="#workouts-accordion">
@@ -15,50 +21,50 @@
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="{{ id.0 }}" aria-expanded="false"aria-controls="{{ id.1 }}">
         Day {{ id.2 }}
         </button>
-    </h2>
-    <div id="{{ id.1 }}" class="accordion-collapse collapse" data-bs-parent="#workouts-accordion">
-        {% endif %}
-        <div class="accordion-body">
-            <!-- starts exercise holder body -->
-            <div class="row">
-            {% for log in logs %}
-            {% if log.day == id.2 %}
-            <div
-                class="col-sm-8 offset-sm-2 col-md-4 offset-md-1 col-lg-3 offset-lg-0">
-                <div class="card">
-                <img src="{{ log.excercise.guide_image.url }}" class="card-img-top" alt="person doing {{ log.excercise.name }}"/>
-                <div class="card-body center-text">
-                    <h5 class="card-title">{{ log.excercise.name }}</h5>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                    <strong>Group = </strong>{{log.excercise.muscle_group}}
-                    </li>
-                    <li class="list-group-item">
-                    <strong>Sets = </strong>{{log.sets_ideal}}
-                    </li>
-                    <li class="list-group-item">
-                    <strong>Reps = </strong>{{log.reps_ideal}}
-                    </li>
-                </ul>
-                <div class="card-body center-text">
-                    <a href="{{ log.excercise.youtube_link }}" class="card-link" target="_blank" aria-label="Youtube link (opens in new page)">Youtube Link</a>
-                </div>
-                <div class="card-body center-text">
-                    <form method="POST" action="{% url 'update_workout' log.id %}">
-                    {{ update_form.as_p }} {% csrf_token %}
-                    <button type="submit">Submit</button>
-                    </form>
-                </div>
-                </div>
-            </div>
+        </h2>
+        <div id="{{ id.1 }}" class="accordion-collapse collapse" data-bs-parent="#workouts-accordion">
             {% endif %}
-            {% endfor %}
+            <div class="accordion-body">
+                <!-- starts exercise holder body -->
+                <div class="row">
+                {% for log in logs %}
+                {% if log.day == id.2 %}
+                <div
+                    class="col-sm-8 offset-sm-2 col-md-4 offset-md-1 col-lg-3 offset-lg-0">
+                    <div class="card">
+                    <img src="{{ log.excercise.guide_image.url }}" class="card-img-top" alt="person doing {{ log.excercise.name }}"/>
+                    <div class="card-body center-text">
+                        <h5 class="card-title">{{ log.excercise.name }}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                        <strong>Group = </strong>{{log.excercise.muscle_group}}
+                        </li>
+                        <li class="list-group-item">
+                        <strong>Sets = </strong>{{log.sets_ideal}}
+                        </li>
+                        <li class="list-group-item">
+                        <strong>Reps = </strong>{{log.reps_ideal}}
+                        </li>
+                    </ul>
+                    <div class="card-body center-text">
+                        <a href="{{ log.excercise.youtube_link }}" class="card-link" target="_blank" aria-label="Youtube link (opens in new page)">Youtube Link</a>
+                    </div>
+                    <div class="card-body center-text">
+                        <form method="POST" action="{% url 'update_workout' log.id %}">
+                        {{ update_form.as_p }} {% csrf_token %}
+                        <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                </div>
+                <!-- ends exercise holder body -->
             </div>
-            <!-- ends exercise holder body -->
+            </div>
         </div>
-        </div>
-    </div>
     {% endfor %}
     </div>
 </div>
