@@ -5,11 +5,11 @@
 {% block content %}
 {% load crispy_forms_tags %}
 <div class="row mt-4 mb-4">
-    <div class="col-md-8 offset-md-2 text-center">
+    <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
         <h2>Login</h2>
         <p>
             {% blocktrans %}If you have not created an account yet, then please
-            <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+            <a href="{{ signup_url }}" class="white-medium-text">sign up</a> first.{% endblocktrans %}
         </p>
     </div>
 </div>
