@@ -1,62 +1,66 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
-    <h2>This are your {{ log_type }} logs</h2>
-</div>
-<div class="row">
-    <div class="col-md-6 offset-3 center-text">
-        <form method="post" action="{% url 'wlogs_view' name%}">
-            <label for="start-date">Start Date</label>
-            <input type="date" id="start-date" name="start_date">
-            <label for="start-date">End Date</label>
-            <input type="date" id="end-date" name="end_date">
-            <button type="submit">Search</button>
-            {% csrf_token %}
-        </form>    
+<div class="container mb-4">
+    <div class="row mt-4 mb-4">
+        <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
+            <h2>Your {{ log_type }} logs</h2>
+        </div>
     </div>
+    <div class="row mb-4 mt-4">
+        <div class="col-md-6 offset-3 center-text">
+            <form method="post" action="{% url 'wlogs_view' name%}">
+                <label for="start-date">Start Date</label>
+                <input type="date" id="start-date" name="start_date">
+                <label for="start-date">End Date</label>
+                <input type="date" id="end-date" name="end_date">
+                <button type="submit">Search</button>
+                {% csrf_token %}
+            </form>    
+        </div>
+    </div>
+    {% if log_type == "workout" %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Muscle Group</th>
+                <th scope="col">Exercise</th>
+                <th scope="col">Sets</th>
+                <th scope="col">Reps</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <th scope="col">{{ log.logged_date }}</th>
+                <th scope="col">{{ log.excercise.muscle_group }}</th>
+                <th scope="col">{{ log.excercise.name }}</th>
+                <th scope="col">{{ log.sets_actual }}</th>
+                <th scope="col">{{ log.reps_actual }}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Suggested</th>
+                <th scope="col">Registered</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <th scope="col">{{ log.created_date }}</th>
+                <th scope="col">{{ log.calories }}</th>
+                <th scope="col">{{ log.calories_ideal }}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 </div>
-{% if log_type == "workout" %}
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Muscle Group</th>
-            <th scope="col">Exercise</th>
-            <th scope="col">Sets</th>
-            <th scope="col">Reps</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for log in logs %}
-        <tr>
-            <th scope="col">{{ log.logged_date }}</th>
-            <th scope="col">{{ log.excercise.muscle_group }}</th>
-            <th scope="col">{{ log.excercise.name }}</th>
-            <th scope="col">{{ log.sets_actual }}</th>
-            <th scope="col">{{ log.reps_actual }}</th>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Suggested</th>
-            <th scope="col">Registered</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for log in logs %}
-        <tr>
-            <th scope="col">{{ log.created_date }}</th>
-            <th scope="col">{{ log.calories }}</th>
-            <th scope="col">{{ log.calories_ideal }}</th>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
 {% endblock %}
