@@ -75,5 +75,11 @@ main {
     margin-bottom: 20px;
 }
 
+/* Workout plan */
+
+.accordion{
+    --bs-accordion-border-color: #0d6efd;
+    --bs-accordion-active-bg: #0d6efd;
+}
 
 
