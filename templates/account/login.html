@@ -3,6 +3,7 @@
 {% load allauth account socialaccount %}
 
 {% block content %}
+{% load crispy_forms_tags %}
 <div class="row mt-4 mb-4">
     <div class="col-md-8 offset-md-2 text-center">
         <p>
@@ -12,26 +13,15 @@
         <h2>Login</h2>
     </div>
 </div>
-<div class="row mt-4 mb-4">
-    <div class="col-md-8 offset-md-2">
-    {% url 'account_login' as login_url %}
-    {% element form form=form method="post" action=login_url tags="entrance,login" %}
-        {% slot body %}
-            {% csrf_token %}
-            {% element fields form=form unlabeled=True %}
-            {% endelement %}
-            {% if redirect_field_value %}
-                <input type="hidden"
-                       name="{{ redirect_field_name }}"
-                       value="{{ redirect_field_value }}" />
-            {% endif %}
-        {% endslot %}
-        {% slot actions %}
-            {% element button type="submit" tags="prominent,login" %}
-                {% trans "Log in" %}
-            {% endelement %}
-        {% endslot %}
-    {% endelement %}
+<div class="container">
+    <div class="row mt-4 mb-4">
+        <div class=" col-sm-8 offset-sm-2 col-md-4 offset-md-4">
+            <form method="POST" action="{% url 'account_login' %}">
+                {{ form|crispy }}
+                {% csrf_token %}
+                <button type="submit">Login</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock content %}

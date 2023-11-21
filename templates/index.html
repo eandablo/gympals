@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+{% load crispy_forms_tags %}
 <!-- if user is logged in-->
 {% if user.is_authenticated %}
 <!-- if user is staff the welcome will be here -->
@@ -65,7 +66,7 @@
         <!-- if user has just joined, he will be prompted to provide info -->
         {% else %}
             <form method="POST">
-                {{ info_form.as_p }}
+                {{ info_form|crispy }}
                 {% csrf_token %}
                 <button type="submit">Submit</button>
             </form>
