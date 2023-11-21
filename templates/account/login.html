@@ -6,19 +6,19 @@
 {% load crispy_forms_tags %}
 <div class="row mt-4 mb-4">
     <div class="col-md-8 offset-md-2 text-center">
+        <h2>Login</h2>
         <p>
             {% blocktrans %}If you have not created an account yet, then please
             <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
         </p>
-        <h2>Login</h2>
     </div>
 </div>
 <div class="container">
     <div class="row mt-4 mb-4">
-        <div class=" col-sm-8 offset-sm-2 col-md-4 offset-md-4">
+        <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4 d-flex justify-content-center">
             <form method="POST" action="{% url 'account_login' %}">
-                {{ form|crispy }}
-                {% csrf_token %}
+                    {{ form|crispy }}
+                    {% csrf_token %}
                 <button type="submit" class="btn btn-primary mt-3">Submit</button>
             </form>
         </div>

@@ -10,7 +10,7 @@
 <!-- if user is not staff welcome is here -->
 {% else %}
 <div class="row mb-4 mt-4">
-    <div class="col-md-6 offset-md-3 mt-2 center-text">
+    <div class="col-md-6 offset-md-3 mt-2">
         <!-- this will display if user has already provided info once -->
         {% if info_exists %}
             <h2> Hi {{ trainee.name }}!</h2>
@@ -65,11 +65,22 @@
             </div>
         <!-- if user has just joined, he will be prompted to provide info -->
         {% else %}
-            <form method="POST">
-                {{ info_form|crispy }}
-                {% csrf_token %}
-                <button type="submit">Submit</button>
-            </form>
+        <div class="container">
+            <div class="row bg-primary">
+                <div class="col-md-6 offset-md-3 center-text">
+                    <h2 class="white-large-text">Your Information</h2>
+                </div>
+            </div>
+            <div class="row mb-4 mt-4">
+                <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4 d-flex justify-content-center">
+                    <form method="POST">
+                        {{ info_form|crispy }}
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
         {% endif %}
     </div>
 </div>
