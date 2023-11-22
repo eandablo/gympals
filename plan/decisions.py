@@ -4,15 +4,15 @@ import random
 
 
 def workout_calories(name):
-    logs = WorkoutLog.objects.filter(name=name, completed=False)
-    total_cal = 0
+    logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
+    total_calories = 0
     for log in logs:
-        total_cal += log.excercise.calories_burnt
+        total_calories += log.excercise.calories_burnt
 
-    return total_cal
+    return total_calories
 
 
-class WorkoutGen():
+class WorkoutGen:
     def select_ids(self, name):
         trainee = get_object_or_404(TraineeInfo, name=name)
         days = [{
@@ -40,28 +40,32 @@ class WorkoutGen():
                         reps_ideal=12,
                         excercise=get_object_or_404(Exercises, id=id)
                     )
+
         return True
 
 
-class DietGen():
+class DietGen:
     def calories_calc(self, name):
         trainee = get_object_or_404(TraineeInfo, name=name)
         goal = trainee.goal
         sex = trainee.sex
-        weight = trainee.weight
-        height = trainee.height
-        age = trainee.age
+        weight = float(trainee.weight)
+        height = float(trainee.height)
+        age = float(trainee.age)
         if sex == 'F':
             basal = 66.5 + 9.5634 * weight + 1.85 * height - 4.676 * age
         elif sex == 'M':
             basal = 66.5 + 13.75 * weight + 5.003 * height - 6.775 * age
         else:
-            basalM = 66.5 + 13.75 * weight + 5.003 * height - 6.775 * age
-            basalF = 66.5 + 9.5634 * weight + 1.85 * height - 4.676 * age
-            basal = (basalM + basalF) * 0.5
+            basal_m = 66.5 + 13.75 * weight + 5.003 * height - 6.775 * age
+            basal_f = 66.5 + 9.5634 * weight + 1.85 * height - 4.676 * age
+            basal = (basal_m + basal_f) * 0.5
+        w_cal = workout_calories(name)
         if goal == 'WL':
-            calories = basal
+            calories = 2.0 * basal
         elif goal == 'MG':
-            calories == 1.5 * basal + 500
+            calories = 2.5 * basal + w_cal
         else:
-            calories = 1.2 * basal + 200
+            calories = 2.0 * basal + w_cal
+
+        return calories
