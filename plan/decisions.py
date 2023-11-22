@@ -52,7 +52,7 @@ class DietGen:
         weight = float(trainee.weight)
         height = float(trainee.height)
         age = float(trainee.age)
-        basal = 10 * weight + 6.25 * height - 5 * age
+        basal = 10 * weight + 3.0 * height - 5 * age
         if sex == 'F':
             basal -= 161
         elif sex == 'M':
@@ -61,10 +61,12 @@ class DietGen:
             basal -= 100
         w_cal = workout_calories(name)
         if goal == 'WL':
-            calories = 1.85 * basal
+            calories = 1.85 * basal - 500
         elif goal == 'MG':
             calories = 2.2 * basal + w_cal
         else:
-            calories = 2.0 * basal + w_cal
+            calories = 1.85 * basal + w_cal
+        trainee.calories = round(calories, 1)
+        trainee.save()
 
-        return True
+        return calories

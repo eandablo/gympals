@@ -24,6 +24,7 @@ class TraineeInfo(models.Model):
     height = models.DecimalField(max_digits=4, decimal_places=1)
     sex = models.CharField(max_length=1, choices=GENDERS, default='N')
     goal = models.CharField(max_length=2, choices=GOALS, default='WL')
+    calories = models.DecimalField(max_digits=5, decimal_places=1)
 
     class Meta:
         ordering = ['-name']

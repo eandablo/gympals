@@ -13,12 +13,12 @@
     <div class="col-md-6 offset-md-3 mt-2">
         <!-- this will display if user has already provided info once -->
         {% if info_exists %}
-
+            
             <div class="container-fluid mt-5">
                 <div class="row mt-4 mb-4">
                     <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
                         <h2> Hi {{ trainee.name }}!</h2>
-                        <h3>This Is Your Dashboard</h3>
+                        <h3>This week your calories are set to: {{ trainee.calories }}</h3>
                     </div>
                 </div>
                 <div class="row">

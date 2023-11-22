@@ -59,8 +59,8 @@ class WorkoutView(View, WorkoutGen, DietGen):
             'workout_plan.html',
             {"logs": logs,
              "ids": ids,
-             "calories": calories,
-             "update_form": LogExerciseForm()}
+             "update_form": LogExerciseForm(),
+             "name": name}
         )
 
 
