@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from .decisions import WorkoutGen, DietGen
 
 
-class HomeView(View):
+class HomeView(View, WorkoutGen, DietGen):
 
     def get(self, request, *args, **kwargs):
         info_exists = False
@@ -32,6 +32,10 @@ class HomeView(View):
             info.save()
             info_exists = True
             trainee = get_object_or_404(TraineeInfo, trainee=request.user)
+            name = trainee.name
+            self.select_ids(name)
+            self.calories_calc(name)
+            trainee = get_object_or_404(TraineeInfo, trainee=request.user)
 
         return render(
             request,
@@ -46,7 +50,7 @@ class WorkoutView(View, WorkoutGen, DietGen):
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
         if not WorkoutLog.objects.filter(trainee__name=name, completed=False):
             self.select_ids(name)
-        calories = self.calories_calc(name)
+            self.calories_calc(name)
         days = logs.order_by('day').values_list('day').distinct('day')
         ids = []
         for day in days:
@@ -132,7 +136,7 @@ class DLogViews(View):
         )
 
 
-class UpdateInfo(View):
+class UpdateInfo(View, DietGen):
     def get(self, request, name, *args, **kwargs):
         trainee = get_object_or_404(TraineeInfo, name=name)
         info_form = TraineeInfoForm(instance=trainee)
@@ -147,5 +151,6 @@ class UpdateInfo(View):
         info_form = TraineeInfoForm(data=request.POST, instance=trainee)
         if info_form.is_valid:
             info_form.save()
+            self.calories_calc(name)
 
         return HttpResponseRedirect(reverse('home'))

@@ -19,12 +19,12 @@ class TraineeInfo(models.Model):
                                    primary_key=True)
     name = models.CharField(max_length=150, unique=True)
     updated_date = models.DateField(auto_now=True)
-    age = models.PositiveIntegerField(default=0)
+    age = models.PositiveIntegerField()
     weight = models.DecimalField(max_digits=4, decimal_places=1)
     height = models.DecimalField(max_digits=4, decimal_places=1)
     sex = models.CharField(max_length=1, choices=GENDERS, default='N')
     goal = models.CharField(max_length=2, choices=GOALS, default='WL')
-    calories = models.DecimalField(max_digits=5, decimal_places=1)
+    calories = models.DecimalField(max_digits=5, decimal_places=1, null=True, blank=True)
 
     class Meta:
         ordering = ['-name']
