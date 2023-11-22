@@ -3,17 +3,17 @@ from django.shortcuts import get_object_or_404
 import random
 
 
-def select_ids(name):
+class WorkoutGen():
+    def select_ids(self, name):
         trainee = get_object_or_404(TraineeInfo, name=name)
         days = [{
-                'day':1,
+                'day': 1,
                 'groups': ['BACK', 'BICEPS']},
-                {'day':2,
+                {'day': 2,
                 'groups': ['CHEST', 'TRICEPS']},
                 # {'day':3,
                 # 'groups': ['LEGS', 'SHOULDERS'],}
-            ]
-        all_ids = []
+                ]
         for day in days:
             groups = day['groups']
             for group in groups:
@@ -23,11 +23,12 @@ def select_ids(name):
                 random_list = random.sample(id_list, k=3)
                 for id in random_list:
                     WorkoutLog.objects.create(
-                        identifier='week1' + trainee.name + str(day['day'])+ '-' + str(id),
+                        identifier='week1' + trainee.name + str(day['day']) +
+                                   '-' + str(id),
                         day=day['day'],
-                        trainee = trainee,
-                        sets_ideal = 3,
-                        reps_ideal = 12,
-                        excercise = get_object_or_404(Exercises, id=id)
+                        trainee=trainee,
+                        sets_ideal=3,
+                        reps_ideal=12,
+                        excercise=get_object_or_404(Exercises, id=id)
                     )
         return 'week1' + trainee.name + str(day['day'])
