@@ -44,7 +44,7 @@ class HomeView(View):
 class WorkoutView(View, WorkoutGen):
     def get(self, request, name, *args, **kwargs):
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
-        dummy = [0]
+        dummy = False
         if not WorkoutLog.objects.filter(trainee__name=name, completed=False):
             dummy = self.select_ids(name)
         days = logs.order_by('day').values_list('day').distinct('day')

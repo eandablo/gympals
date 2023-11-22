@@ -105,4 +105,3 @@ class Diet(models.Model):
 
     def __str__(self):
         return f'This diet is for: {self.trainee}'
-
