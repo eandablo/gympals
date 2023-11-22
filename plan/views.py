@@ -5,6 +5,7 @@ from .models import TraineeInfo, WorkoutLog, Diet
 from django.http import HttpResponseRedirect
 from .decisions import select_ids
 
+
 class HomeView(View):
 
     def get(self, request, *args, **kwargs):
@@ -49,7 +50,8 @@ class WorkoutView(View):
         days = logs.order_by('day').values_list('day').distinct('day')
         ids = []
         for day in days:
-            labels = ['#accordion-'+str(day[0]), 'accordion-'+str(day[0]), day[0]]
+            labels = ['#accordion-'+str(day[0]),
+                      'accordion-'+str(day[0]), day[0]]
             ids.append(labels)
 
         return render(
@@ -57,8 +59,7 @@ class WorkoutView(View):
             'workout_plan.html',
             {"logs": logs,
              "ids": ids,
-             "update_form": LogExerciseForm(),
-            }
+             "update_form": LogExerciseForm()}
         )
 
 
@@ -69,7 +70,8 @@ class LogWorkout(View):
         if form.is_valid():
             form.instance.completed = True
             form.save()
-        return HttpResponseRedirect(reverse('workout_plan', args=[log.trainee.name]))
+        return HttpResponseRedirect(reverse('workout_plan',
+                                    args=[log.trainee.name]))
 
 
 class WLogViews(View):
@@ -80,15 +82,17 @@ class WLogViews(View):
             request,
             'logs_view.html',
             {"logs": logs,
-             "log_type":log_type,
+             "log_type": log_type,
              "name": name}
         )
+
     def post(self, request, name, *args, **kwargs):
         log_type = 'workout'
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=True,
-                           logged_date__range=[start_date, end_date])
+                                         logged_date__range=[start_date,
+                                                             end_date])
         return render(
             request,
             'logs_view.html',
@@ -107,7 +111,7 @@ class DLogViews(View):
             request,
             'logs_view.html',
             {"logs": logs,
-             "log_type":log_type}
+             "log_type": log_type}
         )
 
 
@@ -120,10 +124,11 @@ class UpdateInfo(View):
             'update_info.html',
             {"info_form": info_form}
         )
+
     def post(self, request, name, *args, **kwargs):
         trainee = get_object_or_404(TraineeInfo, name=name)
         info_form = TraineeInfoForm(data=request.POST, instance=trainee)
         if info_form.is_valid:
             info_form.save()
-        
+
         return HttpResponseRedirect(reverse('home'))
