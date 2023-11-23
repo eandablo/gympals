@@ -12,6 +12,15 @@ class TraineeInfoForm(forms.ModelForm):
         }
 
 
+class UpdateInfoForm(forms.ModelForm):
+    class Meta:
+        model:TraineeInfo
+        fields = ('age', 'weight', 'height', 'goal')
+        labels = {
+            'goal': 'Please select a goal'
+        }
+
+
 class LogExerciseForm(forms.ModelForm):
     class Meta:
         model = WorkoutLog

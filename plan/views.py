@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import View, generic
-from .forms import TraineeInfoForm, LogExerciseForm
+from .forms import TraineeInfoForm, LogExerciseForm, UpdateInfoForm
 from .models import TraineeInfo, WorkoutLog, Diet
 from django.http import HttpResponseRedirect
 from .decisions import WorkoutGen, DietGen
@@ -139,7 +139,7 @@ class DLogViews(View):
 class UpdateInfo(View, DietGen):
     def get(self, request, name, *args, **kwargs):
         trainee = get_object_or_404(TraineeInfo, name=name)
-        info_form = TraineeInfoForm(instance=trainee)
+        info_form = UpdateInfoForm(instance=trainee)
         return render(
             request,
             'update_info.html',
@@ -148,7 +148,7 @@ class UpdateInfo(View, DietGen):
 
     def post(self, request, name, *args, **kwargs):
         trainee = get_object_or_404(TraineeInfo, name=name)
-        info_form = TraineeInfoForm(data=request.POST, instance=trainee)
+        info_form = UpdateInfoForm(data=request.POST, instance=trainee)
         if info_form.is_valid:
             info_form.save()
             self.calories_calc(name)
