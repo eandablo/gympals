@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import View, generic
 from .forms import TraineeInfoForm, LogExerciseForm, UpdateInfoForm
-from .models import TraineeInfo, WorkoutLog, Diet
+from .models import TraineeInfo, WorkoutLog, Diet, Exercises
 from django.http import HttpResponseRedirect
 from .decisions import WorkoutGen, DietGen
 
@@ -155,3 +155,13 @@ class UpdateInfo(View, DietGen):
             self.calories_calc(name)
 
         return HttpResponseRedirect(reverse('home'))
+
+
+class CatalogView(View):
+    def get(self, request, name, *args, **kwargs):
+        groups = Exercises.objects.order_by('muscle_group').distinct('muscle_group')
+        ids = []
+        for day in days:
+            labels = ['#accordion-'+str(day[0]),
+                      'accordion-'+str(day[0]), day[0]]
+            ids.append(labels)

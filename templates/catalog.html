@@ -1,0 +1,49 @@
+{% extends 'base.html' %} 
+{% block content %}
+<div class="container mb-4">
+    <div class="row mt-4 mb-4">
+        <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
+            <h2>Workout Plan</h2>
+        </div>
+    </div>
+    <div class="row mt-4 mb-4">
+        <div class="col-md-8 offset-md-2 center-text">
+            <h5>Please follow your plan and submit real work for each exercise</h5>
+        </div>
+    </div>
+    <div class="accordion" id="catalog-accordion">
+    {% for id in ids %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+            {% if forloop.counter == 1 %}
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="{{ id.0 }}" aria-expanded="true"aria-controls="{{ id.1 }}">
+                Day {{ id.2 }}
+            </button>
+            </h2>
+            <div id="{{ id.1 }}" class="accordion-collapse collapse show" data-bs-parent="#catalog-accordion">
+            {% else %}
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="{{ id.0 }}" aria-expanded="false"aria-controls="{{ id.1 }}">
+            Day {{ id.2 }}
+            </button>
+            </h2>
+            <div id="{{ id.1 }}" class="accordion-collapse collapse" data-bs-parent="#catalog-accordion">
+            {% endif %}
+                <div class="accordion-body">
+                    <!-- starts exercise holder body -->
+                    <div class="row">
+                    {% for log in logs %}
+                        {% if log.day == id.2 %}
+                            <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-1 col-lg-3 offset-lg-0">
+
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                    <!-- ends exercise holder body -->
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
