@@ -1,24 +1,30 @@
 {% extends "base.html" %}
 {% load allauth i18n %}
 {% block content %}
-    {% element h2 %}
-        {% trans "Sign Out" %}
-    {% endelement %}
-    <p>{% trans 'Are you sure you want to sign out?' %}</p>
-    {% url 'account_logout' as action_url %}
-    {% element form method="post" action=action_url no_visible_fields=True %}
-        {% slot body %}
-            {% csrf_token %}
-            {% if redirect_field_value %}
-                <input type="hidden"
-                       name="{{ redirect_field_name }}"
-                       value="{{ redirect_field_value }}" />
-            {% endif %}
-        {% endslot %}
-        {% slot actions %}
-            {% element button type="submit" %}
-                {% trans 'Sign Out' %}
-            {% endelement %}
-        {% endslot %}
-    {% endelement %}
+    <div class="container">
+        <div class="row mt-4 mb-4">
+            <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4">
+                <h2>Log out</h2>
+                <p>Are you sure you want to sign out?</p>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4 d-flex justify-content-center">
+                {% url 'account_logout' as action_url %}
+                {% element form method="post" action=action_url no_visible_fields=True %}
+                    {% slot body %}
+                        {% csrf_token %}
+                        {% if redirect_field_value %}
+                            <input type="hidden"
+                                name="{{ redirect_field_name }}"
+                                value="{{ redirect_field_value }}" />
+                        {% endif %}
+                    {% endslot %}
+                    {% slot actions %}
+                        <button type="submit" class="btn btn-primary mt-3">Log out</button>
+                    {% endslot %}
+                {% endelement %}
+            </div>
+        </div>
+    </div>
 {% endblock content %}

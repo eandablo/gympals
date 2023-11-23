@@ -116,7 +116,8 @@ class DLogViews(View):
             request,
             'logs_view.html',
             {"logs": logs,
-             "log_type": log_type}
+             "log_type": log_type,
+             "name": name}
         )
 
     def post(self, request, name, *args, **kwargs):
