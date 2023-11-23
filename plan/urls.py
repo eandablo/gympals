@@ -9,4 +9,5 @@ urlpatterns = [
     path('workoutlogs/<name>', views.WLogViews.as_view(), name='wlogs_view'),
     path('dietlogs/<name>', views.DLogViews.as_view(), name='dlogs_view'),
     path('info/<name>', views.UpdateInfo.as_view(), name='info_update'),
+    path('catalog', views.CatalogView.as_view(), name='catalog'),
 ]

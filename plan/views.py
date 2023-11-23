@@ -158,10 +158,18 @@ class UpdateInfo(View, DietGen):
 
 
 class CatalogView(View):
-    def get(self, request, name, *args, **kwargs):
-        groups = Exercises.objects.order_by('muscle_group').distinct('muscle_group')
+    def get(self, request, *args, **kwargs):
+        groups = Exercises.objects.order_by('muscle_group').values_list('muscle_group').distinct('muscle_group')
+        logs = Exercises.objects.all()
         ids = []
-        for day in days:
-            labels = ['#accordion-'+str(day[0]),
-                      'accordion-'+str(day[0]), day[0]]
+        for group in groups:
+            labels = ['#accordion-'+str(group[0]),
+                      'accordion-'+str(group[0]), group[0]]
             ids.append(labels)
+        
+        return render(
+            request,
+            'catalog.html',
+            {"ids": ids,
+             "logs": logs}            
+        )
