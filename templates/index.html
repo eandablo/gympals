@@ -17,8 +17,9 @@
             <div class="container-fluid mt-5">
                 <div class="row mt-4 mb-4">
                     <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
-                        <h2> Hi {{ trainee.name }}!</h2>
-                        <h3>This week your calories are set to: {{ trainee.calories }}</h3>
+                        <h2> HI {{ trainee.name|upper }}!</h2>
+                        <h3>PLEASE REMEMBER, RECOMMENDED DAILY CALORIES FOR THIS WEEK:</h3>
+                        <h3>{{ trainee.calories }}</h3>
                     </div>
                 </div>
                 <div class="row">

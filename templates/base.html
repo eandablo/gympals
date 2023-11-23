@@ -24,7 +24,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div>
-                    <a class="navbar-brand white-large-text" href="{% url 'home' %}">GymPal</a>
+                    <a class="navbar-brand white-large-text" href="{% url 'home' %}">GYMPAL</a>
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo01">
                     {% if user.is_authenticated %}
@@ -67,8 +67,8 @@
         <div id="hero-div">
             <img id="hero-img" src="{% static 'images/hero_workout.jpg '%}" alt="couple exercising">
             <div id="ethos-holder">
-                    <h4>Welcome to Gympal</h4>
-                    <h4>Personal Trainer</h4>
+                    <h5>WELCOME TO GYMPAL</h5>
+                    <h5>TRAINING AID</h5>
             </div>
         </div>
         {% for message in messages %}
