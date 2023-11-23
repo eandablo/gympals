@@ -6,7 +6,25 @@
 {% if user.is_authenticated %}
 <!-- if user is staff the welcome will be here -->
 {% if user.is_staff %}
-    <h2>Your are staff member</h2>
+<div class="container-fluid mt-5">
+    <div class="row mt-4 mb-4">
+        <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
+            <h3>YOU ARE LOGGED AS ADMINISTRATOR</h3>
+            <h3>MANAGE EXERCISES</h3>
+        </div>
+    </div>
+    <div class="col-md-4 offset-md-4 mt-4 mb-4">
+        <div class="card">
+            <img src="{% static 'images/dumbells.jpg' %}" class="card-img-top" alt="information form">
+            <div class="card-body ">
+              <h5 class="card-title">Catalog</h5>
+              <p class="card-text card-div">Edit/ Delete exercises from catalog</p>
+              <a class="btn btn btn-primary btn-lg" href="#">Go to catalog</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- if user is not staff welcome is here -->
 {% else %}
 <div class="row mb-4 mt-4">
