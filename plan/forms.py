@@ -1,5 +1,5 @@
 from django import forms
-from .models import TraineeInfo, WorkoutLog
+from .models import TraineeInfo, WorkoutLog, Exercises
 
 
 class TraineeInfoForm(forms.ModelForm):
@@ -28,4 +28,18 @@ class LogExerciseForm(forms.ModelForm):
         labels = {
             'sets_actual': 'How many sets?',
             'reps_actual': 'How many reps per set?'
+        }
+
+
+class CreateExerciseForm(forms.ModelForm):
+    class Meta:
+        model = Exercises
+        fields = ('name', 'guide_image', 'muscle_group', 'youtube_link',
+                  'level', 'calories_burnt', 'gender')
+        labels = {
+            'guide_image': 'image',
+            'muscle_group': 'Muscle Group',
+            'youtube_link': 'Youtube URL',
+            'calories_burnt': 'Expected Calories Burnt',
+            'gender': 'Best Suited For (Sex):'
         }
