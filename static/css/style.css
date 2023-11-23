@@ -32,6 +32,9 @@
     text-transform: capitalize;
 }
 
+.card-div{
+    height: 75px;
+}
 
 /* base.html */
 

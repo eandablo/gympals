@@ -10,7 +10,7 @@
 <!-- if user is not staff welcome is here -->
 {% else %}
 <div class="row mb-4 mt-4">
-    <div class="col-md-6 offset-md-3 mt-2">
+    <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3 mt-2">
         <!-- this will display if user has already provided info once -->
         {% if info_exists %}
             
@@ -26,9 +26,9 @@
                     <div class="col-md-6 mt-4">
                         <div class="card">
                             <img src="{% static 'images/form.jpg' %}" class="card-img-top" alt="information form">
-                            <div class="card-body">
+                            <div class="card-body ">
                               <h5 class="card-title">Update Info</h5>
-                              <p class="card-text">Please update your info regularly</p>
+                              <p class="card-text card-div">Please update your info regularly</p>
                               <a class="btn btn btn-primary btn-lg" href="{% url 'info_update' trainee.name %}">Go to form</a>
                             </div>
                           </div>
@@ -38,7 +38,7 @@
                             <img src="{% static 'images/dumbells.jpg' %}" class="card-img-top" alt="dumbells in rack">
                             <div class="card-body">
                               <h5 class="card-title">Workout Plan</h5>
-                              <p class="card-text">Follow your workout plan as close as possible</p>
+                              <p class="card-text card-div">Follow your workout plan as close as possible</p>
                               <a class="btn btn btn-primary btn-lg" href="{% url 'workout_plan' trainee.name %}">See Plan</a>
                             </div>
                           </div>
@@ -51,7 +51,7 @@
                             <img src="{% static 'images/diet.jpg' %}" class="card-img-top" alt="dish of yogurt and granola">
                             <div class="card-body">
                               <h5 class="card-title">Diet Logs</h5>
-                              <p class="card-text">Track your calories to complement workout plan</p>
+                              <p class="card-text card-div">Track your calories to complement workout plan</p>
                               <a class="btn btn btn-primary btn-lg" href="{% url 'dlogs_view' trainee.name %}">See Logs</a>
                             </div>
                           </div>
@@ -61,7 +61,7 @@
                             <img src="{% static 'images/logs.jpg' %}" class="card-img-top" alt="data graph">
                             <div class="card-body">
                               <h5 class="card-title">Workout Logs</h5>
-                              <p class="card-text">See your workout progress in time</p>
+                              <p class="card-text card-div">See your workout progress in time</p>
                               <a class="btn btn btn-primary btn-lg" href="{% url 'wlogs_view' trainee.name %}">See Logs</a>
                             </div>
                           </div>
