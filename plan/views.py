@@ -211,6 +211,15 @@ class EditExercise(View):
              "exercise_form": exercise_form}
         )
 
+    def post(self, request, exercise_id, *args, **kwargs):
+        exercise = get_object_or_404(Exercises, id=exercise_id)
+        exercise_form = CreateExerciseForm(request.POST,
+                                           request.FILES, instance=exercise)
+        if exercise_form.is_valid():
+            exercise_form.save()
+
+        return HttpResponseRedirect(reverse('catalog'))
+
 
 class DeleteExercise(View):
     def post(self, request, id, *args, **kwargs):
