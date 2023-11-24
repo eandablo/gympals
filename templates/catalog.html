@@ -7,6 +7,27 @@
             <h2>CURRENT EXERCISE CATALOG</h2>
         </div>
     </div>
+
+    <p>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseView" aria-expanded="false" aria-controls="collapseView">
+            Existing
+        </button>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdd" aria-expanded="false" aria-controls="collapseAdd">
+          Add new
+        </button>
+    </p>
+    <div class="collapse" id="collapseView">
+        <div class="card card-body">
+          VIEW
+        </div>
+    </div>
+    <div class="collapse" id="collapseAdd">
+        <div class="card card-body">
+          ADD
+        </div>
+    </div>
+
+
     <div class="accordion" id="catalog-accordion">
     {% for id in ids %}
         <div class="accordion-item">
