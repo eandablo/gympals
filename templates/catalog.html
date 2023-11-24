@@ -2,80 +2,74 @@
 {% block content %}
 {% load crispy_forms_tags %}
 <div class="container mb-4">
-    <div class="row mt-4 mb-4">
-        <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
-            <h2>CURRENT EXERCISE CATALOG</h2>
-        </div>
-    </div>
-
     <p>
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseView" aria-expanded="false" aria-controls="collapseView">
-            Existing
+            EXERCISE CATALOG
         </button>
+
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdd" aria-expanded="false" aria-controls="collapseAdd">
-          Add new
+            ADD NEW EXERCISE
         </button>
     </p>
     <div class="collapse" id="collapseView">
-        <div class="card card-body">
-          VIEW
+        <div class="row mt-4 mb-4">
+            <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
+                <h2>CURRENT EXERCISE CATALOG</h2>
+            </div>
+        </div>
+        <div class="accordion" id="catalog-accordion">
+            {% for id in ids %}
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                {% if forloop.counter == 1 %}
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="{{ id.0 }}"
+                        aria-expanded="true" aria-controls="{{ id.1 }}">
+                        {{ id.2 }}
+                    </button>
+                </h2>
+                <div id="{{ id.1 }}" class="accordion-collapse collapse show" data-bs-parent="#catalog-accordion">
+                {% else %}
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="{{ id.0 }}" aria-expanded="false" aria-controls="{{ id.1 }}">
+                        {{ id.2 }}
+                    </button>
+                </h2>
+                    <div id="{{ id.1 }}" class="accordion-collapse collapse" data-bs-parent="#catalog-accordion">
+                    {% endif %}
+                        <div class="accordion-body">
+                            <!-- starts exercise holder body -->
+                            <div class="row">
+                                {% for log in logs %}
+                                {% if log.muscle_group == id.2 %}
+                                <div>
+                                    <a href="#">{{ log.name }}</a>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            <!-- ends exercise holder body -->
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
         </div>
     </div>
     <div class="collapse" id="collapseAdd">
-        <div class="card card-body">
-          ADD
-        </div>
-    </div>
-
-
-    <div class="accordion" id="catalog-accordion">
-    {% for id in ids %}
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-            {% if forloop.counter == 1 %}
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="{{ id.0 }}" aria-expanded="true"aria-controls="{{ id.1 }}">
-                {{ id.2 }}
-            </button>
-            </h2>
-            <div id="{{ id.1 }}" class="accordion-collapse collapse show" data-bs-parent="#catalog-accordion">
-            {% else %}
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="{{ id.0 }}" aria-expanded="false"aria-controls="{{ id.1 }}">
-            {{ id.2 }}
-            </button>
-            </h2>
-            <div id="{{ id.1 }}" class="accordion-collapse collapse" data-bs-parent="#catalog-accordion">
-            {% endif %}
-                <div class="accordion-body">
-                    <!-- starts exercise holder body -->
-                    <div class="row">
-                    {% for log in logs %}
-                        {% if log.muscle_group == id.2 %}
-                            <div>
-                                <a href="#">{{ log.name }}</a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                    </div>
-                    <!-- ends exercise holder body -->
-                </div>
+        <div class="row mt-4 mb-4">
+            <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
+                <h2>ADD NEW EXERCISE</h2>
             </div>
         </div>
-    {% endfor %}
-    </div>
-    <div class="row mt-4 mb-4">
-        <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
-            <h2>ADD NEW EXERCISE</h2>
+        <div class="row mb-4 mt-4">
+            <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4 d-flex justify-content-center">
+                <form method="POST">
+                    {{ exercise_form|crispy }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="row mb-4 mt-4">
-        <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4 d-flex justify-content-center">
-            <form method="POST">
-                {{ exercise_form|crispy }}
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary mt-3">Submit</button>
-            </form>
-        </div>
-    </div>
-</div>
 </div>
 {% endblock %}
