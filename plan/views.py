@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import View, generic
-from .forms import TraineeInfoForm, LogExerciseForm, UpdateInfoForm
+from .forms import TraineeInfoForm, LogExerciseForm, UpdateInfoForm, CreateExerciseForm
 from .models import TraineeInfo, WorkoutLog, Diet, Exercises
 from django.http import HttpResponseRedirect
 from .decisions import WorkoutGen, DietGen
@@ -171,5 +171,26 @@ class CatalogView(View):
             request,
             'catalog.html',
             {"ids": ids,
-             "logs": logs}            
+             "logs": logs,
+             "exercise_form": CreateExerciseForm()}            
+        )
+
+    def post(self, request, *args, **kwargs):
+        groups = Exercises.objects.order_by('muscle_group').values_list('muscle_group').distinct('muscle_group')
+        logs = Exercises.objects.all()
+        ids = []
+        for group in groups:
+            labels = ['#accordion-'+str(group[0]),
+                      'accordion-'+str(group[0]), group[0]]
+            ids.append(labels)
+        exercise_form = CreateExerciseForm(data=request.POST)
+        if exercise_form.is_valid:
+            exercise_form.save()
+        
+        return render(
+            request,
+            'catalog.html',
+            {"ids": ids,
+             "logs": logs,
+             "exercise_form": CreateExerciseForm()}            
         )
