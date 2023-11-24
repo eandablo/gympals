@@ -46,7 +46,11 @@
                                 {% for log in logs %}
                                 {% if log.muscle_group == id.2 %}
                                 <div>
-                                    <a href="#">{{ log.name }}</a>
+                                    <h4>{{ log.name }}</h4>
+                                    <form method="POST" action="{% url 'delete_exercise' log.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" name="exercise_id" value="{{ log.id }}" class="btn-like">Delete</button>
+                                    </form>
                                 </div>
                                 {% endif %}
                                 {% endfor %}
@@ -67,7 +71,7 @@
         </div>
         <div class="row mb-4 mt-4">
             <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4 d-flex justify-content-center">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     {{ exercise_form|crispy }}
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary mt-3">Submit</button>

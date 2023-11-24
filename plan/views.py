@@ -159,38 +159,49 @@ class UpdateInfo(View, DietGen):
 
 class CatalogView(View):
     def get(self, request, *args, **kwargs):
-        groups = Exercises.objects.order_by('muscle_group').values_list('muscle_group').distinct('muscle_group')
+        groups = Exercises.objects.order_by(
+            'muscle_group').values_list(
+                'muscle_group').distinct('muscle_group')
         logs = Exercises.objects.all()
         ids = []
         for group in groups:
             labels = ['#accordion-'+str(group[0]),
                       'accordion-'+str(group[0]), group[0]]
             ids.append(labels)
-        
+
         return render(
             request,
             'catalog.html',
             {"ids": ids,
              "logs": logs,
-             "exercise_form": CreateExerciseForm()}            
+             "exercise_form": CreateExerciseForm()}
         )
 
     def post(self, request, *args, **kwargs):
-        groups = Exercises.objects.order_by('muscle_group').values_list('muscle_group').distinct('muscle_group')
+        exercise_form = CreateExerciseForm(request.POST, request.FILES)
+        if exercise_form.is_valid:
+            exercise_form.save()
+        groups = Exercises.objects.order_by(
+            'muscle_group').values_list(
+                'muscle_group').distinct('muscle_group')
         logs = Exercises.objects.all()
         ids = []
         for group in groups:
             labels = ['#accordion-'+str(group[0]),
                       'accordion-'+str(group[0]), group[0]]
             ids.append(labels)
-        exercise_form = CreateExerciseForm(data=request.POST)
-        if exercise_form.is_valid:
-            exercise_form.save()
-        
+
         return render(
             request,
             'catalog.html',
             {"ids": ids,
              "logs": logs,
-             "exercise_form": CreateExerciseForm()}            
+             "exercise_form": CreateExerciseForm()}
         )
+
+
+class DeleteExercise(View):
+    def post(self, request, id, *args, **kwargs):
+        exercise = get_object_or_404(Exercises, id=id)
+        exercise.delete()
+        return HttpResponseRedirect(reverse('catalog'))
