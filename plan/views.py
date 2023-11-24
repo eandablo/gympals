@@ -200,6 +200,18 @@ class CatalogView(View):
         )
 
 
+class EditExercise(View):
+    def get(self, request, exercise_id, *args, **kwargs):
+        exercise = get_object_or_404(Exercises, id=exercise_id)
+        exercise_form = CreateExerciseForm(instance=exercise)
+        return render(
+            request,
+            'exercise_edit.html',
+            {"exercise": exercise,
+             "exercise_form": exercise_form}
+        )
+
+
 class DeleteExercise(View):
     def post(self, request, id, *args, **kwargs):
         exercise = get_object_or_404(Exercises, id=id)

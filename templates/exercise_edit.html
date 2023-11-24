@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ exercise.guide_image.url }}" class="card-img-top" alt="person doing {{ exercise.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ exercise.name }}</h5>
+                    <a href="{{ exercise.youtube_link }}">Youtube Link</a>
+                </div>
+            </div>
+        </div>
+
+            <div class="col-sm-8 offset-sm-2 col-md-6 d-flex justify-content-center">
+                <!-- exercise form contains enctype for cloudinary field -->
+                <form method="POST" enctype="multipart/form-data">
+                    {{ exercise_form|crispy }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

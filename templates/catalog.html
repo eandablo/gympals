@@ -3,18 +3,21 @@
 {% load crispy_forms_tags %}
 <div class="container mb-4">
     <div class="row mt-5">
+        <!-- collapse buttons -->
         <div class="col text-center">
+            <!-- collapse button for exercises list -->
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseView"
                 aria-expanded="false" aria-controls="collapseView">
                 EXERCISE CATALOG
             </button>
+            <!-- collapse button to add exercise form -->
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdd"
                 aria-expanded="false" aria-controls="collapseAdd">
                 ADD NEW EXERCISE
             </button>
         </div>
     </div>
- 
+    <!-- collapse container for exercise list -->
     <div class="collapse" id="collapseView">
         <div class="row mt-4 mb-4">
             <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
@@ -22,6 +25,7 @@
             </div>
         </div>
         <div class="accordion" id="catalog-accordion">
+            <!-- ids contains information to divide exercises by muscle groups -->
             {% for id in ids %}
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -43,15 +47,15 @@
                         <div class="accordion-body">
                             <!-- starts exercise holder body -->
                             <div class="row">
+                                <!-- logs contains all objects from the exercises table -->
                                 {% for log in logs %}
                                 {% if log.muscle_group == id.2 %}
-                                <div>
-                                    <h4>{{ log.name }}</h4>
+                                <h5><a href="edit_exercise/{{ log.id }}">{{ log.name }}</a></h5>
+                                    <!-- form to host delete exercise button -->
                                     <form method="POST" action="{% url 'delete_exercise' log.id %}">
                                         {% csrf_token %}
-                                        <button type="submit" name="exercise_id" value="{{ log.id }}" class="btn-like">Delete</button>
+                                        <button type="submit" name="exercise_id" value="{{ log.id }}" class="btn btn-danger">Delete</button>
                                     </form>
-                                </div>
                                 {% endif %}
                                 {% endfor %}
                             </div>
@@ -63,6 +67,7 @@
             </div>
         </div>
     </div>
+    <!-- collapse container for add exercise form -->
     <div class="collapse" id="collapseAdd">
         <div class="row mt-4 mb-4">
             <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
@@ -71,6 +76,7 @@
         </div>
         <div class="row mb-4 mt-4">
             <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4 d-flex justify-content-center">
+                <!-- exercise form contains enctype for cloudinary field -->
                 <form method="POST" enctype="multipart/form-data">
                     {{ exercise_form|crispy }}
                     {% csrf_token %}
