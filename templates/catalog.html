@@ -2,15 +2,19 @@
 {% block content %}
 {% load crispy_forms_tags %}
 <div class="container mb-4">
-    <p>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseView" aria-expanded="false" aria-controls="collapseView">
-            EXERCISE CATALOG
-        </button>
-
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdd" aria-expanded="false" aria-controls="collapseAdd">
-            ADD NEW EXERCISE
-        </button>
-    </p>
+    <div class="row mt-5">
+        <div class="col text-center">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseView"
+                aria-expanded="false" aria-controls="collapseView">
+                EXERCISE CATALOG
+            </button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdd"
+                aria-expanded="false" aria-controls="collapseAdd">
+                ADD NEW EXERCISE
+            </button>
+        </div>
+    </div>
+ 
     <div class="collapse" id="collapseView">
         <div class="row mt-4 mb-4">
             <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
