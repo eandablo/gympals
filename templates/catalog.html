@@ -51,11 +51,6 @@
                                 {% for log in logs %}
                                 {% if log.muscle_group == id.2 %}
                                 <h5><a href="edit_exercise/{{ log.id }}">{{ log.name }}</a></h5>
-                                    <!-- form to host delete exercise button -->
-                                    <form method="POST" action="{% url 'delete_exercise' log.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit" name="exercise_id" value="{{ log.id }}" class="btn btn-danger">Delete</button>
-                                    </form>
                                 {% endif %}
                                 {% endfor %}
                             </div>
