@@ -1,10 +1,6 @@
 document.addEventListener('DOMContentLoaded', function(){
-  alertButton = document.getElementById("alert-button");
   let messages = document.getElementById("bootstrap-msg");
   let alert = new bootstrap.Alert(messages);
-  alertButton.addEventListener('click', function(){
-    alert.close();
-  });
   setTimeout(function(){
     alert.close();
   }, 5000);

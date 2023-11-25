@@ -74,9 +74,6 @@
         {% for message in messages %}
         <div class="container-fluid">
           <div class="alert {{ message.tags }} alert-dismissible" role="alert" id="bootstrap-msg">
-            <button type="button" class="close" aria-label="Close" id="alert-button">
-              <span>&times;</span>
-            </button>
             {{ message }}
           </div>
         </div>
