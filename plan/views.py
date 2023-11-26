@@ -224,5 +224,8 @@ class EditExercise(View):
 class DeleteExercise(View):
     def post(self, request, id, *args, **kwargs):
         exercise = get_object_or_404(Exercises, id=id)
-        exercise.delete()
+        input_name = request.POST.get('delete_code')
+        if input_name == exercise.name:
+            exercise.delete()
+
         return HttpResponseRedirect(reverse('catalog'))

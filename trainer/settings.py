@@ -30,7 +30,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-eandablo-gympals-tlv2wt1eip.us2.codeanyapp.com',
+ALLOWED_HOSTS = ['8000-eandablo-gympals-5x9y9hcz3y.us2.codeanyapp.com',
                  'gympals-6af3102877bb.herokuapp.com']
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
