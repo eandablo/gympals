@@ -227,5 +227,8 @@ class DeleteExercise(View):
         input_name = request.POST.get('delete_code')
         if input_name == exercise.name:
             exercise.delete()
+        else:
+            return HttpResponseRedirect(reverse('edit_exercise',
+                                                args=[exercise.id]))            
 
         return HttpResponseRedirect(reverse('catalog'))
