@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import View, generic
-from .forms import TraineeInfoForm, LogExerciseForm, UpdateInfoForm, CreateExerciseForm
+from . import forms
 from .models import TraineeInfo, WorkoutLog, Diet, Exercises
 from django.http import HttpResponseRedirect
 from .decisions import WorkoutGen, DietGen
@@ -19,11 +19,11 @@ class HomeView(View, WorkoutGen, DietGen):
             'index.html',
             {"info_exists": info_exists,
              "trainee": trainee,
-             "info_form": TraineeInfoForm()}
+             "info_form": forms.TraineeInfoForm()}
         )
 
     def post(self, request, *args, **kwargs):
-        info_form = TraineeInfoForm(data=request.POST)
+        info_form = forms.TraineeInfoForm(data=request.POST)
         new_trainee = request.user
         info_exists = False
         if info_form.is_valid():
@@ -48,7 +48,7 @@ class HomeView(View, WorkoutGen, DietGen):
 class WorkoutView(View, WorkoutGen, DietGen):
     def get(self, request, name, *args, **kwargs):
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
-        if not WorkoutLog.objects.filter(trainee__name=name, completed=False):
+        if not logs:
             self.select_ids(name)
             self.calories_calc(name)
         days = logs.order_by('day').values_list('day').distinct('day')
@@ -63,7 +63,7 @@ class WorkoutView(View, WorkoutGen, DietGen):
             'workout_plan.html',
             {"logs": logs,
              "ids": ids,
-             "update_form": LogExerciseForm(),
+             "update_form": forms.LogExerciseForm(),
              "name": name}
         )
 
@@ -71,7 +71,7 @@ class WorkoutView(View, WorkoutGen, DietGen):
 class LogWorkout(View):
     def post(self, request, log_id, *args, **kwargs):
         log = get_object_or_404(WorkoutLog, id=log_id)
-        form = LogExerciseForm(data=request.POST, instance=log)
+        form = forms.LogExerciseForm(data=request.POST, instance=log)
         if form.is_valid():
             form.instance.completed = True
             form.save()
@@ -140,7 +140,7 @@ class DLogViews(View):
 class UpdateInfo(View, DietGen):
     def get(self, request, name, *args, **kwargs):
         trainee = get_object_or_404(TraineeInfo, name=name)
-        info_form = UpdateInfoForm(instance=trainee)
+        info_form = forms.UpdateInfoForm(instance=trainee)
         return render(
             request,
             'update_info.html',
@@ -149,7 +149,7 @@ class UpdateInfo(View, DietGen):
 
     def post(self, request, name, *args, **kwargs):
         trainee = get_object_or_404(TraineeInfo, name=name)
-        info_form = UpdateInfoForm(data=request.POST, instance=trainee)
+        info_form = forms.UpdateInfoForm(data=request.POST, instance=trainee)
         if info_form.is_valid:
             info_form.save()
             self.calories_calc(name)
@@ -174,11 +174,11 @@ class CatalogView(View):
             'catalog.html',
             {"ids": ids,
              "logs": logs,
-             "exercise_form": CreateExerciseForm()}
+             "exercise_form": forms.CreateExerciseForm()}
         )
 
     def post(self, request, *args, **kwargs):
-        exercise_form = CreateExerciseForm(request.POST, request.FILES)
+        exercise_form = forms.CreateExerciseForm(request.POST, request.FILES)
         if exercise_form.is_valid:
             exercise_form.save()
         groups = Exercises.objects.order_by(
@@ -196,14 +196,14 @@ class CatalogView(View):
             'catalog.html',
             {"ids": ids,
              "logs": logs,
-             "exercise_form": CreateExerciseForm()}
+             "exercise_form": forms.CreateExerciseForm()}
         )
 
 
 class EditExercise(View):
     def get(self, request, exercise_id, *args, **kwargs):
         exercise = get_object_or_404(Exercises, id=exercise_id)
-        exercise_form = CreateExerciseForm(instance=exercise)
+        exercise_form = forms.CreateExerciseForm(instance=exercise)
         return render(
             request,
             'exercise_edit.html',
@@ -213,8 +213,9 @@ class EditExercise(View):
 
     def post(self, request, exercise_id, *args, **kwargs):
         exercise = get_object_or_404(Exercises, id=exercise_id)
-        exercise_form = CreateExerciseForm(request.POST,
-                                           request.FILES, instance=exercise)
+        exercise_form = forms.CreateExerciseForm(request.POST,
+                                                 request.FILES,
+                                                 instance=exercise)
         if exercise_form.is_valid():
             exercise_form.save()
 
