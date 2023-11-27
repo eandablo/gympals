@@ -251,11 +251,14 @@ class CatalogView(View):
 class EditExercise(View):
     def get(self, request, exercise_id, *args, **kwargs):
         exercise = get_object_or_404(Exercises, id=exercise_id)
+        n_users = WorkoutLog.objects.filter(completed=False,
+                                            excercise__id=exercise_id).count()
         exercise_form = forms.CreateExerciseForm(instance=exercise)
         return render(
             request,
             'exercise_edit.html',
-            {"exercise": exercise,
+            {"n_users": n_users,
+             "exercise": exercise,
              "exercise_form": exercise_form}
         )
 
