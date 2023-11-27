@@ -4,6 +4,10 @@ import random
 
 
 def workout_calories(name):
+    '''
+    function calculates total of calories expected to burn for
+    a especific trainee due to workout
+    '''
     logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
     total_calories = 0
     for log in logs:
@@ -13,6 +17,9 @@ def workout_calories(name):
 
 
 class WorkoutGen:
+    '''
+    Creates a workout plan for a week for especific trainee
+    '''
     def select_ids(self, name):
         trainee = get_object_or_404(TraineeInfo, name=name)
         days = [{
@@ -31,6 +38,7 @@ class WorkoutGen:
                 id_list = [x[0] for x in ids]
                 random_list = random.sample(id_list, k=3)
                 for id in random_list:
+                    # the workout plan is added here to WorkoutLog
                     WorkoutLog.objects.create(
                         identifier='week1' + trainee.name + str(day['day']) +
                                    '-' + str(id),
@@ -45,6 +53,11 @@ class WorkoutGen:
 
 
 class DietGen:
+    '''
+    Calculates suggested calories for trainee depending on goal
+    age, hight and weight
+    logs the results in the TraineeInfo table
+    '''
     def calories_calc(self, name):
         trainee = get_object_or_404(TraineeInfo, name=name)
         goal = trainee.goal
@@ -73,6 +86,11 @@ class DietGen:
 
 
 class SiteAnalysis():
+    '''
+    provides different functions for site analysis
+    total_trainees calculates number of users and average age
+    exercise_describe calculates total of exercises and muscle groups
+    '''
     def total_trainees(self):
         trainees = TraineeInfo.objects.all()
         if trainees:
