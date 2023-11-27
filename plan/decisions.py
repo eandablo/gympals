@@ -20,6 +20,7 @@ class WorkoutGen:
     '''
     Creates a workout plan for a week for especific trainee
     '''
+
     def select_ids(self, name):
         trainee = get_object_or_404(TraineeInfo, name=name)
         days = [{
@@ -58,6 +59,7 @@ class DietGen:
     age, hight and weight
     logs the results in the TraineeInfo table
     '''
+
     def calories_calc(self, name):
         trainee = get_object_or_404(TraineeInfo, name=name)
         goal = trainee.goal
@@ -85,12 +87,13 @@ class DietGen:
         return calories
 
 
-class SiteAnalysis():
+class SiteAnalysis:
     '''
     provides different functions for site analysis
     total_trainees calculates number of users and average age
     exercise_describe calculates total of exercises and muscle groups
     '''
+
     def total_trainees(self):
         trainees = TraineeInfo.objects.all()
         if trainees:
@@ -112,3 +115,22 @@ class SiteAnalysis():
         n_groups = len(groups)
 
         return [n_exercises, n_groups]
+
+    def calc_performance(self):
+        trainees = TraineeInfo.objects.all()
+        total_performance = 1
+        for trainee in trainees:
+            logs = WorkoutLog.objects.filter(trainee=trainee, completed=True)
+            factor = 0
+            for log in logs:
+                set_diff = (log.sets_ideal - log.sets_actual) / log.sets_ideal
+                reps_diff = (log.reps_ideal - log.reps_actual) / log.reps_ideal
+                factor += (1 - set_diff) * (1 - reps_diff)
+            if logs:
+                trainee_performance = factor / logs.count()
+            else:
+                trainee_performance = 1.0
+
+            total_performance *= trainee_performance
+
+        return total_performance

@@ -50,7 +50,7 @@
                                 <!-- logs contains all objects from the exercises table -->
                                 {% for log in logs %}
                                 {% if log.muscle_group == id.2 %}
-                                <h5><a href="edit_exercise/{{ log.id }}">{{ log.name }}</a></h5>
+                                <p><a href="edit_exercise/{{ log.id }}">{{ log.name }}</a></p>
                                 {% endif %}
                                 {% endfor %}
                             </div>

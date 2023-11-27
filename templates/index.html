@@ -12,10 +12,25 @@
             <h3>YOU ARE LOGGED AS ADMINISTRATOR</h3>
         </div>
     </div>
-    {{ trainees_data }}
-
     <div class="row mt-4 mb-4">
-        <div class="col-md-4 offset-md-4 mt-4 mb-4">
+        <div class="col-md-3 offset-md-2">
+            <div class="card">
+                <div class="card-body ">
+                    <h5 class="card-title">Site Users Summary</h5>
+                    {% if trainees_data %}
+                    <p class="card-text">
+                        Current number of users: {{ trainees_data.0 }}
+                    </p>
+                    <p class="card-text">
+                        Average age if users: {{ trainees_data.1 }}
+                    </p>
+                    {% else %}
+                    <p>The site has no user yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 offset-md-1">
             <div class="card">
                 <div class="card-body ">
                 <h5 class="card-title">Exercise Catalog</h5>
