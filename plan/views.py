@@ -92,6 +92,10 @@ class WorkoutView(View, WorkoutGen, DietGen):
 
 
 class LogWorkout(View):
+    '''
+    Manages the user post of sets and reps in forms.LogExerciseForm
+    redirects to workout_plan.html
+    '''
     def post(self, request, log_id, *args, **kwargs):
         log = get_object_or_404(WorkoutLog, id=log_id)
         form = forms.LogExerciseForm(data=request.POST, instance=log)
@@ -103,6 +107,9 @@ class LogWorkout(View):
 
 
 class WLogViews(View):
+    '''
+    Displays completed entries of WorkoutLog in logs_view.html
+    '''
     def get(self, request, name, *args, **kwargs):
         log_type = 'workout'
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=True)
@@ -114,6 +121,10 @@ class WLogViews(View):
              "name": name}
         )
 
+    '''
+    Displays completed entries of WorkoutLog in logs_view.html
+    narrowing entries to selected dates
+    '''
     def post(self, request, name, *args, **kwargs):
         log_type = 'workout'
         start_date = request.POST.get('start_date')
@@ -132,6 +143,9 @@ class WLogViews(View):
 
 
 class DLogViews(View):
+    '''
+    Displays entries of DietLog in logs_view.html
+    '''
     def get(self, request, name, *args, **kwargs):
         log_type = 'diet'
         logs = Diet.objects.filter(trainee__name=name)
@@ -143,6 +157,10 @@ class DLogViews(View):
              "name": name}
         )
 
+    '''
+    Displays entries of DietLog in logs_view.html
+    narrowing entries to selected dates
+    '''
     def post(self, request, name, *args, **kwargs):
         log_type = 'diet'
         start_date = request.POST.get('start_date')
@@ -161,6 +179,9 @@ class DLogViews(View):
 
 
 class UpdateInfo(View, DietGen):
+    '''
+    Displays form UpdateInfoForm in update_info.html
+    '''
     def get(self, request, name, *args, **kwargs):
         trainee = get_object_or_404(TraineeInfo, name=name)
         info_form = forms.UpdateInfoForm(instance=trainee)
@@ -170,6 +191,10 @@ class UpdateInfo(View, DietGen):
             {"info_form": info_form}
         )
 
+    '''
+    Manages UpdateInfoForm user posting from update_info.html
+    redirects to index.html if form is valid after saving the entry
+    '''
     def post(self, request, name, *args, **kwargs):
         trainee = get_object_or_404(TraineeInfo, name=name)
         info_form = forms.UpdateInfoForm(data=request.POST, instance=trainee)
