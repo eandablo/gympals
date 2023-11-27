@@ -70,3 +70,27 @@ class DietGen:
         trainee.save()
 
         return calories
+
+
+class SiteAnalysis():
+    def total_trainees(self):
+        trainees = TraineeInfo.objects.all()
+        if trainees:
+            n_trainees = trainees.count()
+            total_age = 0
+            for trainee in trainees:
+                total_age += trainee.age
+            average_age = total_age / n_trainees
+        else:
+            return False
+
+        return [n_trainees, average_age]
+
+    def exercises_describe(self):
+        exercises = Exercises.objects.all()
+        n_exercises = exercises.count()
+        groups = exercises.order_by(
+            'muscle_group').values_list('muscle_group').distinct()
+        n_groups = len(groups)
+
+        return [n_exercises, n_groups]

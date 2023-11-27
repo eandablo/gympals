@@ -3,10 +3,10 @@ from django.views import View, generic
 from . import forms
 from .models import TraineeInfo, WorkoutLog, Diet, Exercises
 from django.http import HttpResponseRedirect
-from .decisions import WorkoutGen, DietGen
+from .decisions import WorkoutGen, DietGen, SiteAnalysis
 
 
-class HomeView(View, WorkoutGen, DietGen):
+class HomeView(View, WorkoutGen, DietGen, SiteAnalysis):
     '''
     Get function displays index page
     If user has information displays dashborad
@@ -15,13 +15,17 @@ class HomeView(View, WorkoutGen, DietGen):
     def get(self, request, *args, **kwargs):
         info_exists = False
         trainee = request.user
+        trainees_data = self.total_trainees()
+        exercise_data = self.exercises_describe()
         if hasattr(request.user, 'traineeinfo'):
             info_exists = True
             trainee = get_object_or_404(TraineeInfo, trainee=request.user)
         return render(
             request,
             'index.html',
-            {"info_exists": info_exists,
+            {"exercise_data": exercise_data,
+             "trainees_data": trainees_data,
+             "info_exists": info_exists,
              "trainee": trainee,
              "info_form": forms.TraineeInfoForm()}
         )

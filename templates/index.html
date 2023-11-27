@@ -10,16 +10,23 @@
     <div class="row mt-4 mb-4">
         <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
             <h3>YOU ARE LOGGED AS ADMINISTRATOR</h3>
-            <h3>MANAGE EXERCISES</h3>
         </div>
     </div>
-    <div class="col-md-4 offset-md-4 mt-4 mb-4">
-        <div class="card">
-            <img src="{% static 'images/dumbells.jpg' %}" class="card-img-top" alt="information form">
-            <div class="card-body ">
-              <h5 class="card-title">Catalog</h5>
-              <p class="card-text card-div">Edit/ Delete exercises from catalog</p>
-              <a class="btn btn btn-primary btn-lg" href="{% url 'catalog' %}">Go to catalog</a>
+    {{ trainees_data }}
+
+    <div class="row mt-4 mb-4">
+        <div class="col-md-4 offset-md-4 mt-4 mb-4">
+            <div class="card">
+                <div class="card-body ">
+                <h5 class="card-title">Exercise Catalog</h5>
+                <p class="card-text">
+                    Currently the catalog contains a total of {{ exercise_data.0 }} exercises for {{ exercise_data.1 }} muscle groups
+                </p>
+                <p class="card-text">
+                    To check and edit the catalog, please click on the button below
+                </p>
+                <a class="btn btn btn-primary" href="{% url 'catalog' %}">Go to catalog</a>
+                </div>
             </div>
         </div>
     </div>
