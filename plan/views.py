@@ -7,7 +7,11 @@ from .decisions import WorkoutGen, DietGen
 
 
 class HomeView(View, WorkoutGen, DietGen):
-
+    '''
+    Get function displays index page
+    If user has information displays dashborad
+    otherwise display the form to store user info
+    '''
     def get(self, request, *args, **kwargs):
         info_exists = False
         trainee = request.user
@@ -22,6 +26,9 @@ class HomeView(View, WorkoutGen, DietGen):
              "info_form": forms.TraineeInfoForm()}
         )
 
+    '''
+    Manages the TraineeInfo form post
+    '''
     def post(self, request, *args, **kwargs):
         info_form = forms.TraineeInfoForm(data=request.POST)
         new_trainee = request.user
@@ -36,6 +43,14 @@ class HomeView(View, WorkoutGen, DietGen):
             self.select_ids(name)
             self.calories_calc(name)
             trainee = get_object_or_404(TraineeInfo, trainee=request.user)
+        else:
+            return render(
+                request,
+                'index.html',
+                {"info_exists": info_exists,
+                 "trainee": trainee,
+                 "info_form": forms.TraineeInfoForm()}
+            )
 
         return render(
             request,
@@ -46,6 +61,13 @@ class HomeView(View, WorkoutGen, DietGen):
 
 
 class WorkoutView(View, WorkoutGen, DietGen):
+    '''
+    Displays workout for user in 'workout_plan.html'
+    Finds entries of WorkoutLog model with completed = False
+    if none, creates a workout plan for user calling
+    select_ids function from Mixin WorkoutGen
+    additionally recalculates diet using DietGen
+    '''
     def get(self, request, name, *args, **kwargs):
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
         if not logs:
@@ -53,6 +75,7 @@ class WorkoutView(View, WorkoutGen, DietGen):
             self.calories_calc(name)
         days = logs.order_by('day').values_list('day').distinct('day')
         ids = []
+        # Ids contain information for workout page accordion
         for day in days:
             labels = ['#accordion-'+str(day[0]),
                       'accordion-'+str(day[0]), day[0]]
@@ -230,6 +253,6 @@ class DeleteExercise(View):
             exercise.delete()
         else:
             return HttpResponseRedirect(reverse('edit_exercise',
-                                                args=[exercise.id]))            
+                                                args=[exercise.id]))
 
         return HttpResponseRedirect(reverse('catalog'))
