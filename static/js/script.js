@@ -12,4 +12,10 @@ document.addEventListener('DOMContentLoaded', function(){
       calDiv.style.color = "rgb(247, 247, 247)";
     }
   }, 1000);
+    let logExerciseButton = document.getElementsByClassName('exercise-button');
+    for (let button of logExerciseButton){
+        button.addEventListener('click', function(){
+
+        });
+    }
 });
