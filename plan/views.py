@@ -4,6 +4,7 @@ from . import forms
 from .models import TraineeInfo, WorkoutLog, Diet, Exercises
 from django.http import HttpResponseRedirect
 from .decisions import WorkoutGen, DietGen, SiteAnalysis
+from django.contrib import messages
 
 
 class HomeView(View, WorkoutGen, DietGen, SiteAnalysis):
@@ -17,13 +18,15 @@ class HomeView(View, WorkoutGen, DietGen, SiteAnalysis):
         trainee = request.user
         trainees_data = self.total_trainees()
         exercise_data = self.exercises_describe()
+        performance = self.calc_performance()
         if hasattr(request.user, 'traineeinfo'):
             info_exists = True
             trainee = get_object_or_404(TraineeInfo, trainee=request.user)
         return render(
             request,
             'index.html',
-            {"exercise_data": exercise_data,
+            {"performance": performance,
+             "exercise_data": exercise_data,
              "trainees_data": trainees_data,
              "info_exists": info_exists,
              "trainee": trainee,
@@ -233,6 +236,7 @@ class CatalogView(View):
         exercise_form = forms.CreateExerciseForm(request.POST, request.FILES)
         if exercise_form.is_valid:
             exercise_form.save()
+            messages.success(request, 'New Exercise Added')
         groups = Exercises.objects.order_by(
             'muscle_group').values_list(
                 'muscle_group').distinct('muscle_group')
@@ -273,7 +277,7 @@ class EditExercise(View):
                                                  instance=exercise)
         if exercise_form.is_valid():
             exercise_form.save()
-
+            messages.success(request, 'Exercise successfully edited')
         return HttpResponseRedirect(reverse('catalog'))
 
 
@@ -283,6 +287,7 @@ class DeleteExercise(View):
         input_name = request.POST.get('delete_code')
         if input_name == exercise.name:
             exercise.delete()
+            messages.success(request, 'Exercise Deleted')
         else:
             return HttpResponseRedirect(reverse('edit_exercise',
                                                 args=[exercise.id]))
