@@ -2,6 +2,7 @@ from django.test import TestCase
 from . import models
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from datetime import date
 
 
 class TestTraineeInfo(TestCase):
@@ -239,6 +240,21 @@ class TestDiet(TestCase):
             trainee=trainee
         )
         self.assertEqual(item.calories, 0)
+
+    def test_date_is_today(self):
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.Diet.objects.create(
+            trainee=trainee
+        )
+        today_date = date.today()
+        self.assertEqual(item.created_date, today_date)
 
     def test_calories_ideal_default_0(self):
         user = User.objects.create(username='tester', password='kjhasdf')
