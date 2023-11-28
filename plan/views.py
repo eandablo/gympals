@@ -300,6 +300,12 @@ class EditExercise(View):
 
 
 class DeleteExercise(View):
+    '''
+    Deletes the exercises with the selected id
+    and redirects to cataglo.html if the correct entry in provided
+    in the text input with name input_name otherwise redirects
+    to edit_exercise.html and send error message
+    '''
     def post(self, request, id, *args, **kwargs):
         exercise = get_object_or_404(Exercises, id=id)
         input_name = request.POST.get('delete_code')
