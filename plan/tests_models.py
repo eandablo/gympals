@@ -117,6 +117,48 @@ class TestWorkoutLog(TestCase):
         )
         self.assertEqual(item.day, 1)
 
+    def test_created_date_is_today(self):
+        exercise = models.Exercises.objects.create(
+            name='Test',
+            muscle_group='BACK',
+        )
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.WorkoutLog.objects.create(
+            identifier='week1',
+            trainee=trainee,
+            excercise=exercise
+        )
+        date_today = date.today()
+        self.assertEqual(item.created_date, date_today)
+
+    def test_logged_date_is_today(self):
+        exercise = models.Exercises.objects.create(
+            name='Test',
+            muscle_group='BACK',
+        )
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.WorkoutLog.objects.create(
+            identifier='week1',
+            trainee=trainee,
+            excercise=exercise
+        )
+        date_today = date.today()
+        self.assertEqual(item.logged_date, date_today)
+
     def test_sets_ideal_defaults_0(self):
         exercise = models.Exercises.objects.create(
             name='Test',
