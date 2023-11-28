@@ -57,7 +57,7 @@
                                     <div class="card-body center-text">
                                         <form method="POST" action="{% url 'update_workout' log.id %}">
                                         {{ update_form.as_p }} {% csrf_token %}
-                                        <button class="btn btn btn-primary" type="submit">Submit</button>
+                                        <button class="btn btn btn-primary exercise-button" type="submit">Submit</button>
                                         </form>
                                     </div>
                                 </div>
