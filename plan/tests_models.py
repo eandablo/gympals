@@ -17,6 +17,18 @@ class TestTraineeInfo(TestCase):
         )
         self.assertEqual(item.sex, 'N')
 
+    def test_date_updates(self):
+        user = User.objects.create(username='tester', password='kjhasdf')
+        item = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        date_today = date.today()
+        self.assertEqual(item.updated_date, date_today)
+
     def test_goal_field_defaults_WL(self):
         user = User.objects.create(username='tester', password='kjhasdf')
         item = models.TraineeInfo.objects.create(
