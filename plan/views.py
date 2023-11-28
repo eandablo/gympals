@@ -50,7 +50,9 @@ class HomeView(View, WorkoutGen, DietGen, SiteAnalysis):
             self.select_ids(name)
             self.calories_calc(name)
             trainee = get_object_or_404(TraineeInfo, trainee=request.user)
+            messages.success(request, 'Information succesfully Added')
         else:
+            messages.error(request, 'Information Not Valid')
             return render(
                 request,
                 'index.html',
@@ -82,7 +84,7 @@ class WorkoutView(View, WorkoutGen, DietGen):
             self.calories_calc(name)
         days = logs.order_by('day').values_list('day').distinct('day')
         ids = []
-        # Ids contain information for workout page accordion
+        # Ids contain information for workout page accordion item
         for day in days:
             labels = ['#accordion-'+str(day[0]),
                       'accordion-'+str(day[0]), day[0]]
