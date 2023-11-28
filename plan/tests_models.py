@@ -223,3 +223,47 @@ class TestWorkoutLog(TestCase):
             excercise=exercise
         )
         self.assertEqual(str(item), 'trainee: Person')
+
+
+class TestDiet(TestCase):
+    def test_calories_default_0(self):
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.Diet.objects.create(
+            trainee=trainee
+        )
+        self.assertEqual(item.calories, 0)
+
+    def test_calories_ideal_default_0(self):
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.Diet.objects.create(
+            trainee=trainee
+        )
+        self.assertEqual(item.calories_ideal, 0)
+
+    def test_calories_ideal_default_0(self):
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.Diet.objects.create(
+            trainee=trainee
+        )
+        self.assertEqual(str(item), 'This diet is for: Person')
