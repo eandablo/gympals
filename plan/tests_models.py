@@ -81,3 +81,145 @@ class TestExercises(TestCase):
             muscle_group='BACK',
         )
         self.assertEqual(str(item), 'exercise: Test')
+
+
+class TestWorkoutLog(TestCase):
+    def test_day_defaults_1(self):
+        exercise = models.Exercises.objects.create(
+            name='Test',
+            muscle_group='BACK',
+        )
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.WorkoutLog.objects.create(
+            identifier='week1',
+            trainee=trainee,
+            excercise=exercise
+        )
+        self.assertEqual(item.day, 1)
+
+    def test_sets_ideal_defaults_0(self):
+        exercise = models.Exercises.objects.create(
+            name='Test',
+            muscle_group='BACK',
+        )
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.WorkoutLog.objects.create(
+            identifier='week1',
+            trainee=trainee,
+            excercise=exercise
+        )
+        self.assertEqual(item.sets_ideal, 0)
+
+    def test_sets_actual_defaults_0(self):
+        exercise = models.Exercises.objects.create(
+            name='Test',
+            muscle_group='BACK',
+        )
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.WorkoutLog.objects.create(
+            identifier='week1',
+            trainee=trainee,
+            excercise=exercise
+        )
+        self.assertEqual(item.sets_actual, 0)
+
+    def test_reps_ideal_defaults_0(self):
+        exercise = models.Exercises.objects.create(
+            name='Test',
+            muscle_group='BACK',
+        )
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.WorkoutLog.objects.create(
+            identifier='week1',
+            trainee=trainee,
+            excercise=exercise
+        )
+        self.assertEqual(item.reps_ideal, 0)
+
+    def test_reps_actual_defaults_0(self):
+        exercise = models.Exercises.objects.create(
+            name='Test',
+            muscle_group='BACK',
+        )
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.WorkoutLog.objects.create(
+            identifier='week1',
+            trainee=trainee,
+            excercise=exercise
+        )
+        self.assertEqual(item.reps_actual, 0)
+
+    def test_completed_defaults_False(self):
+        exercise = models.Exercises.objects.create(
+            name='Test',
+            muscle_group='BACK',
+        )
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.WorkoutLog.objects.create(
+            identifier='week1',
+            trainee=trainee,
+            excercise=exercise
+        )
+        self.assertEqual(item.completed, False)
+
+    def test_string_returns_trainee_name(self):
+        exercise = models.Exercises.objects.create(
+            name='Test',
+            muscle_group='BACK',
+        )
+        user = User.objects.create(username='tester', password='kjhasdf')
+        trainee = models.TraineeInfo.objects.create(
+            trainee=user,
+            name='Person',
+            age=30,
+            weight=50,
+            height=50
+        )
+        item = models.WorkoutLog.objects.create(
+            identifier='week1',
+            trainee=trainee,
+            excercise=exercise
+        )
+        self.assertEqual(str(item), 'trainee: Person')
