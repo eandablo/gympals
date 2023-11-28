@@ -213,6 +213,10 @@ class UpdateInfo(View, DietGen):
 
 
 class CatalogView(View):
+    '''
+    Shows exercises in catalog.html divided in accordions
+    by muscle groups
+    '''
     def get(self, request, *args, **kwargs):
         groups = Exercises.objects.order_by(
             'muscle_group').values_list(
@@ -231,7 +235,9 @@ class CatalogView(View):
              "logs": logs,
              "exercise_form": forms.CreateExerciseForm()}
         )
-
+    '''
+    Manages the form to add exercises in calalog.html
+    '''
     def post(self, request, *args, **kwargs):
         exercise_form = forms.CreateExerciseForm(request.POST, request.FILES)
         if exercise_form.is_valid:
@@ -242,6 +248,7 @@ class CatalogView(View):
                 'muscle_group').distinct('muscle_group')
         logs = Exercises.objects.all()
         ids = []
+        # Creates labels for accordions in catalog.html
         for group in groups:
             labels = ['#accordion-'+str(group[0]),
                       'accordion-'+str(group[0]), group[0]]
