@@ -264,8 +264,14 @@ class CatalogView(View):
 
 
 class EditExercise(View):
+    '''
+    Shows exercise with exercise_id and the number of user currently
+    displaying this exercise in their workout plan
+    Displays a form to edit the exercise
+    '''
     def get(self, request, exercise_id, *args, **kwargs):
         exercise = get_object_or_404(Exercises, id=exercise_id)
+        # calculates number of workoutlogs for the exercise not completed
         n_users = WorkoutLog.objects.filter(completed=False,
                                             excercise__id=exercise_id).count()
         exercise_form = forms.CreateExerciseForm(instance=exercise)
@@ -277,6 +283,10 @@ class EditExercise(View):
              "exercise_form": exercise_form}
         )
 
+    '''
+    Manages edit exercise form
+    send success message if form is successfully logged
+    '''
     def post(self, request, exercise_id, *args, **kwargs):
         exercise = get_object_or_404(Exercises, id=exercise_id)
         exercise_form = forms.CreateExerciseForm(request.POST,
@@ -285,6 +295,7 @@ class EditExercise(View):
         if exercise_form.is_valid():
             exercise_form.save()
             messages.success(request, 'Exercise successfully edited')
+
         return HttpResponseRedirect(reverse('catalog'))
 
 
