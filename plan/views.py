@@ -313,6 +313,7 @@ class DeleteExercise(View):
             exercise.delete()
             messages.success(request, 'Exercise Deleted')
         else:
+            messages.error(request, 'Text Do Not Concides')
             return HttpResponseRedirect(reverse('edit_exercise',
                                                 args=[exercise.id]))
 
