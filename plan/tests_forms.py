@@ -83,7 +83,8 @@ class TestUpdateInfoForm(TestCase):
 
     def test_height_field_is_required(self):
         form = forms.UpdateInfoForm(
-            {'weight': 20,
+            {'age': 1,
+             'weight': 20,
              'height': '',
              'sex': 'F',
              'goal': 'WL'}
@@ -91,3 +92,38 @@ class TestUpdateInfoForm(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('height', form.errors.keys())
         self.assertEqual(form.errors['height'][0], 'This field is required.')
+
+
+class TestCreateExerciseForm(TestCase):
+    def test_name_is_required(self):
+        form = forms.CreateExerciseForm(
+            {'name': '',
+             'youtube_link': 'some_link',
+             'muscle_group': 'BACK',
+             'level': 1,
+             'calories_burnt': 5,
+             'gender': 'M'}
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_youtube_link_is_required(self):
+        form = forms.CreateExerciseForm(
+            {'name': 'tester',
+             'youtube_link': '',
+             'muscle_group': 'BACK',
+             'level': 1,
+             'calories_burnt': 5,
+             'gender': 'M'}
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_calories_burnt_is_required(self):
+        form = forms.CreateExerciseForm(
+            {'name': 'tester',
+             'youtube_link': 'some_link',
+             'muscle_group': 'BACK',
+             'level': 1,
+             'calories_burnt': '',
+             'gender': 'M'}
+        )
+        self.assertFalse(form.is_valid())
