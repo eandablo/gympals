@@ -67,6 +67,9 @@ class TestExercises(TestCase):
 
 
 def workoutlog_item():
+    '''
+    defining item for use in TestWorkoutLog
+    '''
     exercise = models.Exercises.objects.create(
         name='Test',
         muscle_group='BACK'
@@ -112,13 +115,16 @@ class TestWorkoutLog(TestCase):
         self.assertEqual(workoutlog_item().reps_actual, 0)
 
     def test_completed_defaults_False(self):
-        self.assertEqual(workoutlog_item().completed, False)
+        self.assertFalse(workoutlog_item().completed)
 
     def test_string_returns_trainee_name(self):
         self.assertEqual(str(workoutlog_item()), 'trainee: Person')
 
 
 def diet_item():
+    '''
+    defining item for use in TestDiet
+    '''
     user = User.objects.create(username='tester', password='kjhasdf')
     trainee = models.TraineeInfo.objects.create(
         trainee=user,
