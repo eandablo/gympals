@@ -5,6 +5,7 @@ from .models import TraineeInfo, WorkoutLog, Diet, Exercises
 from django.http import HttpResponseRedirect
 from .decisions import WorkoutGen, DietGen, SiteAnalysis
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 
 class HomeView(View, WorkoutGen, DietGen, SiteAnalysis):
