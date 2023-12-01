@@ -120,13 +120,15 @@ class WLogViews(View):
     '''
     Displays completed entries of WorkoutLog in logs_view.html
     '''
-    def get(self, request, name, *args, **kwargs):
+    def get(self, request, name, page, *args, **kwargs):
         log_type = 'workout'
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=True)
+        paginator = Paginator(logs, 5)
+        page_obj = paginator.get_page(page)
         return render(
             request,
             'logs_view.html',
-            {"logs": logs,
+            {"logs": page_obj,
              "log_type": log_type,
              "name": name}
         )
@@ -213,6 +215,8 @@ class UpdateInfo(View, DietGen):
             self.calories_calc(name)
 
         return HttpResponseRedirect(reverse('home'))
+
+# Views for the Admin
 
 
 class CatalogView(View):

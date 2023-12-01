@@ -14,7 +14,7 @@
                     <h3>Narrow Your Search Dates</h3>
                 </div>
             </div>
-            <form method="post" action="{% url 'wlogs_view' name%}">
+            <form method="post" action="{% url 'wlogs_view' name=name page=1 %}">
                 <div class="row mt-3 mb-3">
                     <div class="col-md-6 offset-md-3">
                         <label for="start-date">Start Date</label>
