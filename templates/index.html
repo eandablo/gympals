@@ -95,7 +95,7 @@
                             <div class="card-body">
                               <h5 class="card-title">Diet Logs</h5>
                               <p class="card-text card-div">Track your calories to complement workout plan</p>
-                              <a class="btn btn btn-primary btn-lg" href="{% url 'dlogs_view' trainee.name %}">See Logs</a>
+                              <a class="btn btn btn-primary btn-lg" href="{% url 'dlogs_view' name=trainee.name page=1 %}">See Logs</a>
                             </div>
                           </div>
                     </div>
