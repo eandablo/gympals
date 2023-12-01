@@ -1,8 +1,17 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
 <div class="container mb-4">
+    {% if log_type == 'diet' %}
+    <div class="row">
+        <div class="col">
+            <form action="#" method="POST">
+                <label for="diet-input">Please enter consumed calories</label>
+                <input id="diet-input" type="text">
+            </form>
+        </div>
+    </div>
+    {% endif %}
     <div class="row mt-4 mb-4">
         <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
             <h2>YOUR {{ log_type|upper }} LOGS</h2>
@@ -84,13 +93,18 @@
         </tbody>
     </table>
     {% endif %}
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            {% if logs.has_other_pages %}
+            <nav aria-label="Pagination Nav">
+                <ul class="pagination">
+                    {% for i in logs.paginator.page_range %}
+                    <li class="page-item"><a class="page-link" href="{% url 'wlogs_view' name=name page=i %}">{{ i }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
 </div>
-{% if logs.has_other_pages %}
-
-<ul class="pagination">
-    {% for i in logs.paginator.page_range %}
-    <li class="page-item"><a class="page-link" href="{% url 'wlogs_view' name=name page=i %}">{{ i }}</a></li>
-    {% endfor %}
-</ul>
-{% endif %}
 {% endblock %}

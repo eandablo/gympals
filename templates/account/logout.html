@@ -3,13 +3,13 @@
 {% block content %}
     <div class="container">
         <div class="row mt-4 mb-4">
-            <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4">
+            <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4 center-text">
                 <h2>Log out</h2>
-                <p>Are you sure you want to sign out?</p>
+                <p>Are you sure you want to Log out?</p>
             </div>
         </div>
         <div class="row mt-4 mb-4">
-            <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4 d-flex justify-content-center">
+            <div class="col-sm-8 offset-sm-2 col-md-4 offset-md-4 center-text">
                 {% url 'account_logout' as action_url %}
                 {% element form method="post" action=action_url no_visible_fields=True %}
                     {% slot body %}
