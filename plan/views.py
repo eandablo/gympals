@@ -220,6 +220,17 @@ class UpdateInfo(View, DietGen):
 
         return HttpResponseRedirect(reverse('home'))
 
+
+class UpdateDietLogs(View):
+    def post(self, request, name, *args, **kwargs):
+        trainee = get_object_or_404(TraineeInfo, name=name)
+        calories_ideal = trainee.calories
+        calories = request.POST.get('diet_input')
+        Diet.objects.create(trainee=trainee,
+                            calories=calories, calories_ideal=calories_ideal)
+
+        return HttpResponseRedirect(reverse('dlogs_view', args=[name, 1]))
+
 # Views for the Admin
 
 

@@ -10,9 +10,10 @@
     </div>
     <div class="row">
         <div class="col">
-            <form action="#" method="POST">
-                <label for="diet-input">Please enter consumed calories</label>
-                <input id="diet-input" type="text">
+            <form action="{% url 'diet_update' name=name %}" method="POST">
+                {% csrf_token %}
+                <label for="diet_input">Please enter consumed calories</label>
+                <input id="diet_input" name="diet_input" type="text">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
@@ -33,7 +34,7 @@
             {% if log_type == "workout" %}
             <form method="post" action="{% url 'wlogs_view' name=name page=1 %}">
             {% else %}
-            <form method="post" action="{% url 'dlogs_view' name=name page=1 %}"></form>
+            <form method="post" action="{% url 'dlogs_view' name=name page=1 %}">
             {% endif %}
                 <div class="row mt-3 mb-3">
                     <div class="col-md-6 offset-md-3">
@@ -84,8 +85,8 @@
         <thead>
             <tr>
                 <th scope="col">Date</th>
-                <th scope="col">Suggested</th>
                 <th scope="col">Registered</th>
+                <th scope="col">Suggested</th>
             </tr>
         </thead>
         <tbody>

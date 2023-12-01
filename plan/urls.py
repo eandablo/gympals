@@ -10,6 +10,8 @@ urlpatterns = [
          views.WLogViews.as_view(), name='wlogs_view'),
     path('dietlogs/<name>/<int:page>',
          views.DLogViews.as_view(), name='dlogs_view'),
+    path('dietupdate/<name>',
+         views.UpdateDietLogs.as_view(), name='diet_update'),
     path('info/<name>', views.UpdateInfo.as_view(), name='info_update'),
     path('catalog', views.CatalogView.as_view(), name='catalog'),
     path('edit_exercise/<exercise_id>',
