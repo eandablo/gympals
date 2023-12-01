@@ -3,11 +3,17 @@
 
 <div class="container mb-4">
     {% if log_type == 'diet' %}
+    <div class="row mt-4 mb-4">
+        <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
+            <h3>LOG DIET ENTRY</h3>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <form action="#" method="POST">
                 <label for="diet-input">Please enter consumed calories</label>
                 <input id="diet-input" type="text">
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
