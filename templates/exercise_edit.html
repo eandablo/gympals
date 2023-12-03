@@ -33,13 +33,24 @@
             </div>
         </div>
     </div>
-    <div class="row mb-4">
-        <div class="col-md-4 offset-md-4 text-center">
+    <div class="row mb-4 mt-4">
+        <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
+            <h3>DELETE EXERCISE</h3>
+        </div>
+    </div>
+    <div class="row mb-4 border">
+        <div class="col-md-8 offset-md-2 text-center">
             <form method="POST" action="{% url 'delete_exercise' exercise.id %}">
                 {% csrf_token %}
-                <label for="delete_code">Corfirm delete by writing {{exercise.name }} in the space below</label>
-                <input type="text" name="delete_code" id="delete_code">
-                <button type="submit" name="exercise_id" value="{{ exercise.id }}" class="btn btn-danger">Delete</button>
+                <div class="mb-4 mt-4">
+                    <label for="delete_code">Corfirm delete by writing the word "{{exercise.name }}" in the space below</label>
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="delete_code" id="delete_code">
+                </div>
+                <div class="mb-4">
+                    <button type="submit" name="exercise_id" value="{{ exercise.id }}" class="btn btn-danger">Delete</button>
+                </div>
             </form>
         </div>
     </div>
