@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from .decisions import WorkoutGen, DietGen, SiteAnalysis
 from django.contrib import messages
 from django.core.paginator import Paginator
+from datetime import date
 
 
 class HomeView(View, WorkoutGen, DietGen, SiteAnalysis):
@@ -226,8 +227,13 @@ class UpdateDietLogs(View):
         trainee = get_object_or_404(TraineeInfo, name=name)
         calories_ideal = trainee.calories
         calories = request.POST.get('diet_input')
-        Diet.objects.create(trainee=trainee,
-                            calories=calories, calories_ideal=calories_ideal)
+        date_today = date.today()
+        if not Diet.objects.filter(created_date=date_today).exists():
+            Diet.objects.create(trainee=trainee,
+                                calories=calories,
+                                calories_ideal=calories_ideal)
+        else:
+            messages.error(request, 'A log for this day already exist')
 
         return HttpResponseRedirect(reverse('dlogs_view', args=[name, 1]))
 

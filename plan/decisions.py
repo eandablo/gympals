@@ -133,4 +133,4 @@ class SiteAnalysis:
 
             total_performance *= trainee_performance
 
-        return total_performance
+        return round(total_performance, 2)
