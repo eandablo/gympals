@@ -15,7 +15,10 @@ def choose_exercises_per_day(trainee, day):
                 muscle_group=group)
             ids = exercise_list.values_list('id')
             id_list = [x[0] for x in ids]
-            random_list = random.sample(id_list, k=3)
+            if len(id_list) > 2:
+                random_list = random.sample(id_list, k=3)
+            else:
+                random_list = id_list
             for id in random_list:
                 # the workout plan is added here to WorkoutLog
                 WorkoutLog.objects.create(
@@ -55,8 +58,8 @@ class WorkoutGen:
                 'groups': ['BACK', 'BICEPS']},
                 {'day': 2,
                 'groups': ['CHEST', 'TRICEPS']},
-                # {'day':3,
-                # 'groups': ['LEGS', 'SHOULDERS'],}
+                {'day':3,
+                'groups': ['LEGS', 'SHOULDERS'],}
                 ]
         # If there are exercises in the DB starts creating the plan
         if Exercises.objects.all():
