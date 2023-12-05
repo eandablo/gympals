@@ -142,9 +142,16 @@ class WLogViews(View):
         log_type = 'workout'
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
-        logs = WorkoutLog.objects.filter(trainee__name=name, completed=True,
-                                         logged_date__range=[start_date,
-                                                             end_date])
+        if start_date < end_date:
+            logs = WorkoutLog.objects.filter(trainee__name=name,
+                                             completed=True,
+                                             logged_date__range=[start_date,
+                                                                 end_date])
+        else:
+            messages.info(request, 'Start date should predate the End date')
+            logs = WorkoutLog.objects.filter(
+                trainee__name=name, completed=True)
+
         paginator = Paginator(logs, 5)
         page_obj = paginator.get_page(page)
         return render(
@@ -188,9 +195,15 @@ class DLogViews(View):
         log_type = 'diet'
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
-        logs = Diet.objects.filter(trainee__name=name, completed=True,
-                                   logged_date__range=[start_date,
-                                                       end_date])
+        if start_date < end_date:
+            logs = Diet.objects.filter(trainee__name=name,
+                                       logged_date__range=[start_date,
+                                                           end_date])
+        else:
+            logs = Diet.objects.filter(
+                trainee__name=name)
+            messages.info(request, 'Start date should predate the End date')
+
         paginator = Paginator(logs, 5)
         page_obj = paginator.get_page(page)
         # Variable to display diet log input
