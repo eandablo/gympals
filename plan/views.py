@@ -165,12 +165,19 @@ class DLogViews(View):
         logs = Diet.objects.filter(trainee__name=name)
         paginator = Paginator(logs, 5)
         page_obj = paginator.get_page(page)
+        # Variable to display diet log input
+        up_to_date = False
+        today_date = date.today()
+        if Diet.objects.filter(created_date=today_date).exists():
+            up_to_date = True
+
         return render(
             request,
             'logs_view.html',
             {"logs": page_obj,
              "log_type": log_type,
-             "name": name}
+             "name": name,
+             "up_to_date": up_to_date}
         )
 
     '''
@@ -186,12 +193,19 @@ class DLogViews(View):
                                                        end_date])
         paginator = Paginator(logs, 5)
         page_obj = paginator.get_page(page)
+        # Variable to display diet log input
+        up_to_date = False
+        today_date = date.today()
+        if Diet.objects.filter(created_date=today_date).exists():
+            up_to_date = True
+
         return render(
             request,
             'logs_view.html',
             {"logs": page_obj,
              "log_type": log_type,
-             "name": name}
+             "name": name,
+             "up_to_date": up_to_date}
         )
 
 
