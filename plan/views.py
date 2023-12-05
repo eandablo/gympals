@@ -51,7 +51,6 @@ class HomeView(View, WorkoutGen, DietGen, SiteAnalysis):
             name = trainee.name
             self.select_ids(name)
             self.calories_calc(name)
-            trainee = get_object_or_404(TraineeInfo, trainee=request.user)
             messages.success(request, 'Information succesfully Added')
         else:
             messages.error(request, 'Information Not Valid')

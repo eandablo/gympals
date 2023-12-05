@@ -3,6 +3,32 @@ from django.shortcuts import get_object_or_404
 import random
 
 
+def insert_exercises_workout_plan(trainee, random_list, day):
+    logs = WorkoutLog.objects.order_by(
+        'created_date').filter(trainee=trainee, completed=True)
+    if logs:
+        last_log = logs.last()
+        last_week = last_log.identifier
+        num_position = last_week.find('-')
+        if position == 5:
+            week_number = int(last_week[position - 1]) + 1
+        else:
+            week_number = int(last_week[position - 2:position - 1]) + 1
+    else:
+        week_number = 1
+
+    for id in random_list:
+        # the workout plan is added here to WorkoutLog
+        WorkoutLog.objects.create(
+            identifier='week' + str(week_number) + '-' + str(id),
+            day=day['day'],
+            trainee=trainee,
+            sets_ideal=3,
+            reps_ideal=12,
+            excercise=get_object_or_404(Exercises, id=id)
+        )
+
+
 def choose_exercises_per_day(trainee, day):
     '''
     chooses exercises for a specific day
@@ -19,18 +45,8 @@ def choose_exercises_per_day(trainee, day):
                 random_list = random.sample(id_list, k=3)
             else:
                 random_list = id_list
-            for id in random_list:
-                # the workout plan is added here to WorkoutLog
-                WorkoutLog.objects.create(
-                    identifier='week1'
-                    + trainee.name + str(day['day']) +
-                    '-' + str(id),
-                    day=day['day'],
-                    trainee=trainee,
-                    sets_ideal=3,
-                    reps_ideal=12,
-                    excercise=get_object_or_404(Exercises, id=id)
-                )
+
+            insert_exercises_workout_plan(trainee, random_list, day)
 
 
 def workout_calories(name):
@@ -58,8 +74,8 @@ class WorkoutGen:
                 'groups': ['BACK', 'BICEPS']},
                 {'day': 2,
                 'groups': ['CHEST', 'TRICEPS']},
-                {'day':3,
-                'groups': ['LEGS', 'SHOULDERS'],}
+                {'day': 3,
+                'groups': ['LEGS', 'SHOULDERS']}
                 ]
         # If there are exercises in the DB starts creating the plan
         if Exercises.objects.all():
