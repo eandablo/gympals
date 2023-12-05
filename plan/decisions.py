@@ -3,6 +3,33 @@ from django.shortcuts import get_object_or_404
 import random
 
 
+def choose_exercises_per_day(trainee, day):
+    '''
+    chooses exercises for a specific day
+    accepts dictionary day as input variable
+    '''
+    groups = day['groups']
+    for group in groups:
+        if Exercises.objects.filter(muscle_group=group):
+            exercise_list = Exercises.objects.filter(
+                muscle_group=group)
+            ids = exercise_list.values_list('id')
+            id_list = [x[0] for x in ids]
+            random_list = random.sample(id_list, k=3)
+            for id in random_list:
+                # the workout plan is added here to WorkoutLog
+                WorkoutLog.objects.create(
+                    identifier='week1'
+                    + trainee.name + str(day['day']) +
+                    '-' + str(id),
+                    day=day['day'],
+                    trainee=trainee,
+                    sets_ideal=3,
+                    reps_ideal=12,
+                    excercise=get_object_or_404(Exercises, id=id)
+                )
+
+
 def workout_calories(name):
     '''
     function calculates total of calories expected to burn for
@@ -31,26 +58,10 @@ class WorkoutGen:
                 # {'day':3,
                 # 'groups': ['LEGS', 'SHOULDERS'],}
                 ]
-        for day in days:
-            groups = day['groups']
-            for group in groups:
-                exercise_list = Exercises.objects.filter(muscle_group=group)
-                ids = exercise_list.values_list('id')
-                id_list = [x[0] for x in ids]
-                random_list = random.sample(id_list, k=3)
-                for id in random_list:
-                    # the workout plan is added here to WorkoutLog
-                    WorkoutLog.objects.create(
-                        identifier='week1' + trainee.name + str(day['day']) +
-                                   '-' + str(id),
-                        day=day['day'],
-                        trainee=trainee,
-                        sets_ideal=3,
-                        reps_ideal=12,
-                        excercise=get_object_or_404(Exercises, id=id)
-                    )
-
-        return True
+        # If there are exercises in the DB starts creating the plan
+        if Exercises.objects.all():
+            for day in days:
+                choose_exercises_per_day(trainee, day)
 
 
 class DietGen:
