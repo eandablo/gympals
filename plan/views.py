@@ -16,7 +16,8 @@ class HomeView(View, SiteAnalysis):
     otherwise display the form to store user info
     '''
     def get(self, request, *args, **kwargs):
-
+        # Staff users are redirected to a dashboard with link
+        # to see the exercise catalog
         if request.user.is_staff:
             trainees_data = self.total_trainees()
             exercise_data = self.exercises_describe()
@@ -28,8 +29,10 @@ class HomeView(View, SiteAnalysis):
                  "exercise_data": exercise_data,
                  "trainees_data": trainees_data}
             )
+
         else:
             info_exists = False
+            # Normal users returning are redirected to their dashboard
             if hasattr(request.user, 'traineeinfo'):
                 info_exists = True
                 trainee = get_object_or_404(
@@ -40,6 +43,7 @@ class HomeView(View, SiteAnalysis):
                     {"info_exists": info_exists,
                      "trainee": trainee}
                 )
+            # Normal user just signed-up is prompted to info form
             else:
                 return render(
                     request,
@@ -123,6 +127,10 @@ class LogWorkout(View):
         if form.is_valid():
             form.instance.completed = True
             form.save()
+        else:
+            messages.error(request, 'Reps and Sets must be positive integers')
+        # If the last exercise is logged, it redirects to home
+        # otherwise redirects to workout plan
         if WorkoutLog.objects.filter(trainee=log.trainee, completed=False):
             return HttpResponseRedirect(reverse('workout_plan',
                                         args=[log.trainee.name]))
@@ -258,6 +266,14 @@ class UpdateInfo(View, DietGen):
         if info_form.is_valid:
             info_form.save()
             self.calories_calc(name)
+            messages.success(request, 'Your information has been updated')
+        else:
+            messages.error(request, 'Please provide valid information')
+            return render(
+                request,
+                'update_info.html',
+                {"info_form": forms.UpdateInfoForm(instance=trainee)}
+            )
 
         return HttpResponseRedirect(reverse('home'))
 
