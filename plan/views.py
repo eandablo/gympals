@@ -379,7 +379,19 @@ class EditExercise(View):
         if exercise_form.is_valid():
             exercise_form.save()
             messages.success(request, 'Exercise successfully edited')
-
+        else:
+            messages.error(request, 'Data provided is not valid')
+            n_users = WorkoutLog.objects.filter(
+                completed=False,
+                excercise__id=exercise_id).count()
+            exercise_form = forms.CreateExerciseForm(instance=exercise)
+            return render(
+                request,
+                'exercise_edit.html',
+                {"n_users": n_users,
+                 "exercise": exercise,
+                 "exercise_form": exercise_form}
+            )
         return HttpResponseRedirect(reverse('catalog'))
 
 
