@@ -41,7 +41,7 @@
                     <ul class="nav">
                         <li class="nav-item">
                             <a class="nav-link active white-medium-text" aria-current="page"
-                                href="/plan/{{ user.traineeinfo.name }}">Workout</a>
+                                href="/plan/{{ user.traineeinfo.name }}">Plan</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle white-medium-text" href="#" id="records-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -83,7 +83,7 @@
         </div>
         {% for message in messages %}
         <div class="container-fluid">
-          <div class="alert {{ message.tags }} alert-dismissible" role="alert" id="bootstrap-msg">
+          <div class="alert {{ message.tags }} alert-dismissible center-text" role="alert" id="bootstrap-msg">
             {{ message }}
           </div>
         </div>
