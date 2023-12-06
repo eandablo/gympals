@@ -9,31 +9,44 @@ from django.core.paginator import Paginator
 from datetime import date
 
 
-class HomeView(View, WorkoutGen, DietGen, SiteAnalysis):
+class HomeView(View, SiteAnalysis):
     '''
     Get function displays index page
     If user has information displays dashborad
     otherwise display the form to store user info
     '''
     def get(self, request, *args, **kwargs):
-        info_exists = False
-        trainee = request.user
-        trainees_data = self.total_trainees()
-        exercise_data = self.exercises_describe()
-        performance = self.calc_performance()
-        if hasattr(request.user, 'traineeinfo'):
-            info_exists = True
-            trainee = get_object_or_404(TraineeInfo, trainee=request.user)
-        return render(
-            request,
-            'index.html',
-            {"performance": performance,
-             "exercise_data": exercise_data,
-             "trainees_data": trainees_data,
-             "info_exists": info_exists,
-             "trainee": trainee,
-             "info_form": forms.TraineeInfoForm()}
-        )
+
+        if request.user.is_staff:
+            trainees_data = self.total_trainees()
+            exercise_data = self.exercises_describe()
+            performance = self.calc_performance()
+            return render(
+                request,
+                'index.html',
+                {"performance": performance,
+                 "exercise_data": exercise_data,
+                 "trainees_data": trainees_data}
+            )
+        else:
+            info_exists = False
+            if hasattr(request.user, 'traineeinfo'):
+                info_exists = True
+                trainee = get_object_or_404(
+                    TraineeInfo, trainee=request.user)
+                return render(
+                    request,
+                    'index.html',
+                    {"info_exists": info_exists,
+                     "trainee": trainee}
+                )
+            else:
+                return render(
+                    request,
+                    'index.html',
+                    {"info_exists": info_exists,
+                     "info_form": forms.TraineeInfoForm()}
+                )
 
     '''
     Manages the TraineeInfo form post
@@ -48,17 +61,13 @@ class HomeView(View, WorkoutGen, DietGen, SiteAnalysis):
             info.save()
             info_exists = True
             trainee = get_object_or_404(TraineeInfo, trainee=request.user)
-            name = trainee.name
-            self.select_ids(name)
-            self.calories_calc(name)
-            messages.success(request, 'Information succesfully Added')
+            messages.success(request, 'Information Succesfully Added')
         else:
             messages.error(request, 'Information Not Valid')
             return render(
                 request,
                 'index.html',
                 {"info_exists": info_exists,
-                 "trainee": trainee,
                  "info_form": forms.TraineeInfoForm()}
             )
 
@@ -83,6 +92,8 @@ class WorkoutView(View, WorkoutGen, DietGen):
         if not logs:
             self.select_ids(name)
             self.calories_calc(name)
+            logs = WorkoutLog.objects.filter(
+                trainee__name=name, completed=False)
         days = logs.order_by('day').values_list('day').distinct('day')
         ids = []
         # Ids contain information for workout page accordion item

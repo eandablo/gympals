@@ -10,17 +10,18 @@ def insert_exercises_workout_plan(trainee, random_list, day):
         last_log = logs.last()
         last_week = last_log.identifier
         num_position = last_week.find('-')
-        if position == 5:
-            week_number = int(last_week[position - 1]) + 1
+        if num_position == 5:
+            week_number = int(last_week[num_position - 1]) + 1
         else:
-            week_number = int(last_week[position - 2:position - 1]) + 1
+            week_number = int(last_week[num_position - 2:num_position - 1]) + 1
     else:
         week_number = 1
 
     for id in random_list:
         # the workout plan is added here to WorkoutLog
         WorkoutLog.objects.create(
-            identifier='week' + str(week_number) + '-' + str(id),
+            identifier='week' + str(week_number) + '-' + str(id)
+                       + trainee.name,
             day=day['day'],
             trainee=trainee,
             sets_ideal=3,
