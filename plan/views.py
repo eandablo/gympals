@@ -123,8 +123,11 @@ class LogWorkout(View):
         if form.is_valid():
             form.instance.completed = True
             form.save()
-        return HttpResponseRedirect(reverse('workout_plan',
-                                    args=[log.trainee.name]))
+        if WorkoutLog.objects.filter(trainee=log.trainee, completed=False):
+            return HttpResponseRedirect(reverse('workout_plan',
+                                        args=[log.trainee.name]))
+        else:
+            return HttpResponseRedirect(reverse('home'))
 
 
 class WLogViews(View):
