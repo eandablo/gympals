@@ -16,19 +16,11 @@
     {% for id in ids %}
         <div class="accordion-item">
             <h2 class="accordion-header">
-            {% if forloop.counter == 1 %}
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="{{ id.0 }}" aria-expanded="true"aria-controls="{{ id.1 }}">
-                Day {{ id.2 }}
-            </button>
-            </h2>
-            <div id="{{ id.1 }}" class="accordion-collapse collapse show" data-bs-parent="#workouts-accordion">
-            {% else %}
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="{{ id.0 }}" aria-expanded="false"aria-controls="{{ id.1 }}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="{{ id.0 }}" aria-expanded="false" aria-controls="{{ id.1 }}">
                 Day {{ id.2 }}
             </button>
             </h2>
             <div id="{{ id.1 }}" class="accordion-collapse collapse" data-bs-parent="#workouts-accordion">
-            {% endif %}
                 <div class="accordion-body">
                     <!-- starts exercise holder body -->
                     <div class="row">
