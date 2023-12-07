@@ -58,7 +58,7 @@ class Exercises(models.Model):
     name = models.CharField(max_length=150, unique=True)
     guide_image = CloudinaryField('image', default='None')
     muscle_group = models.CharField(max_length=10, choices=GROUPS)
-    youtube_link = models.CharField(max_length=200, unique=True,
+    youtube_link = models.CharField(max_length=200,
                                     default='None')
     level = models.IntegerField(choices=LEVEL_CHOICES, default=1)
     calories_burnt = models.PositiveIntegerField(default=0)
