@@ -60,12 +60,14 @@ class TestHomeView(TestCase):
                           "goal": "WL"})
         trainee = get_object_or_404(models.TraineeInfo, trainee=self.user)
         self.assertEqual(trainee.trainee, self.user)
-        self.assertEqual(trainee.name, "tester")
-        self.assertEqual(trainee.name, "tester")
-        self.assertEqual(trainee.name, "tester")
+        self.assertEqual(trainee.age, 23)
+        self.assertEqual(trainee.weight, 53)
+        self.assertEqual(trainee.height, 167)
+        self.assertEqual(trainee.sex, "F")
+        self.assertEqual(trainee.goal, "WL")
 
 
-class TestWorkoutView(TestCase):
+class LogWorkoutView(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create(username='testuser')
@@ -75,12 +77,6 @@ class TestWorkoutView(TestCase):
             cls.exercise = models.Exercises.objects.create(
                 name=str(i),
                 muscle_group='BACK',
-                calories_burnt=5
-            )
-        for i in range(5, 9):
-            cls.exercise = models.Exercises.objects.create(
-                name=str(i),
-                muscle_group='BICEPS',
                 calories_burnt=5
             )
 
@@ -96,8 +92,20 @@ class TestWorkoutView(TestCase):
                           "goal": "WL"})
         self.trainee = get_object_or_404(models.TraineeInfo, trainee=self.user)
 
-    def test_workoutview_response(self):
-        print(self.trainee.name)
-        print(get_object_or_404(models.Exercises, id=5))
-        # response = self.client.get(
-        #     f'/plan/{self.trainee.name}')
+    def test_workoutview_post(self):
+        my_exercise = get_object_or_404(models.Exercises, id=1)
+        log = models.WorkoutLog.objects.create(
+            identifier='week1',
+            day=1,
+            trainee=self.trainee,
+            sets_ideal=3,
+            reps_ideal=12,
+            completed=False,
+            excercise=my_exercise
+        )
+        response = self.client.post(f'/update/{log.id}',
+                                    {'sets_actual': 3,
+                                     'reps_actual': 12})
+        updated_log = models.WorkoutLog.objects.get(id=1)
+        self.assertEqual(updated_log.sets_actual, 3)
+        self.assertEqual(updated_log.reps_actual, 12)
