@@ -72,21 +72,17 @@ class TestWorkoutView(TestCase):
         cls.user.set_password('yoyoyoyo')
         cls.user.save()
         for i in range(4):
-            print(i)
             cls.exercise = models.Exercises.objects.create(
                 name=str(i),
                 muscle_group='BACK',
                 calories_burnt=5
             )
-    # name = models.CharField(max_length=150, unique=True)
-    # guide_image = CloudinaryField('image', default='None')
-    # muscle_group = models.CharField(max_length=10, choices=GROUPS)
-    # youtube_link = models.CharField(max_length=200, unique=True,
-    #                                 default='None')
-    # level = models.IntegerField(choices=LEVEL_CHOICES, default=1)
-    # calories_burnt = models.PositiveIntegerField(default=0)
-    # gender = models.CharField(max_length=1, choices=GENDERS, default='B')
-
+        for i in range(5, 9):
+            cls.exercise = models.Exercises.objects.create(
+                name=str(i),
+                muscle_group='BICEPS',
+                calories_burnt=5
+            )
 
     def setUp(self):
         self.logged_in = self.client.login(
@@ -101,4 +97,7 @@ class TestWorkoutView(TestCase):
         self.trainee = get_object_or_404(models.TraineeInfo, trainee=self.user)
 
     def test_workoutview_response(self):
-        print(self.trainee)
+        print(self.trainee.name)
+        print(get_object_or_404(models.Exercises, id=5))
+        # response = self.client.get(
+        #     f'/plan/{self.trainee.name}')
