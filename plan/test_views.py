@@ -37,7 +37,29 @@ class TestLogin(TestCase):
 
 
 class TestHomeView(TestCase):
-    def test_response(self):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create(username='testuser')
+        cls.user.set_password('yoyoyoyo')
+        cls.user.save()
+
+    def test_home_view(self):
+
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'index.html')
+
+    def test_home_post(self):
+        logged_in = self.client.login(username='testuser', password='yoyoyoyo')
+        self.client.post('/',
+                         {"name": "tester",
+                          "age": 23,
+                          "weight": 53,
+                          "height": 167,
+                          "sex": "F",
+                          "goal": "WL"})
+        trainee = get_object_or_404(models.TraineeInfo, trainee=self.user)
+        self.assertEqual(trainee.trainee, self.user)
+        self.assertEqual(trainee.name, "tester")
+        self.assertEqual(trainee.name, "tester")
+        self.assertEqual(trainee.name, "tester")
