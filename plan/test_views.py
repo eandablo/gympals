@@ -67,6 +67,45 @@ class TestHomeView(TestCase):
         self.assertEqual(trainee.goal, "WL")
 
 
+class UpdateInfoView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create(username='testuser')
+        cls.user.set_password('yoyoyoyo')
+        cls.user.save()
+        for i in range(4):
+            cls.exercise = models.Exercises.objects.create(
+                name=str(i),
+                muscle_group='BACK',
+                calories_burnt=5
+            )
+
+    def setUp(self):
+        self.logged_in = self.client.login(
+            username='testuser', password='yoyoyoyo')
+        self.client.post('/',
+                         {"name": "tester",
+                          "age": 23,
+                          "weight": 53,
+                          "height": 167,
+                          "sex": "F",
+                          "goal": "WL"})
+        self.trainee = get_object_or_404(models.TraineeInfo, trainee=self.user)
+
+    def test_info_is_updated(self):
+        response = self.client.post(f'/info/{self.trainee.name}',
+                                    {"age": 24,
+                                     "weight": 54,
+                                     "height": 168,
+                                     "goal": "MG"})
+        trainee_updated = get_object_or_404(
+            models.TraineeInfo, trainee=self.user)
+        self.assertEqual(trainee_updated.age, 24)
+        self.assertEqual(trainee_updated.weight, 54)
+        self.assertEqual(trainee_updated.height, 168)
+        self.assertEqual(trainee_updated.goal, "MG")
+
+
 class LogWorkoutView(TestCase):
     @classmethod
     def setUpTestData(cls):
