@@ -4,6 +4,7 @@
 <div class="container mb-4">
     {% if log_type == 'diet' %}
     {% if not up_to_date %}
+    
     <div class="row mt-4 mb-4">
         <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
             <h3>LOG DIET ENTRY</h3>
@@ -71,6 +72,7 @@
             </form>    
         </div>
     </div>
+    {% if logs %}
     {% if log_type == "workout" %}
     <table class="table">
         <thead>
@@ -127,5 +129,12 @@
             {% endif %}
         </div>
     </div>
+    {% else %}
+    <div class="row mt-4 mb-4">
+        <div class="col-md-8 offset-md-2 center-text">
+            <h5>No records to display</h5>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

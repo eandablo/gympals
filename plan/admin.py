@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TraineeInfo, Exercises, WorkoutLog
+from .models import TraineeInfo, Exercises, WorkoutLog, Diet
 
 # Register your models here.
 
@@ -10,7 +10,7 @@ class InfoAdmin(admin.ModelAdmin):
     list_filter = ('name',)
 
 
-@admin.register(Exercises)   
+@admin.register(Exercises)
 class ExerciseInfo(admin.ModelAdmin):
     list_display = ('name', 'guide_image', 'muscle_group', 'youtube_link')
     list_filter = ('muscle_group',)
@@ -22,4 +22,10 @@ class WorkoutAdmin(admin.ModelAdmin):
                     'trainee', 'logged_date', 'sets_ideal',
                     'sets_actual', 'reps_ideal', 'reps_actual',
                     'completed', 'excercise')
+    list_filter = ('trainee',)
+
+
+@admin.register(Diet)
+class DietAdmin(admin.ModelAdmin):
+    list_display = ('created_date', 'trainee', 'calories', 'calories_ideal')
     list_filter = ('trainee',)

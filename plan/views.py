@@ -127,6 +127,7 @@ class LogWorkout(View):
         if form.is_valid():
             form.instance.completed = True
             form.save()
+            messages.success(request, 'Your workout was logged')
         else:
             messages.error(request, 'Reps and Sets must be positive integers')
         # If the last exercise is logged, it redirects to home
@@ -196,7 +197,9 @@ class DLogViews(View):
         # Variable to display diet log input
         up_to_date = False
         today_date = date.today()
-        if Diet.objects.filter(created_date=today_date).exists():
+        log_today = Diet.objects.filter(trainee__name=name,
+                                        created_date=today_date).exists()
+        if log_today:
             up_to_date = True
 
         return render(
@@ -230,7 +233,9 @@ class DLogViews(View):
         # Variable to display diet log input
         up_to_date = False
         today_date = date.today()
-        if Diet.objects.filter(created_date=today_date).exists():
+        log_today = Diet.objects.filter(trainee__name=name,
+                                        created_date=today_date).exists()
+        if log_today:
             up_to_date = True
 
         return render(
@@ -288,6 +293,7 @@ class UpdateDietLogs(View):
             Diet.objects.create(trainee=trainee,
                                 calories=calories,
                                 calories_ideal=calories_ideal)
+            messages.success(request, 'Your diet records are updated')
         else:
             messages.error(request, 'A log for this day already exist')
 
