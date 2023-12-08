@@ -40,7 +40,7 @@ class CreateExerciseForm(forms.ModelForm):
         fields = ('name', 'guide_image', 'muscle_group', 'youtube_link',
                   'level', 'calories_burnt', 'gender')
         labels = {
-            'guide_image': 'image',
+            'guide_image': 'Image',
             'muscle_group': 'Muscle Group',
             'youtube_link': 'Youtube URL',
             'calories_burnt': 'Expected Calories Burnt',

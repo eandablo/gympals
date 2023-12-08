@@ -186,7 +186,21 @@ class AdminViews(TestCase):
                 calories_burnt=5
             )
 
-    def test_superuser_logged_in(self):
-        item = models.Exercises.objects.get(name=1)
-        print(item)
+    def test_editexercise_view(self):
+        response = self.client.get('/edit_exercise/1')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'exercise_edit.html')
+
+    # def test_catalogview_creates_exercise(self):
+    #     self.client.post('/catalog',
+    #                      {'name': 'push-up',
+    #                       'muscle_group': 'CHEST',
+    #                       'youtube_link': 'https://www.youtube.com',
+    #                       'level': 1,
+    #                       'calories_burnt': 10,
+    #                       'gender': 'M'})
+    #     my_exercise = models.Exercises.objects.get(name='push-up')
+    #     print(my_exercise)
+        
+
 
