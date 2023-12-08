@@ -7,6 +7,8 @@ class TraineeInfoForm(forms.ModelForm):
         model = TraineeInfo
         fields = ('name', 'age', 'weight', 'height', 'sex', 'goal')
         labels = {
+            'weight': 'Weight (Kg)',
+            'height': 'Height (cm)',
             'sex': 'Sex (If you prefere not to disclose,' +
             'please select neutral)',
             'goal': 'Please select a goal'

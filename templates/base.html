@@ -39,6 +39,7 @@
                     </ul>
                     {% else %}
                     <ul class="nav">
+                        {% if user.traineeinfo.name %}
                         <li class="nav-item">
                             <a class="nav-link active white-medium-text" aria-current="page"
                                 href="/plan/{{ user.traineeinfo.name }}">Plan</a>
@@ -52,6 +53,7 @@
                               <li><a class="dropdown-item" href="/dietlogs/{{ user.traineeinfo.name }}/1">Diet</a></li>
                             </ul>
                         </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link active white-medium-text" aria-current="page"
                                 href="{% url 'account_logout' %}">Log out</a>
