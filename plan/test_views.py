@@ -167,3 +167,26 @@ class UserViewsWorkoutRelated(TestCase, DietGen):
         log = get_object_or_404(models.Diet, trainee=self.trainee)
         self.assertEqual(log.calories, 1800)
         self.assertRedirects(response, f'/dietlogs/{self.trainee.name}/1')
+
+
+class AdminViews(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_superuser(
+            'admin_user', 'admin_user@gmail.com', '123456')
+        cls.user.save()
+
+    def setUp(self):
+        self.logged_in = self.client.login(
+            username='admin_user', password='123456')
+        for i in range(4):
+            self.exercise = models.Exercises.objects.create(
+                name=str(i),
+                muscle_group='BACK',
+                calories_burnt=5
+            )
+
+    def test_superuser_logged_in(self):
+        item = models.Exercises.objects.get(name=1)
+        print(item)
+
