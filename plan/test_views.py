@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, reverse
 from . import models
 from django.contrib.auth.models import User
 from .decisions import DietGen
+
 # def setUpTestData(cls):
 
 
@@ -191,16 +192,37 @@ class AdminViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'exercise_edit.html')
 
-    # def test_catalogview_creates_exercise(self):
-    #     self.client.post('/catalog',
-    #                      {'name': 'push-up',
-    #                       'muscle_group': 'CHEST',
-    #                       'youtube_link': 'https://www.youtube.com',
-    #                       'level': 1,
-    #                       'calories_burnt': 10,
-    #                       'gender': 'M'})
-    #     my_exercise = models.Exercises.objects.get(name='push-up')
-    #     print(my_exercise)
-        
+    def test_editexercise_can_edit_item(self):
+        response = self.client.post('/edit_exercise/1',
+                                    {'name': 'push-up',
+                                     'muscle_group': 'CHEST',
+                                     'youtube_link': 'https://www.youtube.com',
+                                     'level': 2,
+                                     'calories_burnt': 10,
+                                     'gender': 'M'})
+        my_exercise = models.Exercises.objects.get(name='push-up')
+        self.assertEqual(my_exercise.muscle_group, 'CHEST')
+        self.assertEqual(my_exercise.youtube_link, 'https://www.youtube.com')
+        self.assertEqual(my_exercise.level, 2)
+        self.assertEqual(my_exercise.calories_burnt, 10)
+        self.assertRedirects(response, reverse('catalog'),
+                             fetch_redirect_response=False)
 
+    def test_deleteexercise_deletes_and_redirects(self):
+        num_before = models.Exercises.objects.all().count()
+        response = self.client.post('/delete/1', {'delete_code': '0'})
+        num_after = models.Exercises.objects.all().count()
+        self.assertEqual(num_before, num_after + 1)
+        for i in range(2, num_before + 1):
+            item = models.Exercises.objects.get(id=i)
+            self.assertEqual(item.name, str(i - 1))
+        self.assertRedirects(response, reverse('catalog'),
+                             fetch_redirect_response=False)
 
+    def test_deleteexercise_rejects_wrong_code(self):
+        num_before = models.Exercises.objects.all().count()
+        response = self.client.post('/delete/1', {'delete_code': 'a'})
+        num_after = models.Exercises.objects.all().count()
+        self.assertEqual(num_before, num_after)
+        self.assertRedirects(response, '/edit_exercise/1',
+                             fetch_redirect_response=False)
