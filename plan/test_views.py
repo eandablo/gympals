@@ -3,7 +3,7 @@ from django.test import Client
 from django.shortcuts import get_object_or_404, reverse
 from . import models
 from django.contrib.auth.models import User
-from trainer import settings
+from .decisions import DietGen
 # def setUpTestData(cls):
 
 
@@ -73,24 +73,14 @@ class UpdateInfoView(TestCase):
         cls.user = User.objects.create(username='testuser')
         cls.user.set_password('yoyoyoyo')
         cls.user.save()
-        for i in range(4):
-            cls.exercise = models.Exercises.objects.create(
-                name=str(i),
-                muscle_group='BACK',
-                calories_burnt=5
-            )
 
     def setUp(self):
         self.logged_in = self.client.login(
             username='testuser', password='yoyoyoyo')
-        self.client.post('/',
-                         {"name": "tester",
-                          "age": 23,
-                          "weight": 53,
-                          "height": 167,
-                          "sex": "F",
-                          "goal": "WL"})
-        self.trainee = get_object_or_404(models.TraineeInfo, trainee=self.user)
+        self.trainee = models.TraineeInfo(
+            trainee=self.user, name="tester", age=23, weight=53,
+            height=167, sex="F", goal="WL", calories=2000)
+        self.trainee.save()
 
     def test_info_is_updated(self):
         response = self.client.post(f'/info/{self.trainee.name}',
@@ -107,32 +97,28 @@ class UpdateInfoView(TestCase):
         self.assertRedirects(response, '/')
 
 
-class LogWorkoutView(TestCase):
+class UserViewsWorkoutRelated(TestCase, DietGen):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create(username='testuser')
         cls.user.set_password('yoyoyoyo')
         cls.user.save()
+
+    def setUp(self):
+        self.logged_in = self.client.login(
+            username='testuser', password='yoyoyoyo')
+        self.trainee = models.TraineeInfo(
+            trainee=self.user, name="tester", age=23, weight=53,
+            height=167, sex="F", goal="WL", calories=2000)
+        self.trainee.save()
         for i in range(4):
-            cls.exercise = models.Exercises.objects.create(
+            self.exercise = models.Exercises.objects.create(
                 name=str(i),
                 muscle_group='BACK',
                 calories_burnt=5
             )
 
-    def setUp(self):
-        self.logged_in = self.client.login(
-            username='testuser', password='yoyoyoyo')
-        self.client.post('/',
-                         {"name": "tester",
-                          "age": 23,
-                          "weight": 53,
-                          "height": 167,
-                          "sex": "F",
-                          "goal": "WL"})
-        self.trainee = get_object_or_404(models.TraineeInfo, trainee=self.user)
-
-    def test_workoutview_post(self):
+    def test_workoutview_updates_exercise_log(self):
         my_exercise = get_object_or_404(models.Exercises, id=1)
         log = models.WorkoutLog.objects.create(
             identifier='week1',
@@ -150,32 +136,6 @@ class LogWorkoutView(TestCase):
         self.assertEqual(updated_log.sets_actual, 3)
         self.assertEqual(updated_log.reps_actual, 12)
 
-
-class WandDLogViewsView(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.user = User.objects.create(username='testuser')
-        cls.user.set_password('yoyoyoyo')
-        cls.user.save()
-        for i in range(4):
-            cls.exercise = models.Exercises.objects.create(
-                name=str(i),
-                muscle_group='BACK',
-                calories_burnt=5
-            )
-
-    def setUp(self):
-        self.logged_in = self.client.login(
-            username='testuser', password='yoyoyoyo')
-        self.client.post('/',
-                         {"name": "tester",
-                          "age": 23,
-                          "weight": 53,
-                          "height": 167,
-                          "sex": "F",
-                          "goal": "WL"})
-        self.trainee = get_object_or_404(models.TraineeInfo, trainee=self.user)
-
     def test_wlogview_view(self):
         my_exercise = get_object_or_404(models.Exercises, id=1)
         log = models.WorkoutLog.objects.create(
@@ -189,8 +149,9 @@ class WandDLogViewsView(TestCase):
         )
         response = self.client.get(f'/workoutlogs/{self.trainee.name}/1')
         self.assertEqual(response.status_code, 200)
-    
-    def test_wlogview_view(self):
+        self.assertTemplateUsed(response, 'logs_view.html')
+
+    def test_dlogview_view(self):
         log = models.Diet.objects.create(
             trainee=self.trainee,
             calories=100,
@@ -198,3 +159,11 @@ class WandDLogViewsView(TestCase):
         )
         response = self.client.get(f'/dietlogs/{self.trainee.name}/1')
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'logs_view.html')
+
+    def test_updatedietlog_updates_calories(self):
+        response = self.client.post(f'/dietupdate/{self.trainee.name}',
+                                    {'diet_input': 1800})
+        log = get_object_or_404(models.Diet, trainee=self.trainee)
+        self.assertEqual(log.calories, 1800)
+        self.assertRedirects(response, f'/dietlogs/{self.trainee.name}/1')
