@@ -29,6 +29,8 @@ def insert_exercises_workout_plan(trainee, random_list, day):
             excercise=get_object_or_404(Exercises, id=id)
         )
 
+    return ''
+
 
 def choose_exercises_per_day(trainee, day):
     '''
@@ -48,6 +50,8 @@ def choose_exercises_per_day(trainee, day):
                 random_list = id_list
 
             insert_exercises_workout_plan(trainee, random_list, day)
+
+    return ''
 
 
 def workout_calories(name):
@@ -83,6 +87,8 @@ class WorkoutGen:
             for day in days:
                 choose_exercises_per_day(trainee, day)
 
+        return ''
+
 
 class DietGen:
     '''
@@ -115,7 +121,7 @@ class DietGen:
         trainee.calories = round(calories, 1)
         trainee.save()
 
-        return calories
+        return ''
 
 
 class SiteAnalysis:

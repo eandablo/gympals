@@ -63,5 +63,13 @@ class DecisionsTests(TestCase, WorkoutGen, DietGen):
         age = float(self.trainee.age)
         self.select_ids(self.trainee.name)
         for item in self.test_calc_set:
-
-            calories = self.calories_calc(self.trainee.name)
+            self.trainee.sex = item['sex']
+            self.trainee.goal = item['goal']
+            self.trainee.save()
+            self.calories_calc(self.trainee.name)
+            trainee_updated = models.TraineeInfo.objects.get(
+                name=self.trainee.name)
+            basal = 10 * weight + 3.0 * height - 5 * age + item['rest_s']
+            calories = item['factor'] * basal + item['rest_w']
+            self.assertEqual(float(trainee_updated.calories),
+                             round(calories, 1))
