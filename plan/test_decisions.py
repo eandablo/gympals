@@ -24,17 +24,26 @@ class DecisionsTests(TestCase, WorkoutGen, DietGen):
                 muscle_group='BACK',
                 calories_burnt=5
             )
-        # self.test_calc_set = [
-        #     {'sex': 'F', 'goal': 'WL', 'factor': 'rest': -161},
-        #     {'sex': 'F', 'goal': 'MG', 'rest': -161},
-        #     {'sex': 'F', 'goal': 'DF', 'rest': -161},
-        #     {'sex': 'M', 'goal': 'WL', 'rest': 5},
-        #     {'sex': 'M', 'goal': 'MG', 'rest': 5},
-        #     {'sex': 'M', 'goal': 'DF', 'rest': 5},
-        #     {'sex': 'N', 'goal': 'WL', 'rest': -100},
-        #     {'sex': 'N', 'goal': 'MG', 'rest': -100},
-        #     {'sex': 'N', 'goal': 'DF', 'rest': -100}
-        # ]
+        self.test_calc_set = [
+            {'sex': 'F', 'goal': 'WL',
+             'factor': 1.85, 'rest_s': -161, 'rest_w': -500},
+            {'sex': 'F', 'goal': 'MG',
+             'factor': 2.2, 'rest_s': -161, 'rest_w': 15},
+            {'sex': 'F', 'goal': 'DF',
+             'factor': 1.85, 'rest_s': -161, 'rest_w': 15},
+            {'sex': 'M', 'goal': 'WL',
+             'factor': 1.85, 'rest_s': 5, 'rest_w': -500},
+            {'sex': 'M', 'goal': 'MG',
+             'factor': 2.2, 'rest_s': 5, 'rest_w': 15},
+            {'sex': 'M', 'goal': 'DF',
+             'factor': 1.85,  'rest_s': 5, 'rest_w': 15},
+            {'sex': 'N', 'goal': 'WL',
+             'factor': 1.85, 'rest_s': -100, 'rest_w': -500},
+            {'sex': 'N', 'goal': 'MG',
+             'factor': 2.2, 'rest_s': -100, 'rest_w': 15},
+            {'sex': 'N', 'goal': 'DF',
+             'factor': 1.85, 'rest_s': -100, 'rest_w': 15}
+        ]
 
     def test_select_ids(self):
         self.select_ids(self.trainee.name)
@@ -48,11 +57,11 @@ class DecisionsTests(TestCase, WorkoutGen, DietGen):
             calories,
             3 * models.Exercises.objects.get(id=1).calories_burnt)
 
-    # def test_calories_calc(self):
-    #     weight = float(trainee.weight)
-    #     height = float(trainee.height)
-    #     age = float(trainee.age)
-    #     for item in self.test_calc_set:
+    def test_calories_calc(self):
+        weight = float(self.trainee.weight)
+        height = float(self.trainee.height)
+        age = float(self.trainee.age)
+        self.select_ids(self.trainee.name)
+        for item in self.test_calc_set:
 
-        # calories = self.calories_calc(self.trainee.name)
-
+            calories = self.calories_calc(self.trainee.name)
