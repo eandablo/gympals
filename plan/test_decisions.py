@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from . import models
 from .decisions import WorkoutGen, DietGen, workout_calories
+from .decisions import choose_exercises_per_day
 
 
 class DecisionsTests(TestCase, WorkoutGen, DietGen):
@@ -73,3 +74,9 @@ class DecisionsTests(TestCase, WorkoutGen, DietGen):
             calories = item['factor'] * basal + item['rest_w']
             self.assertEqual(float(trainee_updated.calories),
                              round(calories, 1))
+
+    def test_choose_exercises_per_day(self):
+        day = {'day': 1, 'groups': ['BACK', 'BICEPS']}
+        choose_exercises_per_day(self.trainee, day)
+        logs = models.WorkoutLog.objects.filter(trainee=self.trainee)
+        self.assertEqual(len(logs), 3)
