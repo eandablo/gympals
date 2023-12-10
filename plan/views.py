@@ -289,7 +289,9 @@ class UpdateDietLogs(View):
         calories_ideal = trainee.calories
         calories = request.POST.get('diet_input')
         date_today = date.today()
-        if not Diet.objects.filter(created_date=date_today).exists():
+        log_today = Diet.objects.filter(trainee__name=name,
+                                        created_date=today_date).exists()
+        if not log_today:
             Diet.objects.create(trainee=trainee,
                                 calories=calories,
                                 calories_ideal=calories_ideal)
