@@ -36,6 +36,8 @@ ALLOWED_HOSTS = ['8000-eandablo-gympals-ntcj6kyfdz.us2.codeanyapp.com',
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 # Application definition
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
