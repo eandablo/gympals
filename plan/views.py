@@ -113,7 +113,6 @@ class WorkoutView(View, WorkoutGen, DietGen):
             'workout_plan.html',
             {"logs": logs,
              "ids": ids,
-             "update_form": forms.LogExerciseForm(),
              "name": name}
         )
 
