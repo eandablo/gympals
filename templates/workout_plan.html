@@ -58,9 +58,33 @@
                                     </div>
                                     <div class="card-body center-text">
                                         <h5>Log your workout</h5>
-                                        <form method="POST" action="{% url 'update_workout' log.id %}">
-                                        {{ update_form.as_p }} {% csrf_token %}
-                                        <button class="btn btn btn-primary exercise-button" type="submit">Submit</button>
+                                        <form method="POST" action="{% url 'update_workout' log.id %}">                                            
+                                            <div class="row mt-1 mb-1">
+                                                <div class="col">
+                                                    <label for="sets{{log.excercise.name}}">How many sets?</label>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1 mb-1">
+                                                <div class="col">
+                                                    <input id="sets{{log.excercise.name}}" name="sets{{log.excercise.name}}" type="number" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1 mb-1">
+                                                <div class="col">
+                                                    <label for="reps{{log.excercise.name}}">How many reps?</label>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1 mb-1">
+                                                <div class="col">
+                                                    <input id="reps{{log.excercise.name}}" name="reps{{log.excercise.name}}" type="number" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3 mb-1">
+                                                <div class="col">
+                                                    <button class="btn btn btn-primary exercise-button" type="submit">Submit</button>
+                                                </div>
+                                            </div>
+                                            {% csrf_token %}
                                         </form>
                                     </div>
                                 </div>

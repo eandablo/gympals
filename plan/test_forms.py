@@ -94,22 +94,6 @@ class TestUpdateInfoForm(TestCase):
         self.assertEqual(form.errors['height'][0], 'This field is required.')
 
 
-class TestLogExerciseForm(TestCase):
-    def test_sets_actual_is_required(self):
-        form = forms.LogExerciseForm(
-            {'sets_actual': '',
-             'reps_actual': 1}
-        )
-        self.assertFalse(form.is_valid())
-
-    def test_reps_actual_is_required(self):
-        form = forms.LogExerciseForm(
-            {'sets_actual': 1,
-             'reps_actual': ''}
-        )
-        self.assertFalse(form.is_valid())
-
-
 class TestCreateExerciseForm(TestCase):
     def test_name_is_required(self):
         form = forms.CreateExerciseForm(

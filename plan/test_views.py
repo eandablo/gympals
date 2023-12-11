@@ -130,9 +130,12 @@ class UserViewsWorkoutRelated(TestCase, DietGen):
             completed=False,
             excercise=my_exercise
         )
-        response = self.client.post(f'/update/{log.id}',
-                                    {'sets_actual': 3,
-                                     'reps_actual': 12})
+        key_1 = 'sets' + log.excercise.name
+        key_2 = 'reps' + log.excercise.name
+        response = self.client.post(
+            f'/update/{log.id}',
+            {key_1: 3,
+             key_2: 12})
         updated_log = models.WorkoutLog.objects.get(id=1)
         self.assertEqual(updated_log.sets_actual, 3)
         self.assertEqual(updated_log.reps_actual, 12)

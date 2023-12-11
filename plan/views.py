@@ -59,6 +59,8 @@ class HomeView(View, SiteAnalysis):
         info_form = forms.TraineeInfoForm(data=request.POST)
         new_trainee = request.user
         info_exists = False
+        names = TraineeInfo.objects.values_list('name')
+
         if info_form.is_valid():
             info = info_form.save(commit=False)
             info.trainee = new_trainee
@@ -67,7 +69,7 @@ class HomeView(View, SiteAnalysis):
             trainee = get_object_or_404(TraineeInfo, trainee=request.user)
             messages.success(request, 'Information Succesfully Added')
         else:
-            messages.error(request, 'Information Not Valid')
+            messages.error(request, 'Name already exists')
             return render(
                 request,
                 'index.html',
@@ -123,13 +125,13 @@ class LogWorkout(View):
     '''
     def post(self, request, log_id, *args, **kwargs):
         log = get_object_or_404(WorkoutLog, id=log_id)
-        form = forms.LogExerciseForm(data=request.POST, instance=log)
-        if form.is_valid():
-            form.instance.completed = True
-            form.save()
-            messages.success(request, 'Your workout was logged')
-        else:
-            messages.error(request, 'Reps and Sets must be positive integers')
+        sets = request.POST.get('sets' + log.excercise.name)
+        reps = request.POST.get('reps' + log.excercise.name)
+        print(reps)
+        log.sets_actual = int(sets)
+        log.reps_actual = int(reps)
+        log.completed = True
+        log.save()
         # If the last exercise is logged, it redirects to home
         # otherwise redirects to workout plan
         if WorkoutLog.objects.filter(trainee=log.trainee, completed=False):
@@ -236,7 +238,10 @@ class DLogViews(View):
         paginator = Paginator(logs, 5)
         page_obj = paginator.get_page(page)
         # Variable to display diet log input
-        up_to_date = False
+        if trainee.calories:
+            up_to_date = False
+        else:
+            up_to_date = True
         today_date = date.today()
         log_today = Diet.objects.filter(trainee__name=name,
                                         created_date=today_date).exists()
