@@ -4,6 +4,74 @@ Gympal is an app desinged to assist you with your workout, giving you exercise a
 Additionally, it allows you to log information about your workout and calorie intake in order to track
 your progress.
 
+[You can visit the deployed proyect here](https:)
+
+## User Stories
+
+- As a New User I can a welcome page on entering the app with enough information so that I understand the GOAL of this app.
+- As a New User I can a link to subscribe in the welcome page so that I can receive help with my workout.
+- As a new User I can enter my user name and password in a new page so that I can subscribe.
+- As a New User I can provide essential information as soon as I subscribe so that I can receive personalised workouts.
+- As a Regular User I can select an action so that update information, see workout plan, or my previous workout logs.
+- As a User I can receive a workout plan so that I can achieve my goals.
+- As a Regular User I can receive a diet plan so that I can complement my workout plan with the appropriate calory intake.
+- As a Regular User I can see my workout plan so that perform my regular exercise.
+- As a Regular User I can login to the app so that I can use the app benefits.
+- As a User I can log reps and sets for each exercise so that I can keep track of my progress.
+- As a User I can log my daily calorie intake so that I keep track how my diet affects my progress.
+- As a User I can filter diet/workout logs by updated date so that I can narrow down my search to the most relevant entries.
+- As a Admin I can update the list of available exercises so that the app offers the best workouts to users.
+- As a User/Admin I can see messages indicating success login, form completion so that I am sure my actions have been successful.
+- As a User/Admin I can see well stylised so that feel a sense of professionalism when navigating the app.
+- As a User I can See All my Logs Paginated so that I can see more comfortably my logs.
+- As a Admin I can see the number of trainees assigned a specific exercise so that I can decide if the exercise is worth keeping before editing or deleting.
+- As a Admin I can edit specific exercises so that I can keep the exercise catalogue up to date.
+- As a Admin I can delete specific exercise so that I can rid off exercises that are no in use anymore.
+- As a Admin I can see a measure of average user performance so that I have an idea of how effective the advice to trainees is.
+- As a User I can clearly see the amounts of daily calories recommended so that Complement my workout with an appropriate diet.
+- As a user I can see the calories update log only if needed so that the diet logs are clearer.
+- As a User/Admin I can use easily accessible links so that I can navigate through the website without using browser arrows.
+- As a User/Admin I can see a message if form submission or related procedure failed so that I understand why submission was unsuccessful.
+
+## Features
+
+### Responsiveness
+
+- Responsive to multiple devices.
+  
+## Database Models
+
+Gympals database  total of four original models interconnected via one-to-one or one-to-many relationships.
+
+## Technologies Used
+
+### Languages Used
+
+- HTML5
+- CSS3
+- Javascrypt
+- Python
+- PostgreSQL
+
+### Frameworks, Libraries & Programs Used
+
+#### Frameworks
+
+1. [Django:] The app was created using Django v3.2.23.
+2. [Bootstrap:] The app was styled using Bootstrap 5.3.
+
+#### Libraries
+
+1. [Google Fonts:](https://fonts.google.com/) Roboto and Exo fonts were imported to CSS stylesheet from Google fonts.
+2. [Python libraries: random, datetime]
+
+#### Programs
+
+1. [GitHub:](https://github.com/) GitHub is used to store the projects code after being pushed from Codeanywhere.
+2. [Codeanywhere:](https://app.codeanywhere.com/) Codeanywhere was used to create website content.
+3. [ElephantSQL:] Database gympal was hosted in Elephant SQL(https://www.elephantsql.com/).
+4. [Cloudinary:] Cloudinary was used to store images uploaded through the app.
+
 ## Testing
 
 ### Python sintaxis
@@ -15,7 +83,46 @@ All python code in plan app was validated using the PEP8 validator provided by t
 A 85% coevarege of plan app code was achieved using automated testing. Views and code in decisions.py using distinct instance
 couldn't be tested since this order is not supported in the local database. These features are covered in user stories testing. 
 
-![automated-testing](static/images/automated_testing.png)
+![automated_testing](static/images/automated_testing.png)
+
+### Testing Based on User Stories
+
+- On entering the app I found a welcome page on entering the app with enough information to understand the goal of GYMPALS.
+
+On the one hand, the hero image in the welcome page delivers a clear message the app is related to fitness.
+
+![Welcome_new_user_top](static/images/home_not_logged.png)
+
+On the other hand, the benefits section provides implicit information on what to expect from this app.
+
+![Welcome_new_user_top](static/images/home_not_logged_footer.png)
+
+- A link to subscribe is found in the welcome page.
+
+Links to signup or login to the app are provided on the top as a navigation bar and at the bottom of the welcome page in a separate section.
+The footer also provides links to social media pages.
+
+- Sign up page provides inputs to enter my user name and password so that I can subscribe.
+
+The sign up page features the same hero image and navigation bar as the welcome page for consistency. A simple form is provided to enter username and password with option to enter email.
+
+![suscribe_page](static/images/sign_up_page_bottom.png)
+
+- After sign-up, the new user is redirected to a form to provide essential information as soon as I subscribe so they can receive personalised workouts.
+  
+Navigation bar of this page is limited to home and log out link. The form provides fields for name, age, height, weight, sex and goal. Information important to create
+appropriate advice.
+
+![info_form_top](static/images/sign_up_info_form_top.png)
+
+Fields for sex and goal are pre-populated with options.
+
+![info_form_sex](static/images/sign_up_info_form_sexchoices.png)
+![info_form_goal](static/images/sign_up_info_form_goalchoices.png)
+
+### Bugs
+
+No bugs were found during extensive testing of the deployed app.
 
 ## Deployment
 
@@ -53,3 +160,5 @@ By forking the GitHub Repository we make a copy of the original repository on ou
 - Python code was created by Efren Andablo Reyes
 
 - Acknowldgement to my mentor Dario for his great guidance diring this project development
+
+- Website images were downloaded from Pexels.com
