@@ -78,7 +78,7 @@
                               <p class="card-text card-div">Please update your info regularly</p>
                               <a class="btn btn btn-primary btn-lg" href="{% url 'info_update' trainee.name %}">Go to form</a>
                             </div>
-                          </div>
+                        </div>
                     </div>
                     <div class="col-md-5 m-1">
                         <div class="card">
@@ -88,7 +88,7 @@
                               <p class="card-text card-div">See your workout plan and register your work</p>
                               <a class="btn btn btn-primary btn-lg" href="{% url 'workout_plan' trainee.name %}">See Plan</a>
                             </div>
-                          </div>
+                        </div>
                         
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                               <p class="card-text card-div">Update your calories intake and track your diet</p>
                               <a class="btn btn btn-primary btn-lg" href="{% url 'dlogs_view' name=trainee.name page=1 %}">See Logs</a>
                             </div>
-                          </div>
+                        </div>
                     </div>
                     <div class="col-md-5 m-1">
                         <div class="card">
@@ -111,8 +111,7 @@
                               <p class="card-text card-div">See your workout progress in time</p>
                               <a class="btn btn btn-primary btn-lg" href="{% url 'wlogs_view' name=trainee.name page=1 %}">See Logs</a>
                             </div>
-                          </div>
-                        
+                        </div>
                     </div>
                 </div>
             </div>
@@ -178,8 +177,7 @@
                 <p>If you are already registererd for our service</p>
             </div>
             <div>
-                <p class="mt-2 mb-2"><a href="{% url 'account_login' %}" class="btn btn btn-primary"
-                    href="{% url 'account_login' %}">Login</a>
+                <p class="mt-2 mb-2"><a href="{% url 'account_login' %}" class="btn btn btn-primary">Login</a>
             </p>
             </div>
         </div>
@@ -189,7 +187,7 @@
                 <p>If you want to start receiving GYMPAL benefits</p>
             </div>            
             <div>
-                <p class="mt-2 mb-2"><a href="{% url 'account_signup' %}" class="btn btn btn-primary" href="{% url 'account_login' %}">Join Us</a></p> 
+                <p class="mt-2 mb-2"><a href="{% url 'account_signup' %}" class="btn btn btn-primary">Join Us</a></p> 
             </div>
         </div>
     </div>
