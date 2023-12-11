@@ -36,15 +36,7 @@
     height: 75px;
 }
 
-.side-margin-auto{
-    margin: 0 auto 0 auto;
-}
-
 /* base.html */
-
-main {
-    min-height: 100vh;
-}
 
 .whole-screen{
     min-height: 100vh;
