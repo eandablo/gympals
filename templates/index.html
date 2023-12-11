@@ -85,7 +85,7 @@
                             <img src="{% static 'images/dumbells.jpg' %}" class="card-img-top" alt="dumbells in rack">
                             <div class="card-body">
                               <h5 class="card-title">Workout Plan</h5>
-                              <p class="card-text card-div">Follow your workout plan as close as possible</p>
+                              <p class="card-text card-div">See your workout plan and register your work</p>
                               <a class="btn btn btn-primary btn-lg" href="{% url 'workout_plan' trainee.name %}">See Plan</a>
                             </div>
                           </div>
@@ -98,7 +98,7 @@
                             <img src="{% static 'images/diet.jpg' %}" class="card-img-top" alt="dish of yogurt and granola">
                             <div class="card-body">
                               <h5 class="card-title">Diet Logs</h5>
-                              <p class="card-text card-div">Track your calories to complement workout plan</p>
+                              <p class="card-text card-div">Update your calories intake and track your diet</p>
                               <a class="btn btn btn-primary btn-lg" href="{% url 'dlogs_view' name=trainee.name page=1 %}">See Logs</a>
                             </div>
                           </div>
