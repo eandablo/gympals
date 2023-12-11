@@ -120,6 +120,11 @@ Fields for sex and goal are pre-populated with options.
 ![info_form_sex](static/images/sign_up_info_form_sexchoices.png)
 ![info_form_goal](static/images/sign_up_info_form_goalchoices.png)
 
+- As Regular User I have a dahsbord immediately after sign-up or loging in with links to update information, see workout plan, or my previous workout logs.
+
+![dashboard_top](static/images/)
+![dashboard_bottom](static/images/)
+
 ### Bugs
 
 No bugs were found during extensive testing of the deployed app.

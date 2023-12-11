@@ -192,10 +192,15 @@ class DLogViews(View):
     def get(self, request, name, page, *args, **kwargs):
         log_type = 'diet'
         logs = Diet.objects.filter(trainee__name=name)
+        trainee = TraineeInfo.objects.get(name=name)
         paginator = Paginator(logs, 5)
         page_obj = paginator.get_page(page)
         # Variable to display diet log input
-        up_to_date = False
+        if trainee.calories:
+            up_to_date = False
+        else:
+            up_to_date = True
+
         today_date = date.today()
         log_today = Diet.objects.filter(trainee__name=name,
                                         created_date=today_date).exists()
