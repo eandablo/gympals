@@ -18,10 +18,9 @@ your progress.
 - As a Regular User I can login to the app so that I can use the app benefits.
 - As a User I can log reps and sets for each exercise so that I can keep track of my progress.
 - As a User I can log my daily calorie intake so that I keep track how my diet affects my progress.
-- As a User I can filter diet/workout logs by updated date so that I can narrow down my search to the most relevant entries.
+- As a User I can see/filter diet/workout logs by updated date so that I can narrow down my search to the most relevant entries.
 - As a Admin I can update the list of available exercises so that the app offers the best workouts to users.
 - As a User/Admin I can see messages indicating success login, form completion so that I am sure my actions have been successful.
-- As a User/Admin I can see well stylised so that feel a sense of professionalism when navigating the app.
 - As a User I can See All my Logs Paginated so that I can see more comfortably my logs.
 - As a Admin I can see the number of trainees assigned a specific exercise so that I can decide if the exercise is worth keeping before editing or deleting.
 - As a Admin I can edit specific exercises so that I can keep the exercise catalogue up to date.
@@ -163,11 +162,36 @@ The user can update their calorie intake once per day using the input provided i
 
 ![calories_input](static/images/diet_logs_view_asking_update_top.png)
 
-- As a User I can filter diet/workout logs by updated date so that I can narrow down my search to the most relevant entries.
+- As a User I can see/filter diet/workout logs by updated date so that I can narrow down my search to the most relevant entries.
 
-The user is provided with a way to filter the logs by dates they were created simply by chosing dates in the form shown bellow and submiting the form. The clear bottom resets the the page and shows all entries.
+The users can see their past workout 
 
-![logs_filter](static/images/logs_filter.png)
+![workout_logs](static/images/workout_log_view.png)
+
+or calorie intake logs by clicking on the links provided in the dashboard or navigation bar.
+
+![diet_logs](static/images/diet_log_view.png)
+
+The user is provided with a way to filter the logs by dates they were created simply by chosing dates in the form shown bellow and submiting the form. The clear bottom resets the the page and shows all entries. An example for the diet logs is provided below, filtering dates between 11th  and 12th of september (Excluding the 10th).
+
+![diet_logs_filtered](static/images/diet_logs_filtered.png)
+
+- As a User I can See All my Logs Paginated so that I can see more comfortably my logs.
+
+The logs are displayed in pages with 10 logs each. The pages are accessible using the quick numbered links below the records.
+
+![workout_logs_pagination](static/images/workout_log_view_paginated.png)
+
+- As a Admin I can see the number of trainees assigned a specific exercise so that I can decide if the exercise is worth keeping before editing or deleting.
+
+User with admin permission (staff) have a different dashboard where they have analytical numbers whwoing the performance of the website, along with
+links to see the exercise catalogs.
+
+![admin_dashboard](static/images/admin_dashboard_top.png)
+
+- As a Admin I can update the list of available exercises so that the app offers the best workouts to users.
+
+Only users with admin privi
 
 ### Bugs
 
