@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from .decisions import WorkoutGen, DietGen, SiteAnalysis
 from django.contrib import messages
 from django.core.paginator import Paginator
-from datetime import date
+from datetime import date, timedelta
 
 
 class HomeView(View, SiteAnalysis):
@@ -145,9 +145,11 @@ class WLogViews(View):
     '''
     def get(self, request, name, page, *args, **kwargs):
         log_type = 'workout'
-        logs = WorkoutLog.objects.filter(trainee__name=name, completed=True)
+        logs = WorkoutLog.objects.order_by('created_date').filter(
+            trainee__name=name, completed=True)
         paginator = Paginator(logs, 5)
         page_obj = paginator.get_page(page)
+
         return render(
             request,
             'logs_view.html',
@@ -164,14 +166,15 @@ class WLogViews(View):
         log_type = 'workout'
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
-        if start_date < end_date:
-            logs = WorkoutLog.objects.filter(trainee__name=name,
-                                             completed=True,
-                                             logged_date__range=[start_date,
-                                                                 end_date])
+        if start_date <= end_date:
+            logs = WorkoutLog.objects.order_by(
+                'created_date').filter(trainee__name=name,
+                                       completed=True,
+                                       logged_date__range=[start_date,
+                                       end_date])
         else:
             messages.info(request, 'Start date should predate the End date')
-            logs = WorkoutLog.objects.filter(
+            logs = WorkoutLog.objects.order_by('created_date').filter(
                 trainee__name=name, completed=True)
 
         paginator = Paginator(logs, 5)
@@ -191,7 +194,7 @@ class DLogViews(View):
     '''
     def get(self, request, name, page, *args, **kwargs):
         log_type = 'diet'
-        logs = Diet.objects.filter(trainee__name=name)
+        logs = Diet.objects.order_by('created_date').filter(trainee__name=name)
         trainee = TraineeInfo.objects.get(name=name)
         paginator = Paginator(logs, 5)
         page_obj = paginator.get_page(page)
@@ -224,18 +227,20 @@ class DLogViews(View):
         log_type = 'diet'
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
-        if start_date < end_date:
-            logs = Diet.objects.filter(trainee__name=name,
-                                       logged_date__range=[start_date,
+        if start_date <= end_date:
+            logs = Diet.objects.order_by(
+                'created_date').filter(trainee__name=name,
+                                       created_date__range=[start_date,
                                                            end_date])
         else:
-            logs = Diet.objects.filter(
-                trainee__name=name)
+            logs = Diet.objects.order_by(
+                'created_date').filter(trainee__name=name)
             messages.info(request, 'Start date should predate the End date')
 
         paginator = Paginator(logs, 5)
         page_obj = paginator.get_page(page)
         # Variable to display diet log input
+        trainee = TraineeInfo.objects.get(name=name)
         if trainee.calories:
             up_to_date = False
         else:

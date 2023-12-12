@@ -2,6 +2,7 @@
 {% block content %}
 
 <div class="container mb-4">
+    <!-- Displays an input to log calories -->
     {% if log_type == 'diet' %}
     {% if not up_to_date %}
     
@@ -34,11 +35,14 @@
     </div>
     {% endif %}
     {% endif %}
+
+    <!-- The logs display starts here -->
     <div class="row mt-4 mb-4">
         <div class="col-md-8 offset-md-2 bg-primary center-text white-medium-text">
             <h2>YOUR {{ log_type|upper }} LOGS</h2>
         </div>
     </div>
+    <!-- Displays date inputs to narrow searches -->
     <div class="row mb-4 mt-4">
         <div class="col-md-6 offset-md-3 center-text border">
             <div class="row">
@@ -54,13 +58,13 @@
                 <div class="row mt-3 mb-3">
                     <div class="col-md-6 offset-md-3">
                         <label for="start-date">Start Date</label>
-                        <input type="date" id="start-date" name="start_date">
+                        <input type="date" id="start-date" name="start_date" required>
                     </div>
                 </div>
                 <div class="row mt-3 mb-3">
                     <div class="col-md-6 offset-md-3">
                         <label for="start-date">End Date</label>
-                        <input type="date" id="end-date" name="end_date">
+                        <input type="date" id="end-date" name="end_date" required> 
                     </div>
                 </div>
                 <div class="row mt-3 mb-3">
@@ -73,6 +77,7 @@
         </div>
     </div>
     {% if logs %}
+    <!-- This contains table element for either workout or diet logs -->
     {% if log_type == "workout" %}
     <table class="table">
         <thead>
@@ -116,13 +121,31 @@
         </tbody>
     </table>
     {% endif %}
+    <!-- Logs display finishes -->
+    <!-- Pages controls starts here -->
     <div class="row">
         <div class="col-md-8 offset-md-2">
             {% if logs.has_other_pages %}
             <nav aria-label="Pagination Nav">
                 <ul class="pagination">
                     {% for i in logs.paginator.page_range %}
+                    <!-- For workout view-->
+                    {% if log_type == "workout" %}
+                    <!-- Deciding the active page -->
+                    {% if logs.number == i %}
+                    <li class="page-item active"><a class="page-link" href="{% url 'wlogs_view' name=name page=i %}">{{ i }}</a></li>
+                    {% else %}
                     <li class="page-item"><a class="page-link" href="{% url 'wlogs_view' name=name page=i %}">{{ i }}</a></li>
+                    {% endif %}
+                    {% else %}
+                    <!-- For diet view-->
+                    <!-- Deciding the active page -->
+                    {% if logs.number == i %}
+                    <li class="page-item active"><a class="page-link" href="{% url 'dlogs_view' name=name page=i %}">{{ i }}</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="{% url 'dlogs_view' name=name page=i %}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endif %}
                     {% endfor %}
                 </ul>
             </nav>
