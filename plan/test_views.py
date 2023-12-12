@@ -130,8 +130,8 @@ class UserViewsWorkoutRelated(TestCase, DietGen):
             completed=False,
             excercise=my_exercise
         )
-        key_1 = 'sets' + log.excercise.name
-        key_2 = 'reps' + log.excercise.name
+        key_1 = 'sets' + log.identifier
+        key_2 = 'reps' + log.identifier
         response = self.client.post(
             f'/update/{log.id}',
             {key_1: 3,
