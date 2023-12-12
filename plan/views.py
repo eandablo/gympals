@@ -341,9 +341,14 @@ class CatalogView(View):
     '''
     def post(self, request, *args, **kwargs):
         exercise_form = forms.CreateExerciseForm(request.POST, request.FILES)
-        if exercise_form.is_valid:
+        logs = Exercises.objects.all()
+        names_top = logs.values_list('name')
+        names = [name[0] for name in names_top]
+        if exercise_form.is_valid():
             exercise_form.save()
             messages.success(request, 'New Exercise Added')
+        else:
+            messages.error(request, 'Name already exists')
         groups = Exercises.objects.order_by(
             'muscle_group').values_list(
                 'muscle_group').distinct('muscle_group')

@@ -51,7 +51,7 @@ p {
 
 /* base.html */
 
-.whole-screen{
+main{
     min-height: 100vh;
 }
 

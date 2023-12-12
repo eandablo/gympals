@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['8000-eandablo-gympals-lbiysvmukp.us2.codeanyapp.com',
+ALLOWED_HOSTS = ['8000-eandablo-gympals-dzo2g8aspf.us2.codeanyapp.com',
                  'gympals-6af3102877bb.herokuapp.com']
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
