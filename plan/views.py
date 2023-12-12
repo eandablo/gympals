@@ -124,9 +124,8 @@ class LogWorkout(View):
     '''
     def post(self, request, log_id, *args, **kwargs):
         log = get_object_or_404(WorkoutLog, id=log_id)
-        sets = request.POST.get('sets' + log.excercise.name)
-        reps = request.POST.get('reps' + log.excercise.name)
-        print(reps)
+        sets = request.POST.get('sets' + str(log.identifier))
+        reps = request.POST.get('reps' + str(log.identifier))
         log.sets_actual = int(sets)
         log.reps_actual = int(reps)
         log.completed = True

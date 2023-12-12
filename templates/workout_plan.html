@@ -61,22 +61,22 @@
                                         <form method="POST" action="{% url 'update_workout' log.id %}">                                            
                                             <div class="row mt-1 mb-1">
                                                 <div class="col">
-                                                    <label for="sets{{log.excercise.name}}">How many sets?</label>
+                                                    <label for="sets{{log.identifier}}">How many sets?</label>
                                                 </div>
                                             </div>
                                             <div class="row mt-1 mb-1">
                                                 <div class="col">
-                                                    <input id="sets{{log.excercise.name}}" name="sets{{log.excercise.name}}" type="number" required>
+                                                    <input id="sets{{log.identifier}}" name="sets{{log.identifier}}" type="number" required>
                                                 </div>
                                             </div>
                                             <div class="row mt-1 mb-1">
                                                 <div class="col">
-                                                    <label for="reps{{log.excercise.name}}">How many reps?</label>
+                                                    <label for="reps{{log.identifier}}">How many reps?</label>
                                                 </div>
                                             </div>
                                             <div class="row mt-1 mb-1">
                                                 <div class="col">
-                                                    <input id="reps{{log.excercise.name}}" name="reps{{log.excercise.name}}" type="number" required>
+                                                    <input id="reps{{log.identifier}}" name="reps{{log.identifier}}" type="number" required>
                                                 </div>
                                             </div>
                                             <div class="row mt-3 mb-1">
