@@ -147,7 +147,7 @@ class WLogViews(View):
         log_type = 'workout'
         logs = WorkoutLog.objects.order_by('created_date').filter(
             trainee__name=name, completed=True)
-        paginator = Paginator(logs, 5)
+        paginator = Paginator(logs, 10)
         page_obj = paginator.get_page(page)
 
         return render(
@@ -177,7 +177,7 @@ class WLogViews(View):
             logs = WorkoutLog.objects.order_by('created_date').filter(
                 trainee__name=name, completed=True)
 
-        paginator = Paginator(logs, 5)
+        paginator = Paginator(logs, 10)
         page_obj = paginator.get_page(page)
         return render(
             request,
@@ -196,7 +196,7 @@ class DLogViews(View):
         log_type = 'diet'
         logs = Diet.objects.order_by('created_date').filter(trainee__name=name)
         trainee = TraineeInfo.objects.get(name=name)
-        paginator = Paginator(logs, 5)
+        paginator = Paginator(logs, 10)
         page_obj = paginator.get_page(page)
         # Variable to display diet log input
         if trainee.calories:
@@ -237,7 +237,7 @@ class DLogViews(View):
                 'created_date').filter(trainee__name=name)
             messages.info(request, 'Start date should predate the End date')
 
-        paginator = Paginator(logs, 5)
+        paginator = Paginator(logs, 10)
         page_obj = paginator.get_page(page)
         # Variable to display diet log input
         trainee = TraineeInfo.objects.get(name=name)

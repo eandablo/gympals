@@ -70,8 +70,14 @@
                 <div class="row mt-3 mb-3">
                     <div class="col-md-6 offset-md-3">
                         <button class="btn btn-primary" type="submit">Search</button>
+                        {% if log_type == 'workout' %}
+                        <a class="btn btn-primary" href="{% url 'wlogs_view' name=name page=1 %}">Clear</a>
+                        {% else %}
+                        <a class="btn btn-primary" href="{% url 'dlogs_view' name=name page=1 %}">Clear</a>
+                        {% endif %}
                     </div>
                 </div>
+                
                 {% csrf_token %}
             </form>    
         </div>
