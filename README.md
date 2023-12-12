@@ -191,7 +191,17 @@ links to see the exercise catalogs.
 
 - As a Admin I can update the list of available exercises so that the app offers the best workouts to users.
 
-Only users with admin privi
+Only users with admin privilages can edit the list of exercises available in the app. The app uses this list to generate the workout plans of the regular
+users automatically. On pushing the catalog button or the navbar link of the admin dashboard, the admin is redirected to a new page with options to see the catalog or add new exercises.
+
+![admin_catalog_view](static/images/admin_catalog_collapsed.png)
+
+A button is provided to display a form to add exercises as shown below.
+
+![admin_add_exercise](static/images/admin_catalog_add_exercise.png)
+
+- As a User/Admin I can see messages indicating success login, form completion so that I am sure my actions have been successful.
+
 
 ### Bugs
 
