@@ -59,7 +59,7 @@ Gympals database  total of four original models interconnected via one-to-one or
 #### Libraries
 
 1. [Google Fonts:](https://fonts.google.com/) Roboto and Exo fonts were imported to CSS stylesheet from Google fonts.
-2. [Python libraries: random, datetime]
+2. Python libraries: random, datetime
 
 #### Programs
 
@@ -76,7 +76,7 @@ All python code in plan app was validated using the PEP8 validator provided by t
 
 ### Automated testing (Unittest)
 
-A 85% coevarege of plan app code was achieved using automated testing. Code in views.py and decisions.py using distinct method
+A 83% coevarege of plan app code was achieved using automated testing. Code in views.py and decisions.py using distinct method
 couldn't be tested since this order is not supported in the local database. These features are covered in user stories testing.
 
 ![automated_testing](static/images/automated_testing.png)
@@ -200,6 +200,23 @@ A button is provided to display a form to add exercises as shown below.
 
 ![admin_add_exercise](static/images/admin_catalog_add_exercise.png)
 
+- As a Admin I can edit specific exercises so that I can keep the exercise catalogue up to date.
+
+The exercise catalog button displays the available exercises in accordion elements divided by muscular group. 
+
+![admin_catalog_show](static/images/admin_catalog_catalog_accordion.png)
+
+To edit/delete an exercise, the admin must click on the exercise name  and immidiately wil be prompted to a new page
+with exercise details, with a prepopulated form with exercise details. The form can be use to edit details.
+
+![admin_edit_exercise](static/images/admin_edit_exercise.png)
+
+- As a Admin I can delete specific exercise so that I can rid off exercises that are no in use anymore.
+
+The same page, displays a form to delete the exercise. For this, the admin must write the exercise name in the iput field.
+
+![admin_delete_exercise](static/images/admin_delete_exercise.png)
+
 - As a User/Admin I can see messages indicating success login, form completion so that I am sure my actions have been successful.
 
 As mentioned above, a new user is first asked to provide personal information to receive appropriate advice, on submitting the form the user receives a message
@@ -211,18 +228,34 @@ When succesfully logged in a message is conveyed to the user:
 
 ![user_login_message](static/images/succesfull_login_message.png)
 
+On logging out the user also receives a message:
+
+![log_out_message](static/images/logout_message.png)
+
 When users succesfully submit the workout form an exercise they receive a message indicating succes as shown below:
 
 ![user_exercise_log_message](static/images/exercise_logged_message.png)
 
 Admin is able to add new exercise to the catalog, on correctly filling and submiting the form, the admin receives a success message:
 
-![admin_add_exercise_success](static/imgaes/admin_add_new_exercise.png)
+![admin_add_exercise_success](static/images/admin_add_new_exercise.png)
 
 On the other hand, the exercise name must be unique, if the admin attempts to sumbit a new exercise with name already existing in the catalog, the
 submission is rejected and an error message is produced:
 
 ![admin_add_exercise_error](static/images/admin_catalog_add_exercise_error.png)
+
+Admin can edit exercise details, on succesfully changing an exercise details, a success message is displayed:
+
+![admin_edit_exercise_success](static/images/admin_edit_exercise_success.png)
+
+Admin can erase an exercise, but to do so must provide an input. If the wrong input is provided an error message is displayed:
+
+![admin_delete_exercise_error](static/images/admin_delete_exercise_error.png)
+
+On the other hand, if the exercise is succesfully deleted, a success message is displayed:
+
+![admin_delete_exercise_success](static/images/admin_delete_exercise_success.png)
 
 ### Bugs
 
