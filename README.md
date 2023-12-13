@@ -331,10 +331,11 @@ By forking the GitHub Repository we make a copy of the original repository on ou
 
 ## Credits
 
-- Code Institute for providing the mock template user for this project deployement
-
 - Python code was created by Efren Andablo Reyes
+
+- Several Bootstrap elements were used, where the code provided in [Bootstrap website](https://getbootstrap.com/) was slightly modified to
+fit this proyect.
 
 - Acknowldgement to my mentor Dario for his great guidance diring this project development
 
-- Website images were downloaded from Pexels.com
+- Website images were downloaded from [Pexels](https://www.pexels.com/)
