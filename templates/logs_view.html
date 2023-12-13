@@ -22,7 +22,7 @@
                 </div>
                 <div class="row mt-3 mb-3">
                     <div class="col">
-                        <input id="diet_input" name="diet_input" type="text" required>
+                        <input id="diet_input" name="diet_input" type="number" required>
                     </div>
                 </div>
                 <div class="row mt-3 mb-3">
@@ -147,9 +147,9 @@
                     <!-- For diet view-->
                     <!-- Deciding the active page -->
                     {% if logs.number == i %}
-                    <li class="page-item active"><a class="page-link" href="{% url 'dlogs_view' name=name page=i %}">{{ i }}</a></li>
+                    <li class="page-item active"><a class="page-link" href="{% url 'dlogs_p_view' name=name page=i %}">{{ i }}</a></li>
                     {% else %}
-                    <li class="page-item"><a class="page-link" href="{% url 'dlogs_view' name=name page=i %}">{{ i }}</a></li>
+                    <li class="page-item"><a class="page-link" href="{% url 'dlogs_p_view' name=name page=i %}">{{ i }}</a></li>
                     {% endif %}
                     {% endif %}
                     {% endfor %}

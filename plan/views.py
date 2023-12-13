@@ -196,6 +196,10 @@ class WLogViews(View):
 
 
 class PaginationWViews(View):
+    '''
+    Handles pagination by recalling data stored by WLogViews 
+    in dictionary logs_page['w']
+    '''
     def get(self, request, name, page, *args, **kwargs):
         page_obj = logs_page['w'].get_page(page)
         return render(
@@ -215,8 +219,8 @@ class DLogViews(View):
         log_type = 'diet'
         logs = Diet.objects.order_by('created_date').filter(trainee__name=name)
         trainee = TraineeInfo.objects.get(name=name)
-        paginator = Paginator(logs, 10)
-        page_obj = paginator.get_page(page)
+        logs_page['d'] = Paginator(logs, 2)
+        page_obj = logs_page['d'].get_page(page)
         # Variable to display diet log input
         if trainee.calories:
             up_to_date = False
@@ -250,14 +254,14 @@ class DLogViews(View):
             logs = Diet.objects.order_by(
                 'created_date').filter(trainee__name=name,
                                        created_date__range=[start_date,
-                                                           end_date])
+                                                            end_date])
         else:
             logs = Diet.objects.order_by(
                 'created_date').filter(trainee__name=name)
             messages.info(request, 'Start date should predate the End date')
 
-        paginator = Paginator(logs, 10)
-        page_obj = paginator.get_page(page)
+        logs_page['d'] = Paginator(logs, 2)
+        page_obj = logs_page['d'].get_page(page)
         # Variable to display diet log input
         trainee = TraineeInfo.objects.get(name=name)
         if trainee.calories:
@@ -275,6 +279,34 @@ class DLogViews(View):
             'logs_view.html',
             {"logs": page_obj,
              "log_type": log_type,
+             "name": name,
+             "up_to_date": up_to_date}
+        )
+
+
+class PaginationDViews(View):
+    '''
+    Handles pagination by recalling data stored by DLogViews 
+    in dictionary logs_page['d']
+    '''
+    def get(self, request, name, page, *args, **kwargs):
+        page_obj = logs_page['d'].get_page(page)
+        trainee = TraineeInfo.objects.get(name=name)
+        if trainee.calories:
+            up_to_date = False
+        else:
+            up_to_date = True
+        today_date = date.today()
+        log_today = Diet.objects.filter(trainee__name=name,
+                                        created_date=today_date).exists()
+        if log_today:
+            up_to_date = True
+
+        return render(
+            request,
+            'logs_view.html',
+            {"logs": page_obj,
+             "log_type": 'diet',
              "name": name,
              "up_to_date": up_to_date}
         )
