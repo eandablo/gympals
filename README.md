@@ -4,7 +4,7 @@ Gympal is an app desinged to assist you with your workout, giving you exercise a
 Additionally, it allows you to log information about your workout and calorie intake in order to track
 your progress.
 
-[You can visit the deployed proyect here](https:)
+[You can visit the deployed proyect here](https://gympals-6af3102877bb.herokuapp.com/)
 
 ## User Stories
 
@@ -69,6 +69,45 @@ Gympals database  total of four original models interconnected via one-to-one or
 4. [Cloudinary:](https://cloudinary.com/) Cloudinary was used to store images uploaded through the app.
 
 ## Testing
+
+### W3C Validation
+
+HTML5, CSS3 were checked using the W3C valitadors.
+
+- HTML
+
+No errors or warnings were found in the following pages:
+
+[Home](https://validator.w3.org/nu/?doc=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2F)
+
+[Workout_plan](https://validator.w3.org/nu/?doc=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2Fplan%2FEfren)
+
+[Workout_records](https://validator.w3.org/nu/?doc=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2Fworkoutlogs%2FEfren%2F1)
+
+[Diet_records](https://validator.w3.org/nu/?doc=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2Fdietlogs%2FEfren%2F1)
+
+[Logout](https://validator.w3.org/nu/?doc=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2Faccounts%2Flogout%2F)
+
+[Admin_catalog](https://validator.w3.org/nu/?doc=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2Fcatalog)
+
+[Edit_exercise](https://validator.w3.org/nu/?doc=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2Fedit_exercise%2F4)
+
+The following issues were found related to the Django framework:
+
+The sign up page showed an error related to elements not implicit in the html code. More specifically, the issue seems to be related to the list
+contained in the allauth form. Not declared explicitly.
+
+[Signup](https://validator.w3.org/nu/?doc=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2Faccounts%2Fsignup%2F)
+
+The update_info.html was not accesible by the validator. The code was thoroughly inspected by the developer and no errors were found.
+
+[Update_info](https://validator.w3.org/nu/?doc=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2Finfo%2FEfren)
+
+- CSS3
+
+The app is mostly styled using bootstrap. The CCS3 validator found some errors related with Bootstrap, but static CSS showed no errors or warnings.
+
+[Boostrap errors](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
 
 ### Python sintaxis
 
@@ -164,7 +203,7 @@ The user can update their calorie intake once per day using the input provided i
 
 - As a User I can see/filter diet/workout logs by updated date so that I can narrow down my search to the most relevant entries.
 
-The users can see their past workout 
+The users can see their past workout using the links on records (navigation bar) or in the dashboard.
 
 ![workout_logs](static/images/workout_log_view.png)
 
@@ -202,7 +241,7 @@ A button is provided to display a form to add exercises as shown below.
 
 - As a Admin I can edit specific exercises so that I can keep the exercise catalogue up to date.
 
-The exercise catalog button displays the available exercises in accordion elements divided by muscular group. 
+The exercise catalog button displays the available exercises in accordion elements divided by muscular group.
 
 ![admin_catalog_show](static/images/admin_catalog_catalog_accordion.png)
 
@@ -277,13 +316,13 @@ The project was deployed in the Code Institute's mock terminal for Heroku follow
 
 By forking the GitHub Repository we make a copy of the original repository on our GitHub account to view and/or make changes without affecting the original repository by using the following steps...
 
-1. Log in to GitHub and locate the [GitHub Repository](https://github.com/eandablo/differential)
+1. Log in to GitHub and locate the [GitHub Repository](https://github.com/eandablo/gympals)
 2. At the top of the Repository (not top of page) just above the "Settings" Button on the menu, locate the "Fork" Button.
 3. You should now have a copy of the original repository in your GitHub account.
 
 ### Making a Local Clone
 
-1. Log in to GitHub and locate the [GitHub Repository](https://github.com/eandablo/differential)
+1. Log in to GitHub and locate the [GitHub Repository](https://github.com/eandablo/gympals)
 2. Under the repository name, click "Clone or download".
 3. To clone the repository using HTTPS, under "Clone with HTTPS", copy the link.
 4. Open Git Bash
