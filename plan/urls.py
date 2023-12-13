@@ -8,6 +8,8 @@ urlpatterns = [
     path('update/<log_id>', views.LogWorkout.as_view(), name='update_workout'),
     path('workoutlogs/<name>/<int:page>',
          views.WLogViews.as_view(), name='wlogs_view'),
+    path('workoutlogs_p/<name>/<int:page>',
+         views.PaginationWViews.as_view(), name='wlogs_p_view'),
     path('dietlogs/<name>/<int:page>',
          views.DLogViews.as_view(), name='dlogs_view'),
     path('dietupdate/<name>',

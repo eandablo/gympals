@@ -184,13 +184,25 @@ class WLogViews(View):
             logs = WorkoutLog.objects.order_by('created_date').filter(
                 trainee__name=name, completed=True)
 
-        paginator = Paginator(logs, 10)
-        page_obj = paginator.get_page(page)
+        logs_page['w'] = Paginator(logs, 5)
+        page_obj = logs_page['w'].get_page(page)
         return render(
             request,
             'logs_view.html',
             {"logs": page_obj,
              "log_type": log_type,
+             "name": name}
+        )
+
+
+class PaginationWViews(View):
+    def get(self, request, name, page, *args, **kwargs):
+        page_obj = logs_page['w'].get_page(page)
+        return render(
+            request,
+            'logs_view.html',
+            {"logs": page_obj,
+             "log_type": 'workout',
              "name": name}
         )
 
