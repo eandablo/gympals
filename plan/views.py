@@ -139,6 +139,13 @@ class LogWorkout(View):
             return HttpResponseRedirect(reverse('home'))
 
 
+# Defining dictionary to store paginators for workout and diet logs
+logs_page = {
+    'w': Paginator,
+    'd': Paginator
+}
+
+
 class WLogViews(View):
     '''
     Displays completed entries of WorkoutLog in logs_view.html
@@ -147,8 +154,8 @@ class WLogViews(View):
         log_type = 'workout'
         logs = WorkoutLog.objects.order_by('created_date').filter(
             trainee__name=name, completed=True)
-        paginator = Paginator(logs, 10)
-        page_obj = paginator.get_page(page)
+        logs_page['w'] = Paginator(logs, 5)
+        page_obj = logs_page['w'].get_page(page)
 
         return render(
             request,
@@ -171,7 +178,7 @@ class WLogViews(View):
                 'created_date').filter(trainee__name=name,
                                        completed=True,
                                        logged_date__range=[start_date,
-                                       end_date])
+                                                           end_date])
         else:
             messages.info(request, 'Start date should predate the End date')
             logs = WorkoutLog.objects.order_by('created_date').filter(

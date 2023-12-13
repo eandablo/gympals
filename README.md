@@ -66,7 +66,7 @@ Gympals database  total of four original models interconnected via one-to-one or
 1. [GitHub:](https://github.com/) GitHub is used to store the projects code after being pushed from Codeanywhere.
 2. [Codeanywhere:](https://app.codeanywhere.com/) Codeanywhere was used to create website content.
 3. [ElephantSQL:](https://www.elephantsql.com/) Database gympal was hosted in Elephant SQL .
-4. [Cloudinary:] Cloudinary was used to store images uploaded through the app.
+4. [Cloudinary:](https://cloudinary.com/) Cloudinary was used to store images uploaded through the app.
 
 ## Testing
 
@@ -76,7 +76,7 @@ All python code in plan app was validated using the PEP8 validator provided by t
 
 ### Automated testing (Unittest)
 
-A 85% coevarege of plan app code was achieved using automated testing. Views and code in decisions.py using distinct instance
+A 85% coevarege of plan app code was achieved using automated testing. Code in views.py and decisions.py using distinct method
 couldn't be tested since this order is not supported in the local database. These features are covered in user stories testing.
 
 ![automated_testing](static/images/automated_testing.png)
