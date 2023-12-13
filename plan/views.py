@@ -154,7 +154,7 @@ class WLogViews(View):
         log_type = 'workout'
         logs = WorkoutLog.objects.order_by('created_date').filter(
             trainee__name=name, completed=True)
-        logs_page['w'] = Paginator(logs, 5)
+        logs_page['w'] = Paginator(logs, 10)
         page_obj = logs_page['w'].get_page(page)
 
         return render(
@@ -184,7 +184,7 @@ class WLogViews(View):
             logs = WorkoutLog.objects.order_by('created_date').filter(
                 trainee__name=name, completed=True)
 
-        logs_page['w'] = Paginator(logs, 5)
+        logs_page['w'] = Paginator(logs, 10)
         page_obj = logs_page['w'].get_page(page)
         return render(
             request,
@@ -197,7 +197,7 @@ class WLogViews(View):
 
 class PaginationWViews(View):
     '''
-    Handles pagination by recalling data stored by WLogViews 
+    Handles pagination by recalling data stored by WLogViews
     in dictionary logs_page['w']
     '''
     def get(self, request, name, page, *args, **kwargs):
@@ -219,7 +219,7 @@ class DLogViews(View):
         log_type = 'diet'
         logs = Diet.objects.order_by('created_date').filter(trainee__name=name)
         trainee = TraineeInfo.objects.get(name=name)
-        logs_page['d'] = Paginator(logs, 2)
+        logs_page['d'] = Paginator(logs, 10)
         page_obj = logs_page['d'].get_page(page)
         # Variable to display diet log input
         if trainee.calories:
@@ -260,7 +260,7 @@ class DLogViews(View):
                 'created_date').filter(trainee__name=name)
             messages.info(request, 'Start date should predate the End date')
 
-        logs_page['d'] = Paginator(logs, 2)
+        logs_page['d'] = Paginator(logs, 10)
         page_obj = logs_page['d'].get_page(page)
         # Variable to display diet log input
         trainee = TraineeInfo.objects.get(name=name)
@@ -286,7 +286,7 @@ class DLogViews(View):
 
 class PaginationDViews(View):
     '''
-    Handles pagination by recalling data stored by DLogViews 
+    Handles pagination by recalling data stored by DLogViews
     in dictionary logs_page['d']
     '''
     def get(self, request, name, page, *args, **kwargs):

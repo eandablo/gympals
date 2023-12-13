@@ -202,6 +202,27 @@ A button is provided to display a form to add exercises as shown below.
 
 - As a User/Admin I can see messages indicating success login, form completion so that I am sure my actions have been successful.
 
+As mentioned above, a new user is first asked to provide personal information to receive appropriate advice, on submitting the form the user receives a message
+of success:
+
+![user_info_submission_success](static/images/sign_up_info_form_submitted_message.png)
+
+When succesfully logged in a message is conveyed to the user:
+
+![user_login_message](static/images/succesfull_login_message.png)
+
+When users succesfully submit the workout form an exercise they receive a message indicating succes as shown below:
+
+![user_exercise_log_message](static/images/exercise_logged_message.png)
+
+Admin is able to add new exercise to the catalog, on correctly filling and submiting the form, the admin receives a success message:
+
+![admin_add_exercise_success](static/imgaes/admin_add_new_exercise.png)
+
+On the other hand, the exercise name must be unique, if the admin attempts to sumbit a new exercise with name already existing in the catalog, the
+submission is rejected and an error message is produced:
+
+![admin_add_exercise_error](static/images/admin_catalog_add_exercise_error.png)
 
 ### Bugs
 
