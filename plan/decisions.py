@@ -3,6 +3,13 @@ from django.shortcuts import get_object_or_404
 import random
 
 
+# Defining dictionary to store paginators for workout and diet logs
+logs_page = {
+    'w': Paginator,
+    'd': Paginator
+}
+
+
 def insert_exercises_workout_plan(trainee, random_list, day):
     logs = WorkoutLog.objects.order_by(
         'created_date').filter(trainee=trainee, completed=True)
@@ -171,4 +178,3 @@ class SiteAnalysis:
             total_performance *= trainee_performance
 
         return round(total_performance, 2)
-

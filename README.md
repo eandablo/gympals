@@ -34,10 +34,10 @@ your progress.
 ### Responsiveness
 
 - Responsive to multiple devices.
-  
+
 ## Database Models
 
-Gympals database  total of four original models interconnected via one-to-one or one-to-many relationships.
+Gympals database total of four original models interconnected via one-to-one or one-to-many relationships.
 
 ## Technologies Used
 
@@ -144,7 +144,7 @@ The sign up page features the same hero image and navigation bar as the welcome 
 ![suscribe_page](static/images/sign_up_page_bottom.png)
 
 - After sign-up, the new user is redirected to a form to provide essential information as soon as I subscribe so they can receive personalised workouts.
-  
+
 Navigation bar of this page is limited to home and log out link. The form provides fields for name, age, height, weight, sex and goal. Information important to create
 appropriate advice.
 
@@ -211,7 +211,7 @@ or calorie intake logs by clicking on the links provided in the dashboard or nav
 
 ![diet_logs](static/images/diet_log_view.png)
 
-The user is provided with a way to filter the logs by dates they were created simply by chosing dates in the form shown bellow and submiting the form. The clear bottom resets the the page and shows all entries. An example for the diet logs is provided below, filtering dates between 11th  and 12th of september (Excluding the 10th).
+The user is provided with a way to filter the logs by dates they were created simply by chosing dates in the form shown bellow and submiting the form. The clear bottom resets the the page and shows all entries. An example for the diet logs is provided below, filtering dates between 11th and 12th of september (Excluding the 10th).
 
 ![diet_logs_filtered](static/images/diet_logs_filtered.png)
 
@@ -245,7 +245,7 @@ The exercise catalog button displays the available exercises in accordion elemen
 
 ![admin_catalog_show](static/images/admin_catalog_catalog_accordion.png)
 
-To edit/delete an exercise, the admin must click on the exercise name  and immidiately wil be prompted to a new page
+To edit/delete an exercise, the admin must click on the exercise name and immidiately wil be prompted to a new page
 with exercise details, with a prepopulated form with exercise details. The form can be use to edit details.
 
 ![admin_edit_exercise](static/images/admin_edit_exercise.png)
@@ -334,7 +334,7 @@ By forking the GitHub Repository we make a copy of the original repository on ou
 - Python code was created by Efren Andablo Reyes
 
 - Several Bootstrap elements were used, where the code provided in [Bootstrap website](https://getbootstrap.com/) was slightly modified to
-fit this proyect.
+  fit this proyect.
 
 - Acknowldgement to my mentor Dario for his great guidance diring this project development
 

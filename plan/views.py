@@ -3,7 +3,7 @@ from django.views import View, generic
 from . import forms
 from .models import TraineeInfo, WorkoutLog, Diet, Exercises
 from django.http import HttpResponseRedirect
-from .decisions import WorkoutGen, DietGen, SiteAnalysis
+from .decisions import WorkoutGen, DietGen, SiteAnalysis, logs_page
 from django.contrib import messages
 from django.core.paginator import Paginator
 from datetime import date, timedelta
@@ -15,6 +15,7 @@ class HomeView(View, SiteAnalysis):
     If user has information displays dashborad
     otherwise display the form to store user info
     '''
+
     def get(self, request, *args, **kwargs):
         # Staff users are redirected to a dashboard with link
         # to see the exercise catalog
@@ -55,6 +56,7 @@ class HomeView(View, SiteAnalysis):
     '''
     Manages the TraineeInfo form post
     '''
+
     def post(self, request, *args, **kwargs):
         info_form = forms.TraineeInfoForm(data=request.POST)
         new_trainee = request.user
@@ -93,6 +95,7 @@ class WorkoutView(View, WorkoutGen, DietGen):
     select_ids function from Mixin WorkoutGen
     additionally recalculates diet using DietGen
     '''
+
     def get(self, request, name, *args, **kwargs):
         logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
         if not logs:
@@ -122,6 +125,7 @@ class LogWorkout(View):
     Manages the user post of sets and reps in forms.LogExerciseForm
     redirects to workout_plan.html
     '''
+
     def post(self, request, log_id, *args, **kwargs):
         log = get_object_or_404(WorkoutLog, id=log_id)
         sets = request.POST.get('sets' + str(log.identifier))
@@ -139,17 +143,11 @@ class LogWorkout(View):
             return HttpResponseRedirect(reverse('home'))
 
 
-# Defining dictionary to store paginators for workout and diet logs
-logs_page = {
-    'w': Paginator,
-    'd': Paginator
-}
-
-
 class WLogViews(View):
     '''
     Displays completed entries of WorkoutLog in logs_view.html
     '''
+
     def get(self, request, name, page, *args, **kwargs):
         log_type = 'workout'
         logs = WorkoutLog.objects.order_by('created_date').filter(
@@ -169,6 +167,7 @@ class WLogViews(View):
     Displays completed entries of WorkoutLog in logs_view.html
     narrowing entries to selected dates
     '''
+
     def post(self, request, name, page, *args, **kwargs):
         log_type = 'workout'
         start_date = request.POST.get('start_date')
@@ -200,6 +199,7 @@ class PaginationWViews(View):
     Handles pagination by recalling data stored by WLogViews
     in dictionary logs_page['w']
     '''
+
     def get(self, request, name, page, *args, **kwargs):
         page_obj = logs_page['w'].get_page(page)
         return render(
@@ -215,6 +215,7 @@ class DLogViews(View):
     '''
     Displays entries of DietLog in logs_view.html
     '''
+
     def get(self, request, name, page, *args, **kwargs):
         log_type = 'diet'
         logs = Diet.objects.order_by('created_date').filter(trainee__name=name)
@@ -246,6 +247,7 @@ class DLogViews(View):
     Displays entries of DietLog in logs_view.html
     narrowing entries to selected dates
     '''
+
     def post(self, request, name, page, *args, **kwargs):
         log_type = 'diet'
         start_date = request.POST.get('start_date')
@@ -289,6 +291,7 @@ class PaginationDViews(View):
     Handles pagination by recalling data stored by DLogViews
     in dictionary logs_page['d']
     '''
+
     def get(self, request, name, page, *args, **kwargs):
         page_obj = logs_page['d'].get_page(page)
         trainee = TraineeInfo.objects.get(name=name)
@@ -316,6 +319,7 @@ class UpdateInfo(View, DietGen):
     '''
     Displays form UpdateInfoForm in update_info.html
     '''
+
     def get(self, request, name, *args, **kwargs):
         trainee = get_object_or_404(TraineeInfo, name=name)
         info_form = forms.UpdateInfoForm(instance=trainee)
@@ -329,6 +333,7 @@ class UpdateInfo(View, DietGen):
     Manages UpdateInfoForm user posting from update_info.html
     redirects to index.html if form is valid after saving the entry
     '''
+
     def post(self, request, name, *args, **kwargs):
         trainee = get_object_or_404(TraineeInfo, name=name)
         info_form = forms.UpdateInfoForm(data=request.POST, instance=trainee)
@@ -373,6 +378,7 @@ class CatalogView(View):
     Shows exercises in catalog.html divided in accordions
     by muscle groups
     '''
+
     def get(self, request, *args, **kwargs):
         groups = Exercises.objects.order_by(
             'muscle_group').values_list(
@@ -394,6 +400,7 @@ class CatalogView(View):
     '''
     Manages the form to add exercises in calalog.html
     '''
+
     def post(self, request, *args, **kwargs):
         exercise_form = forms.CreateExerciseForm(request.POST, request.FILES)
         logs = Exercises.objects.all()
@@ -430,6 +437,7 @@ class EditExercise(View):
     displaying this exercise in their workout plan
     Displays a form to edit the exercise
     '''
+
     def get(self, request, exercise_id, *args, **kwargs):
         exercise = get_object_or_404(Exercises, id=exercise_id)
         # calculates number of workoutlogs for the exercise not completed
@@ -448,6 +456,7 @@ class EditExercise(View):
     Manages edit exercise form
     send success message if form is successfully logged
     '''
+
     def post(self, request, exercise_id, *args, **kwargs):
         exercise = get_object_or_404(Exercises, id=exercise_id)
         exercise_form = forms.CreateExerciseForm(request.POST,
@@ -479,6 +488,7 @@ class DeleteExercise(View):
     in the text input with name input_name otherwise redirects
     to edit_exercise.html and send error message
     '''
+
     def post(self, request, id, *args, **kwargs):
         exercise = get_object_or_404(Exercises, id=id)
         input_name = request.POST.get('delete_code')
