@@ -150,7 +150,7 @@ class WLogViews(View):
     def get(self, request, name, page, *args, **kwargs):
         log_type = 'workout'
         logs = WorkoutLog.objects.filter(
-            trainee__name=name, completed=True)
+            trainee__name=name, completed=True).order_by('-logged_date')
         logs_page = Paginator(logs, 10)
         page_obj = logs_page.get_page(page)
         end = date.today()
@@ -178,11 +178,11 @@ class WLogViews(View):
             logs = WorkoutLog.objects.filter(
                 logged_date__range=[start_date, end_date],
                 trainee__name=name,
-                completed=True)
+                completed=True).order_by('-logged_date')
         else:
             messages.info(request, 'Start date should predate the End date')
-            logs = WorkoutLog.objects.order_by('created_date').filter(
-                trainee__name=name, completed=True)
+            logs = WorkoutLog.objects.filter(
+                trainee__name=name, completed=True).order_by('-logged_date')
 
         logs_page = Paginator(logs, 10)
         page_obj = logs_page.get_page(page)
@@ -211,7 +211,7 @@ class PaginationWViews(View):
             trainee__name=name,
             completed=True,
             logged_date__range=[start_date,
-                                end_date])
+                                end_date]).order_by('-logged_date')
         logs_page = Paginator(logs, 10)
         page_obj = logs_page.get_page(page)
         return render(
@@ -231,7 +231,9 @@ class DLogViews(View):
     '''
     def get(self, request, name, page, *args, **kwargs):
         log_type = 'diet'
-        logs = Diet.objects.order_by('created_date').filter(trainee__name=name)
+        logs = Diet.objects.order_by(
+            'created_date').filter(
+                trainee__name=name).order_by('-created_date')
         trainee = TraineeInfo.objects.get(name=name)
         logs_page = Paginator(logs, 2)
         page_obj = logs_page.get_page(page)
@@ -271,9 +273,10 @@ class DLogViews(View):
         end_date = request.POST.get('end_date')
         if start_date <= end_date:
             logs = Diet.objects.order_by(
-                'created_date').filter(trainee__name=name,
-                                       created_date__range=[start_date,
-                                                            end_date])
+                'created_date').filter(
+                    trainee__name=name,
+                    created_date__range=[start_date,
+                                         end_date]).order_by('-created_date')
         else:
             logs = Diet.objects.order_by(
                 'created_date').filter(trainee__name=name)
@@ -314,9 +317,10 @@ class PaginationDViews(View):
         start_date = datetime.strptime(start, '%Y-%m-%d').date()
         end_date = datetime.strptime(end, '%Y-%m-%d').date()
         logs = Diet.objects.order_by(
-            'created_date').filter(trainee__name=name,
-                                   created_date__range=[start_date,
-                                                        end_date])
+            'created_date').filter(
+                trainee__name=name,
+                created_date__range=[start_date,
+                                     end_date]).order_by('-created_date')
         logs_page = Paginator(logs, 2)
         page_obj = logs_page.get_page(page)
         trainee = TraineeInfo.objects.get(name=name)
