@@ -149,9 +149,9 @@ class WLogViews(View):
     '''
     def get(self, request, name, page, *args, **kwargs):
         log_type = 'workout'
-        logs = WorkoutLog.objects.order_by('created_date').filter(
+        logs = WorkoutLog.objects.filter(
             trainee__name=name, completed=True)
-        logs_page = Paginator(logs, 10)
+        logs_page = Paginator(logs, 20)
         page_obj = logs_page.get_page(page)
         end = date.today()
         start = end - timedelta(days=10000)
@@ -175,11 +175,10 @@ class WLogViews(View):
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
         if start_date <= end_date:
-            logs = WorkoutLog.objects.order_by(
-                'created_date').filter(trainee__name=name,
-                                       completed=True,
-                                       logged_date__range=[start_date,
-                                                           end_date])
+            logs = WorkoutLog.objects.filter(
+                logged_date__range=[start_date, end_date],
+                                    trainee__name=name,
+                                    completed=True)
         else:
             messages.info(request, 'Start date should predate the End date')
             logs = WorkoutLog.objects.order_by('created_date').filter(
@@ -212,8 +211,7 @@ class PaginationWViews(View):
             trainee__name=name,
             completed=True,
             logged_date__range=[start_date,
-                                end_date]).order_by(
-            'created_date')
+                                end_date])
         logs_page = Paginator(logs, 10)
         page_obj = logs_page.get_page(page)
         return render(
