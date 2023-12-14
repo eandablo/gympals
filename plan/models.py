@@ -88,7 +88,7 @@ class WorkoutLog(models.Model):
                                   related_name='workout_exercise')
 
     class Meta:
-        ordering = ['trainee', '-created_date']
+        ordering = ['created_date']
 
     def __str__(self):
         return f'trainee: {self.trainee}'

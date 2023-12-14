@@ -1,14 +1,6 @@
 from .models import TraineeInfo, WorkoutLog, Exercises
 from django.shortcuts import get_object_or_404
 import random
-from django.core.paginator import Paginator
-
-
-# Defining dictionary to store paginators for workout and diet logs
-logs_page = {
-    'w': Paginator,
-    'd': Paginator
-}
 
 
 def insert_exercises_workout_plan(trainee, random_list, day):

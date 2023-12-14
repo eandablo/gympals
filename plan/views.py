@@ -3,10 +3,10 @@ from django.views import View, generic
 from . import forms
 from .models import TraineeInfo, WorkoutLog, Diet, Exercises
 from django.http import HttpResponseRedirect
-from .decisions import WorkoutGen, DietGen, SiteAnalysis, logs_page
+from .decisions import WorkoutGen, DietGen, SiteAnalysis
 from django.contrib import messages
 from django.core.paginator import Paginator
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 
 class HomeView(View, SiteAnalysis):
@@ -147,20 +147,22 @@ class WLogViews(View):
     '''
     Displays completed entries of WorkoutLog in logs_view.html
     '''
-
     def get(self, request, name, page, *args, **kwargs):
         log_type = 'workout'
         logs = WorkoutLog.objects.order_by('created_date').filter(
             trainee__name=name, completed=True)
-        logs_page['w'] = Paginator(logs, 10)
-        page_obj = logs_page['w'].get_page(page)
-
+        logs_page = Paginator(logs, 10)
+        page_obj = logs_page.get_page(page)
+        end = date.today()
+        start = end - timedelta(days=10000)
         return render(
             request,
             'logs_view.html',
             {"logs": page_obj,
              "log_type": log_type,
-             "name": name}
+             "name": name,
+             "start": start,
+             "end": end}
         )
 
     '''
@@ -183,14 +185,16 @@ class WLogViews(View):
             logs = WorkoutLog.objects.order_by('created_date').filter(
                 trainee__name=name, completed=True)
 
-        logs_page['w'] = Paginator(logs, 10)
-        page_obj = logs_page['w'].get_page(page)
+        logs_page = Paginator(logs, 10)
+        page_obj = logs_page.get_page(page)
         return render(
             request,
             'logs_view.html',
             {"logs": page_obj,
              "log_type": log_type,
-             "name": name}
+             "name": name,
+             "start": start_date,
+             "end": end_date}
         )
 
 
@@ -200,14 +204,26 @@ class PaginationWViews(View):
     in dictionary logs_page['w']
     '''
 
-    def get(self, request, name, page, *args, **kwargs):
-        page_obj = logs_page['w'].get_page(page)
+    def get(self, request, name, page, start, end, *args, **kwargs):
+        start_date = datetime.strptime(start, '%Y-%m-%d').date()
+        end_date = datetime.strptime(end, '%Y-%m-%d').date()
+
+        logs = WorkoutLog.objects.filter(
+            trainee__name=name,
+            completed=True,
+            logged_date__range=[start_date,
+                                end_date]).order_by(
+            'created_date')
+        logs_page = Paginator(logs, 10)
+        page_obj = logs_page.get_page(page)
         return render(
             request,
             'logs_view.html',
             {"logs": page_obj,
              "log_type": 'workout',
-             "name": name}
+             "name": name,
+             "start": start_date,
+             "end": end_date}
         )
 
 
