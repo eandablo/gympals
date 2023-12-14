@@ -12,7 +12,7 @@ urlpatterns = [
          views.PaginationWViews.as_view(), name='wlogs_p_view'),
     path('dietlogs/<name>/<int:page>',
          views.DLogViews.as_view(), name='dlogs_view'),
-    path('dietlogs_p/<name>/<int:page>',
+    path('dietlogs_p/<name>/<int:page>/<start>/<end>',
          views.PaginationDViews.as_view(), name='dlogs_p_view'),
     path('dietupdate/<name>',
          views.UpdateDietLogs.as_view(), name='diet_update'),
