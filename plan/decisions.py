@@ -138,7 +138,7 @@ class SiteAnalysis:
             total_age = 0
             for trainee in trainees:
                 total_age += trainee.age
-            average_age = total_age / n_trainees
+            average_age = round(total_age / n_trainees, 1)
         else:
             return False
 
