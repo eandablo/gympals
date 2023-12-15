@@ -235,7 +235,7 @@ class DLogViews(View):
             'created_date').filter(
                 trainee__name=name).order_by('-created_date')
         trainee = TraineeInfo.objects.get(name=name)
-        logs_page = Paginator(logs, 2)
+        logs_page = Paginator(logs, 10)
         page_obj = logs_page.get_page(page)
         end = date.today()
         start = end - timedelta(days=10000)
@@ -282,7 +282,7 @@ class DLogViews(View):
                 'created_date').filter(trainee__name=name)
             messages.info(request, 'Start date should predate the End date')
 
-        logs_page = Paginator(logs, 2)
+        logs_page = Paginator(logs, 10)
         page_obj = logs_page.get_page(page)
         # Variable to display diet log input
         trainee = TraineeInfo.objects.get(name=name)
@@ -321,7 +321,7 @@ class PaginationDViews(View):
                 trainee__name=name,
                 created_date__range=[start_date,
                                      end_date]).order_by('-created_date')
-        logs_page = Paginator(logs, 2)
+        logs_page = Paginator(logs, 10)
         page_obj = logs_page.get_page(page)
         trainee = TraineeInfo.objects.get(name=name)
         if trainee.calories:
