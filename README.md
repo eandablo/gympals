@@ -35,6 +35,36 @@ your progress.
 
 - Responsive to multiple devices.
 
+## Wireframes
+
+### Ordinary User
+
+#### Home
+
+![home_wireframe](static/images/home_wf.png)
+
+#### Workout Plan
+
+![workout_wireframe](static/images/workoutplan_wf.png)
+
+#### Records
+
+![records_wireframe](static/images/log_view_wf.png)
+
+#### Information Submission
+
+![info_wireframe](static/images/form_submission_wf.png)
+
+### Admin
+
+#### Exercise Catalog
+
+![catalog_wireframe](static/images/catalog_wf.png)
+
+#### Exercise Edit
+
+![edit_exercise_wireframe](static/images/edit_exercise_wf.png)
+
 ## Database Models
 
 Gympals database total of four original models interconnected via one-to-one or one-to-many relationships.
