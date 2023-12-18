@@ -6,6 +6,11 @@ your progress.
 
 [You can visit the deployed proyect here](https://gympals-6af3102877bb.herokuapp.com/)
 
+## Agile strategy
+
+In agreement to Agile protocol, user stories were created in the Github repository using the [project
+feature](https://github.com/users/eandablo/projects/4). Initial user stories increased as the project progreesed in small sessions of about six hours long each. User stories were labeled either as must have or maybe. In each session, one or two user stories from the to do pile were moved to in progress in the project canvas. If stories were concluded during the sessio, they were moved to the done pile. Uncomplete user stories were sent back to the to do list. This progress was repeated until all user stories were moved to done list or excluded from the project if found superfluous.
+
 ## User Stories
 
 - As a New User I can a welcome page on entering the app with enough information so that I understand the GOAL of this app.
@@ -83,8 +88,8 @@ Gympals database total of four original models interconnected via one-to-one or 
 
 #### Frameworks
 
-1. [Django:] The app was created using Django v3.2.23.
-2. [Bootstrap:] The app was styled using Bootstrap 5.3.
+1. Django: The app was created using Django v3.2.23.
+2. Bootstrap: The app was styled using Bootstrap 5.3.
 
 #### Libraries
 
@@ -141,7 +146,7 @@ The app is mostly styled using bootstrap. The CCS3 validator found some errors r
 
 ### Python sintaxis
 
-All python code in plan app was validated using the PEP8 validator provided by the code institute. No errors or problems were found.
+All python code in plan app was validated using the [PEP8 validator](https://pep8ci.herokuapp.com/) provided by the code institute. No errors or problems were found.
 
 ### Automated testing (Unittest)
 
@@ -368,4 +373,4 @@ By forking the GitHub Repository we make a copy of the original repository on ou
 
 - Acknowldgement to my mentor Dario for his great guidance diring this project development
 
-- Website images were downloaded from [Pexels](https://www.pexels.com/)
+- Static website images were downloaded from [Pexels](https://www.pexels.com/). Exercise images stored in cloudinary belong to Efren Andablo.
