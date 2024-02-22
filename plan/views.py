@@ -111,15 +111,15 @@ class WorkoutView(View, WorkoutGen, DietGen):
             # Ids contain information for workout page accordion item
             for day in days:
                 labels = ['#accordion-'+str(day[0]),
-                        'accordion-'+str(day[0]), day[0]]
+                          'accordion-'+str(day[0]), day[0]]
                 ids.append(labels)
 
             return render(
                 request,
                 'workout_plan.html',
                 {"logs": logs,
-                "ids": ids,
-                "name": name}
+                 "ids": ids,
+                 "name": name}
             )
         else:
             return HttpResponseRedirect(reverse('home'))
@@ -166,10 +166,10 @@ class WLogViews(View):
                 request,
                 'logs_view.html',
                 {"logs": page_obj,
-                "log_type": log_type,
-                "name": name,
-                "start": start,
-                "end": end}
+                 "log_type": log_type,
+                 "name": name,
+                 "start": start,
+                 "end": end}
             )
         else:
             return HttpResponseRedirect(reverse('home'))
@@ -190,10 +190,10 @@ class WLogViews(View):
                     trainee__name=name,
                     completed=True).order_by('-logged_date')
             else:
-                messages.info(request, 
+                messages.info(request,
                               'Start date should predate the End date')
                 logs = WorkoutLog.objects.filter(
-                    trainee__name=name, 
+                    trainee__name=name,
                     completed=True).order_by('-logged_date')
 
             logs_page = Paginator(logs, 10)
@@ -202,10 +202,10 @@ class WLogViews(View):
                 request,
                 'logs_view.html',
                 {"logs": page_obj,
-                "log_type": log_type,
-                "name": name,
-                "start": start_date,
-                "end": end_date}
+                 "log_type": log_type,
+                 "name": name,
+                 "start": start_date,
+                 "end": end_date}
             )
         else:
             return HttpResponseRedirect(reverse('home'))
@@ -234,13 +234,14 @@ class PaginationWViews(View):
                 request,
                 'logs_view.html',
                 {"logs": page_obj,
-                "log_type": 'workout',
-                "name": name,
-                "start": start_date,
-                "end": end_date}
+                 "log_type": 'workout',
+                 "name": name,
+                 "start": start_date,
+                 "end": end_date}
             )
         else:
             return HttpResponseRedirect(reverse('home'))
+
 
 class DLogViews(View):
     '''
@@ -274,11 +275,11 @@ class DLogViews(View):
                 request,
                 'logs_view.html',
                 {"logs": page_obj,
-                "log_type": log_type,
-                "name": name,
-                "up_to_date": up_to_date,
-                "start": start,
-                "end": end}
+                 "log_type": log_type,
+                 "name": name,
+                 "up_to_date": up_to_date,
+                 "start": start,
+                 "end": end}
             )
         else:
             return HttpResponseRedirect(reverse('home'))
@@ -298,8 +299,8 @@ class DLogViews(View):
                     'created_date').filter(
                         trainee__name=name,
                         created_date__range=[start_date,
-                                            end_date]).order_by(
-                                                '-created_date')
+                                             end_date]).order_by(
+                                                 '-created_date')
             else:
                 logs = Diet.objects.order_by(
                     'created_date').filter(trainee__name=name)
@@ -324,11 +325,11 @@ class DLogViews(View):
                 request,
                 'logs_view.html',
                 {"logs": page_obj,
-                "log_type": log_type,
-                "name": name,
-                "up_to_date": up_to_date,
-                "start": start_date,
-                "end": end_date}
+                 "log_type": log_type,
+                 "name": name,
+                 "up_to_date": up_to_date,
+                 "start": start_date,
+                 "end": end_date}
             )
         else:
             return HttpResponseRedirect(reverse('home'))
@@ -348,7 +349,7 @@ class PaginationDViews(View):
                 'created_date').filter(
                     trainee__name=name,
                     created_date__range=[start_date,
-                                        end_date]).order_by('-created_date')
+                                         end_date]).order_by('-created_date')
             logs_page = Paginator(logs, 10)
             page_obj = logs_page.get_page(page)
             trainee = TraineeInfo.objects.get(name=name)
@@ -366,11 +367,11 @@ class PaginationDViews(View):
                 request,
                 'logs_view.html',
                 {"logs": page_obj,
-                "log_type": 'diet',
-                "name": name,
-                "up_to_date": up_to_date,
-                "start": start_date,
-                "end": end_date}
+                 "log_type": 'diet',
+                 "name": name,
+                 "up_to_date": up_to_date,
+                 "start": start_date,
+                 "end": end_date}
             )
         else:
             return HttpResponseRedirect(reverse('home'))
@@ -458,15 +459,15 @@ class CatalogView(View):
             ids = []
             for group in groups:
                 labels = ['#accordion-'+str(group[0]),
-                        'accordion-'+str(group[0]), group[0]]
+                          'accordion-'+str(group[0]), group[0]]
                 ids.append(labels)
 
             return render(
                 request,
                 'catalog.html',
                 {"ids": ids,
-                "logs": logs,
-                "exercise_form": forms.CreateExerciseForm()}
+                 "logs": logs,
+                 "exercise_form": forms.CreateExerciseForm()}
             )
         else:
             return HttpResponseRedirect(reverse('home'))
@@ -494,15 +495,15 @@ class CatalogView(View):
             # Creates labels for accordions in catalog.html
             for group in groups:
                 labels = ['#accordion-'+str(group[0]),
-                        'accordion-'+str(group[0]), group[0]]
+                          'accordion-'+str(group[0]), group[0]]
                 ids.append(labels)
 
             return render(
                 request,
                 'catalog.html',
                 {"ids": ids,
-                "logs": logs,
-                "exercise_form": forms.CreateExerciseForm()}
+                 "logs": logs,
+                 "exercise_form": forms.CreateExerciseForm()}
             )
         else:
             return HttpResponseRedirect(reverse('home'))
@@ -527,8 +528,8 @@ class EditExercise(View):
                 request,
                 'exercise_edit.html',
                 {"n_users": n_users,
-                "exercise": exercise,
-                "exercise_form": exercise_form}
+                 "exercise": exercise,
+                 "exercise_form": exercise_form}
             )
         else:
             return HttpResponseRedirect(reverse('home'))
@@ -541,8 +542,8 @@ class EditExercise(View):
         if request.user.is_staff:
             exercise = get_object_or_404(Exercises, id=exercise_id)
             exercise_form = forms.CreateExerciseForm(request.POST,
-                                                    request.FILES,
-                                                    instance=exercise)
+                                                     request.FILES,
+                                                     instance=exercise)
             if exercise_form.is_valid():
                 exercise_form.save()
                 messages.success(request, 'Exercise successfully edited')
@@ -556,8 +557,8 @@ class EditExercise(View):
                     request,
                     'exercise_edit.html',
                     {"n_users": n_users,
-                    "exercise": exercise,
-                    "exercise_form": exercise_form}
+                     "exercise": exercise,
+                     "exercise_form": exercise_form}
                 )
             return HttpResponseRedirect(reverse('catalog'))
         else:
