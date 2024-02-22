@@ -72,7 +72,9 @@ feature](https://github.com/users/eandablo/projects/4). Initial user stories inc
 
 ## Database Models
 
-Gympals database total of four original models interconnected via one-to-one or one-to-many relationships.
+Gympals database total of four original models interconnected via one-to-one or one-to-many relationships. Database design is represented in the schema below.
+
+![Databa_base](static/images/gympals_db.png)
 
 ## Technologies Used
 
