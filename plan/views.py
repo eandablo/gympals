@@ -207,113 +207,120 @@ class WLogViews(View):
 
 class PaginationWViews(View):
     '''
-    Handles pagination by recalling data stored by WLogViews
-    in dictionary logs_page['w']
+    Handles workout pagination when page number different than 1
+    considering previously used start and end dates
     '''
 
     def get(self, request, name, page, start, end, *args, **kwargs):
-        start_date = datetime.strptime(start, '%Y-%m-%d').date()
-        end_date = datetime.strptime(end, '%Y-%m-%d').date()
+        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+            start_date = datetime.strptime(start, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end, '%Y-%m-%d').date()
 
-        logs = WorkoutLog.objects.filter(
-            trainee__name=name,
-            completed=True,
-            logged_date__range=[start_date,
-                                end_date]).order_by('-logged_date')
-        logs_page = Paginator(logs, 10)
-        page_obj = logs_page.get_page(page)
-        return render(
-            request,
-            'logs_view.html',
-            {"logs": page_obj,
-             "log_type": 'workout',
-             "name": name,
-             "start": start_date,
-             "end": end_date}
-        )
-
+            logs = WorkoutLog.objects.filter(
+                trainee__name=name,
+                completed=True,
+                logged_date__range=[start_date,
+                                    end_date]).order_by('-logged_date')
+            logs_page = Paginator(logs, 10)
+            page_obj = logs_page.get_page(page)
+            return render(
+                request,
+                'logs_view.html',
+                {"logs": page_obj,
+                "log_type": 'workout',
+                "name": name,
+                "start": start_date,
+                "end": end_date}
+            )
+        else:
+            return HttpResponseRedirect(reverse('home'))
 
 class DLogViews(View):
     '''
     Displays entries of DietLog in logs_view.html
     '''
     def get(self, request, name, page, *args, **kwargs):
-        log_type = 'diet'
-        logs = Diet.objects.order_by(
-            'created_date').filter(
-                trainee__name=name).order_by('-created_date')
-        trainee = TraineeInfo.objects.get(name=name)
-        logs_page = Paginator(logs, 10)
-        page_obj = logs_page.get_page(page)
-        end = date.today()
-        start = end - timedelta(days=10000)
-        # Variable to display diet log input
-        if trainee.calories:
-            up_to_date = False
+        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+            log_type = 'diet'
+            logs = Diet.objects.order_by(
+                'created_date').filter(
+                    trainee__name=name).order_by('-created_date')
+            trainee = TraineeInfo.objects.get(name=name)
+            logs_page = Paginator(logs, 10)
+            page_obj = logs_page.get_page(page)
+            end = date.today()
+            start = end - timedelta(days=10000)
+            # Variable to display diet log input
+            if trainee.calories:
+                up_to_date = False
+            else:
+                up_to_date = True
+
+            today_date = date.today()
+            log_today = Diet.objects.filter(trainee__name=name,
+                                            created_date=today_date).exists()
+            if log_today:
+                up_to_date = True
+
+            return render(
+                request,
+                'logs_view.html',
+                {"logs": page_obj,
+                "log_type": log_type,
+                "name": name,
+                "up_to_date": up_to_date,
+                "start": start,
+                "end": end}
+            )
         else:
-            up_to_date = True
-
-        today_date = date.today()
-        log_today = Diet.objects.filter(trainee__name=name,
-                                        created_date=today_date).exists()
-        if log_today:
-            up_to_date = True
-
-        return render(
-            request,
-            'logs_view.html',
-            {"logs": page_obj,
-             "log_type": log_type,
-             "name": name,
-             "up_to_date": up_to_date,
-             "start": start,
-             "end": end}
-        )
-
+            return HttpResponseRedirect(reverse('home'))
     '''
     Displays entries of DietLog in logs_view.html
     narrowing entries to selected dates
     '''
 
     def post(self, request, name, page, *args, **kwargs):
-        log_type = 'diet'
-        start_date = request.POST.get('start_date')
-        end_date = request.POST.get('end_date')
-        if start_date <= end_date:
-            logs = Diet.objects.order_by(
-                'created_date').filter(
-                    trainee__name=name,
-                    created_date__range=[start_date,
-                                         end_date]).order_by('-created_date')
-        else:
-            logs = Diet.objects.order_by(
-                'created_date').filter(trainee__name=name)
-            messages.info(request, 'Start date should predate the End date')
+        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+            log_type = 'diet'
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+            if start_date <= end_date:
+                logs = Diet.objects.order_by(
+                    'created_date').filter(
+                        trainee__name=name,
+                        created_date__range=[start_date,
+                                            end_date]).order_by('-created_date')
+            else:
+                logs = Diet.objects.order_by(
+                    'created_date').filter(trainee__name=name)
+                messages.info(request, 'Start date should predate the End date')
 
-        logs_page = Paginator(logs, 10)
-        page_obj = logs_page.get_page(page)
-        # Variable to display diet log input
-        trainee = TraineeInfo.objects.get(name=name)
-        if trainee.calories:
-            up_to_date = False
-        else:
-            up_to_date = True
-        today_date = date.today()
-        log_today = Diet.objects.filter(trainee__name=name,
-                                        created_date=today_date).exists()
-        if log_today:
-            up_to_date = True
+            logs_page = Paginator(logs, 10)
+            page_obj = logs_page.get_page(page)
+            # Variable to display diet log input
+            trainee = TraineeInfo.objects.get(name=name)
+            if trainee.calories:
+                up_to_date = False
+            else:
+                up_to_date = True
+            today_date = date.today()
+            log_today = Diet.objects.filter(trainee__name=name,
+                                            created_date=today_date).exists()
+            if log_today:
+                up_to_date = True
 
-        return render(
-            request,
-            'logs_view.html',
-            {"logs": page_obj,
-             "log_type": log_type,
-             "name": name,
-             "up_to_date": up_to_date,
-             "start": start_date,
-             "end": end_date}
-        )
+            return render(
+                request,
+                'logs_view.html',
+                {"logs": page_obj,
+                "log_type": log_type,
+                "name": name,
+                "up_to_date": up_to_date,
+                "start": start_date,
+                "end": end_date}
+            )
+        else:
+            return HttpResponseRedirect(reverse('home'))
 
 
 class PaginationDViews(View):
