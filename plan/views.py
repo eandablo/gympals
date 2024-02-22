@@ -97,8 +97,10 @@ class WorkoutView(View, WorkoutGen, DietGen):
     '''
 
     def get(self, request, name, *args, **kwargs):
-        if request.user.is_authenticated and name == request.user.traineeinfo.name:
-            logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
+        authentication = request.user.is_authenticated
+        if authentication and name == request.user.traineeinfo.name:
+            logs = WorkoutLog.objects.filter(trainee__name=name,
+                                             completed=False)
             if not logs:
                 self.select_ids(name)
                 self.calories_calc(name)
@@ -151,7 +153,8 @@ class WLogViews(View):
     Displays completed entries of WorkoutLog in logs_view.html
     '''
     def get(self, request, name, page, *args, **kwargs):
-        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+        authentication = request.user.is_authenticated
+        if authentication and name == request.user.traineeinfo.name:
             log_type = 'workout'
             logs = WorkoutLog.objects.filter(
                 trainee__name=name, completed=True).order_by('-logged_date')
@@ -176,7 +179,8 @@ class WLogViews(View):
     '''
 
     def post(self, request, name, page, *args, **kwargs):
-        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+        authentication = request.user.is_authenticated
+        if authentication and name == request.user.traineeinfo.name:
             log_type = 'workout'
             start_date = request.POST.get('start_date')
             end_date = request.POST.get('end_date')
@@ -186,9 +190,11 @@ class WLogViews(View):
                     trainee__name=name,
                     completed=True).order_by('-logged_date')
             else:
-                messages.info(request, 'Start date should predate the End date')
+                messages.info(request, 
+                              'Start date should predate the End date')
                 logs = WorkoutLog.objects.filter(
-                    trainee__name=name, completed=True).order_by('-logged_date')
+                    trainee__name=name, 
+                    completed=True).order_by('-logged_date')
 
             logs_page = Paginator(logs, 10)
             page_obj = logs_page.get_page(page)
@@ -212,7 +218,8 @@ class PaginationWViews(View):
     '''
 
     def get(self, request, name, page, start, end, *args, **kwargs):
-        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+        authentication = request.user.is_authenticated
+        if authentication and name == request.user.traineeinfo.name:
             start_date = datetime.strptime(start, '%Y-%m-%d').date()
             end_date = datetime.strptime(end, '%Y-%m-%d').date()
 
@@ -240,7 +247,8 @@ class DLogViews(View):
     Displays entries of DietLog in logs_view.html
     '''
     def get(self, request, name, page, *args, **kwargs):
-        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+        authentication = request.user.is_authenticated
+        if authentication and name == request.user.traineeinfo.name:
             log_type = 'diet'
             logs = Diet.objects.order_by(
                 'created_date').filter(
@@ -280,7 +288,8 @@ class DLogViews(View):
     '''
 
     def post(self, request, name, page, *args, **kwargs):
-        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+        authentication = request.user.is_authenticated
+        if authentication and name == request.user.traineeinfo.name:
             log_type = 'diet'
             start_date = request.POST.get('start_date')
             end_date = request.POST.get('end_date')
@@ -289,11 +298,13 @@ class DLogViews(View):
                     'created_date').filter(
                         trainee__name=name,
                         created_date__range=[start_date,
-                                            end_date]).order_by('-created_date')
+                                            end_date]).order_by(
+                                                '-created_date')
             else:
                 logs = Diet.objects.order_by(
                     'created_date').filter(trainee__name=name)
-                messages.info(request, 'Start date should predate the End date')
+                messages.info(request,
+                              'Start date should predate the End date')
 
             logs_page = Paginator(logs, 10)
             page_obj = logs_page.get_page(page)
@@ -329,7 +340,8 @@ class PaginationDViews(View):
     considering previously used start and end dates
     '''
     def get(self, request, name, page, start, end, *args, **kwargs):
-        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+        authentication = request.user.is_authenticated
+        if authentication and name == request.user.traineeinfo.name:
             start_date = datetime.strptime(start, '%Y-%m-%d').date()
             end_date = datetime.strptime(end, '%Y-%m-%d').date()
             logs = Diet.objects.order_by(
@@ -370,7 +382,8 @@ class UpdateInfo(View, DietGen):
     '''
 
     def get(self, request, name, *args, **kwargs):
-        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+        authentication = request.user.is_authenticated
+        if authentication and name == request.user.traineeinfo.name:
             trainee = get_object_or_404(TraineeInfo, name=name)
             info_form = forms.UpdateInfoForm(instance=trainee)
             return render(
@@ -386,13 +399,16 @@ class UpdateInfo(View, DietGen):
     '''
 
     def post(self, request, name, *args, **kwargs):
-        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+        authentication = request.user.is_authenticated
+        if authentication and name == request.user.traineeinfo.name:
             trainee = get_object_or_404(TraineeInfo, name=name)
-            info_form = forms.UpdateInfoForm(data=request.POST, instance=trainee)
+            info_form = forms.UpdateInfoForm(data=request.POST,
+                                             instance=trainee)
             if info_form.is_valid:
                 info_form.save()
                 self.calories_calc(name)
-                messages.success(request, 'Your information has been updated')
+                messages.success(request,
+                                 'Your information has been updated')
             else:
                 messages.error(request, 'Please provide valid information')
                 return render(
@@ -460,7 +476,8 @@ class CatalogView(View):
 
     def post(self, request, *args, **kwargs):
         if request.user.is_staff:
-            exercise_form = forms.CreateExerciseForm(request.POST, request.FILES)
+            exercise_form = forms.CreateExerciseForm(request.POST,
+                                                     request.FILES)
             logs = Exercises.objects.all()
             names_top = logs.values_list('name')
             names = [name[0] for name in names_top]
@@ -502,8 +519,9 @@ class EditExercise(View):
         if request.user.is_staff:
             exercise = get_object_or_404(Exercises, id=exercise_id)
             # calculates number of workoutlogs for the exercise not completed
-            n_users = WorkoutLog.objects.filter(completed=False,
-                                                excercise__id=exercise_id).count()
+            n_users = WorkoutLog.objects.filter(
+                completed=False,
+                excercise__id=exercise_id).count()
             exercise_form = forms.CreateExerciseForm(instance=exercise)
             return render(
                 request,
