@@ -325,40 +325,43 @@ class DLogViews(View):
 
 class PaginationDViews(View):
     '''
-    Handles pagination by recalling data stored by DLogViews
-    in dictionary logs_page['d']
+    Handles diet pagination when page number different than 1
+    considering previously used start and end dates
     '''
     def get(self, request, name, page, start, end, *args, **kwargs):
-        start_date = datetime.strptime(start, '%Y-%m-%d').date()
-        end_date = datetime.strptime(end, '%Y-%m-%d').date()
-        logs = Diet.objects.order_by(
-            'created_date').filter(
-                trainee__name=name,
-                created_date__range=[start_date,
-                                     end_date]).order_by('-created_date')
-        logs_page = Paginator(logs, 10)
-        page_obj = logs_page.get_page(page)
-        trainee = TraineeInfo.objects.get(name=name)
-        if trainee.calories:
-            up_to_date = False
-        else:
-            up_to_date = True
-        today_date = date.today()
-        log_today = Diet.objects.filter(trainee__name=name,
-                                        created_date=today_date).exists()
-        if log_today:
-            up_to_date = True
+        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+            start_date = datetime.strptime(start, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end, '%Y-%m-%d').date()
+            logs = Diet.objects.order_by(
+                'created_date').filter(
+                    trainee__name=name,
+                    created_date__range=[start_date,
+                                        end_date]).order_by('-created_date')
+            logs_page = Paginator(logs, 10)
+            page_obj = logs_page.get_page(page)
+            trainee = TraineeInfo.objects.get(name=name)
+            if trainee.calories:
+                up_to_date = False
+            else:
+                up_to_date = True
+            today_date = date.today()
+            log_today = Diet.objects.filter(trainee__name=name,
+                                            created_date=today_date).exists()
+            if log_today:
+                up_to_date = True
 
-        return render(
-            request,
-            'logs_view.html',
-            {"logs": page_obj,
-             "log_type": 'diet',
-             "name": name,
-             "up_to_date": up_to_date,
-             "start": start_date,
-             "end": end_date}
-        )
+            return render(
+                request,
+                'logs_view.html',
+                {"logs": page_obj,
+                "log_type": 'diet',
+                "name": name,
+                "up_to_date": up_to_date,
+                "start": start_date,
+                "end": end_date}
+            )
+        else:
+            return HttpResponseRedirect(reverse('home'))
 
 
 class UpdateInfo(View, DietGen):
@@ -367,35 +370,40 @@ class UpdateInfo(View, DietGen):
     '''
 
     def get(self, request, name, *args, **kwargs):
-        trainee = get_object_or_404(TraineeInfo, name=name)
-        info_form = forms.UpdateInfoForm(instance=trainee)
-        return render(
-            request,
-            'update_info.html',
-            {"info_form": info_form}
-        )
-
+        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+            trainee = get_object_or_404(TraineeInfo, name=name)
+            info_form = forms.UpdateInfoForm(instance=trainee)
+            return render(
+                request,
+                'update_info.html',
+                {"info_form": info_form}
+            )
+        else:
+            return HttpResponseRedirect(reverse('home'))
     '''
     Manages UpdateInfoForm user posting from update_info.html
     redirects to index.html if form is valid after saving the entry
     '''
 
     def post(self, request, name, *args, **kwargs):
-        trainee = get_object_or_404(TraineeInfo, name=name)
-        info_form = forms.UpdateInfoForm(data=request.POST, instance=trainee)
-        if info_form.is_valid:
-            info_form.save()
-            self.calories_calc(name)
-            messages.success(request, 'Your information has been updated')
-        else:
-            messages.error(request, 'Please provide valid information')
-            return render(
-                request,
-                'update_info.html',
-                {"info_form": forms.UpdateInfoForm(instance=trainee)}
-            )
+        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+            trainee = get_object_or_404(TraineeInfo, name=name)
+            info_form = forms.UpdateInfoForm(data=request.POST, instance=trainee)
+            if info_form.is_valid:
+                info_form.save()
+                self.calories_calc(name)
+                messages.success(request, 'Your information has been updated')
+            else:
+                messages.error(request, 'Please provide valid information')
+                return render(
+                    request,
+                    'update_info.html',
+                    {"info_form": forms.UpdateInfoForm(instance=trainee)}
+                )
 
-        return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse('home'))
+        else:
+            return HttpResponseRedirect(reverse('home'))
 
 
 class UpdateDietLogs(View):
