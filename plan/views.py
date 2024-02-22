@@ -151,53 +151,58 @@ class WLogViews(View):
     Displays completed entries of WorkoutLog in logs_view.html
     '''
     def get(self, request, name, page, *args, **kwargs):
-        log_type = 'workout'
-        logs = WorkoutLog.objects.filter(
-            trainee__name=name, completed=True).order_by('-logged_date')
-        logs_page = Paginator(logs, 10)
-        page_obj = logs_page.get_page(page)
-        end = date.today()
-        start = end - timedelta(days=10000)
-        return render(
-            request,
-            'logs_view.html',
-            {"logs": page_obj,
-             "log_type": log_type,
-             "name": name,
-             "start": start,
-             "end": end}
-        )
-
+        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+            log_type = 'workout'
+            logs = WorkoutLog.objects.filter(
+                trainee__name=name, completed=True).order_by('-logged_date')
+            logs_page = Paginator(logs, 10)
+            page_obj = logs_page.get_page(page)
+            end = date.today()
+            start = end - timedelta(days=10000)
+            return render(
+                request,
+                'logs_view.html',
+                {"logs": page_obj,
+                "log_type": log_type,
+                "name": name,
+                "start": start,
+                "end": end}
+            )
+        else:
+            return HttpResponseRedirect(reverse('home'))
     '''
     Displays completed entries of WorkoutLog in logs_view.html
     narrowing entries to selected dates
     '''
 
     def post(self, request, name, page, *args, **kwargs):
-        log_type = 'workout'
-        start_date = request.POST.get('start_date')
-        end_date = request.POST.get('end_date')
-        if start_date <= end_date:
-            logs = WorkoutLog.objects.filter(
-                logged_date__range=[start_date, end_date],
-                trainee__name=name,
-                completed=True).order_by('-logged_date')
-        else:
-            messages.info(request, 'Start date should predate the End date')
-            logs = WorkoutLog.objects.filter(
-                trainee__name=name, completed=True).order_by('-logged_date')
+        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+            log_type = 'workout'
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+            if start_date <= end_date:
+                logs = WorkoutLog.objects.filter(
+                    logged_date__range=[start_date, end_date],
+                    trainee__name=name,
+                    completed=True).order_by('-logged_date')
+            else:
+                messages.info(request, 'Start date should predate the End date')
+                logs = WorkoutLog.objects.filter(
+                    trainee__name=name, completed=True).order_by('-logged_date')
 
-        logs_page = Paginator(logs, 10)
-        page_obj = logs_page.get_page(page)
-        return render(
-            request,
-            'logs_view.html',
-            {"logs": page_obj,
-             "log_type": log_type,
-             "name": name,
-             "start": start_date,
-             "end": end_date}
-        )
+            logs_page = Paginator(logs, 10)
+            page_obj = logs_page.get_page(page)
+            return render(
+                request,
+                'logs_view.html',
+                {"logs": page_obj,
+                "log_type": log_type,
+                "name": name,
+                "start": start_date,
+                "end": end_date}
+            )
+        else:
+            return HttpResponseRedirect(reverse('home'))
 
 
 class PaginationWViews(View):
