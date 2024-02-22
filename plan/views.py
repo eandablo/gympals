@@ -97,27 +97,30 @@ class WorkoutView(View, WorkoutGen, DietGen):
     '''
 
     def get(self, request, name, *args, **kwargs):
-        logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
-        if not logs:
-            self.select_ids(name)
-            self.calories_calc(name)
-            logs = WorkoutLog.objects.filter(
-                trainee__name=name, completed=False)
-        days = logs.order_by('day').values_list('day').distinct('day')
-        ids = []
-        # Ids contain information for workout page accordion item
-        for day in days:
-            labels = ['#accordion-'+str(day[0]),
-                      'accordion-'+str(day[0]), day[0]]
-            ids.append(labels)
+        if request.user.is_authenticated and name == request.user.traineeinfo.name:
+            logs = WorkoutLog.objects.filter(trainee__name=name, completed=False)
+            if not logs:
+                self.select_ids(name)
+                self.calories_calc(name)
+                logs = WorkoutLog.objects.filter(
+                    trainee__name=name, completed=False)
+            days = logs.order_by('day').values_list('day').distinct('day')
+            ids = []
+            # Ids contain information for workout page accordion item
+            for day in days:
+                labels = ['#accordion-'+str(day[0]),
+                        'accordion-'+str(day[0]), day[0]]
+                ids.append(labels)
 
-        return render(
-            request,
-            'workout_plan.html',
-            {"logs": logs,
-             "ids": ids,
-             "name": name}
-        )
+            return render(
+                request,
+                'workout_plan.html',
+                {"logs": logs,
+                "ids": ids,
+                "name": name}
+            )
+        else:
+            return HttpResponseRedirect(reverse('home'))
 
 
 class LogWorkout(View):
