@@ -434,55 +434,61 @@ class CatalogView(View):
     '''
 
     def get(self, request, *args, **kwargs):
-        groups = Exercises.objects.order_by(
-            'muscle_group').values_list(
-                'muscle_group').distinct('muscle_group')
-        logs = Exercises.objects.all()
-        ids = []
-        for group in groups:
-            labels = ['#accordion-'+str(group[0]),
-                      'accordion-'+str(group[0]), group[0]]
-            ids.append(labels)
+        if request.user.is_staff:
+            groups = Exercises.objects.order_by(
+                'muscle_group').values_list(
+                    'muscle_group').distinct('muscle_group')
+            logs = Exercises.objects.all()
+            ids = []
+            for group in groups:
+                labels = ['#accordion-'+str(group[0]),
+                        'accordion-'+str(group[0]), group[0]]
+                ids.append(labels)
 
-        return render(
-            request,
-            'catalog.html',
-            {"ids": ids,
-             "logs": logs,
-             "exercise_form": forms.CreateExerciseForm()}
-        )
+            return render(
+                request,
+                'catalog.html',
+                {"ids": ids,
+                "logs": logs,
+                "exercise_form": forms.CreateExerciseForm()}
+            )
+        else:
+            return HttpResponseRedirect(reverse('home'))
     '''
     Manages the form to add exercises in calalog.html
     '''
 
     def post(self, request, *args, **kwargs):
-        exercise_form = forms.CreateExerciseForm(request.POST, request.FILES)
-        logs = Exercises.objects.all()
-        names_top = logs.values_list('name')
-        names = [name[0] for name in names_top]
-        if exercise_form.is_valid():
-            exercise_form.save()
-            messages.success(request, 'New Exercise Added')
-        else:
-            messages.error(request, 'Name already exists')
-        groups = Exercises.objects.order_by(
-            'muscle_group').values_list(
-                'muscle_group').distinct('muscle_group')
-        logs = Exercises.objects.all()
-        ids = []
-        # Creates labels for accordions in catalog.html
-        for group in groups:
-            labels = ['#accordion-'+str(group[0]),
-                      'accordion-'+str(group[0]), group[0]]
-            ids.append(labels)
+        if request.user.is_staff:
+            exercise_form = forms.CreateExerciseForm(request.POST, request.FILES)
+            logs = Exercises.objects.all()
+            names_top = logs.values_list('name')
+            names = [name[0] for name in names_top]
+            if exercise_form.is_valid():
+                exercise_form.save()
+                messages.success(request, 'New Exercise Added')
+            else:
+                messages.error(request, 'Name already exists')
+            groups = Exercises.objects.order_by(
+                'muscle_group').values_list(
+                    'muscle_group').distinct('muscle_group')
+            logs = Exercises.objects.all()
+            ids = []
+            # Creates labels for accordions in catalog.html
+            for group in groups:
+                labels = ['#accordion-'+str(group[0]),
+                        'accordion-'+str(group[0]), group[0]]
+                ids.append(labels)
 
-        return render(
-            request,
-            'catalog.html',
-            {"ids": ids,
-             "logs": logs,
-             "exercise_form": forms.CreateExerciseForm()}
-        )
+            return render(
+                request,
+                'catalog.html',
+                {"ids": ids,
+                "logs": logs,
+                "exercise_form": forms.CreateExerciseForm()}
+            )
+        else:
+            return HttpResponseRedirect(reverse('home'))
 
 
 class EditExercise(View):
@@ -493,46 +499,51 @@ class EditExercise(View):
     '''
 
     def get(self, request, exercise_id, *args, **kwargs):
-        exercise = get_object_or_404(Exercises, id=exercise_id)
-        # calculates number of workoutlogs for the exercise not completed
-        n_users = WorkoutLog.objects.filter(completed=False,
-                                            excercise__id=exercise_id).count()
-        exercise_form = forms.CreateExerciseForm(instance=exercise)
-        return render(
-            request,
-            'exercise_edit.html',
-            {"n_users": n_users,
-             "exercise": exercise,
-             "exercise_form": exercise_form}
-        )
-
+        if request.user.is_staff:
+            exercise = get_object_or_404(Exercises, id=exercise_id)
+            # calculates number of workoutlogs for the exercise not completed
+            n_users = WorkoutLog.objects.filter(completed=False,
+                                                excercise__id=exercise_id).count()
+            exercise_form = forms.CreateExerciseForm(instance=exercise)
+            return render(
+                request,
+                'exercise_edit.html',
+                {"n_users": n_users,
+                "exercise": exercise,
+                "exercise_form": exercise_form}
+            )
+        else:
+            return HttpResponseRedirect(reverse('home'))
     '''
     Manages edit exercise form
     send success message if form is successfully logged
     '''
 
     def post(self, request, exercise_id, *args, **kwargs):
-        exercise = get_object_or_404(Exercises, id=exercise_id)
-        exercise_form = forms.CreateExerciseForm(request.POST,
-                                                 request.FILES,
-                                                 instance=exercise)
-        if exercise_form.is_valid():
-            exercise_form.save()
-            messages.success(request, 'Exercise successfully edited')
+        if request.user.is_staff:
+            exercise = get_object_or_404(Exercises, id=exercise_id)
+            exercise_form = forms.CreateExerciseForm(request.POST,
+                                                    request.FILES,
+                                                    instance=exercise)
+            if exercise_form.is_valid():
+                exercise_form.save()
+                messages.success(request, 'Exercise successfully edited')
+            else:
+                messages.error(request, 'Data provided is not valid')
+                n_users = WorkoutLog.objects.filter(
+                    completed=False,
+                    excercise__id=exercise_id).count()
+                exercise_form = forms.CreateExerciseForm(instance=exercise)
+                return render(
+                    request,
+                    'exercise_edit.html',
+                    {"n_users": n_users,
+                    "exercise": exercise,
+                    "exercise_form": exercise_form}
+                )
+            return HttpResponseRedirect(reverse('catalog'))
         else:
-            messages.error(request, 'Data provided is not valid')
-            n_users = WorkoutLog.objects.filter(
-                completed=False,
-                excercise__id=exercise_id).count()
-            exercise_form = forms.CreateExerciseForm(instance=exercise)
-            return render(
-                request,
-                'exercise_edit.html',
-                {"n_users": n_users,
-                 "exercise": exercise,
-                 "exercise_form": exercise_form}
-            )
-        return HttpResponseRedirect(reverse('catalog'))
+            return HttpResponseRedirect(reverse('home'))
 
 
 class DeleteExercise(View):
