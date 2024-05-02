@@ -142,9 +142,7 @@ The update_info.html was not accesible by the validator. The code was thoroughly
 
 - CSS3
 
-The app is mostly styled using bootstrap. The CCS3 validator found some errors related with Bootstrap, but static CSS showed no errors or warnings.
-
-[Boostrap errors](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
+The app was validated CSS3 and SGV level using the [WC3 validator](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fgympals-6af3102877bb.herokuapp.com%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en).
 
 ### Python sintaxis
 
