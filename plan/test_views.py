@@ -5,8 +5,6 @@ from . import models
 from django.contrib.auth.models import User
 from .decisions import DietGen
 
-# def setUpTestData(cls):
-
 
 class TestSignup(TestCase):
     def test_signup_view(self):
